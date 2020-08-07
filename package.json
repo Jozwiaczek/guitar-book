@@ -1,14 +1,14 @@
 {
-  "name": "gatsby-starter-theme-workspace",
+  "name": "song-book",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
   "license": "0BSD",
   "scripts": {
-    "build": "yarn workspace example build"
+    "build": "yarn workspace app build"
   },
   "workspaces": [
-    "gatsby-theme-minimal",
-    "example"
+    "app",
+    "gatsby-theme-song-book"
   ]
 }

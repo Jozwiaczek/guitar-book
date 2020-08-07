@@ -1,0 +1,32 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/song-book.git",
+    "directory": "song-book"
+  },
+  "scripts": {
+    "clean": "gatsby clean",
+    "develop": "gatsby develop --open --https",
+    "build": "gatsby build"
+  },
+  "dependencies": {
+    "gatsby": "^2.24.26",
+    "gatsby-theme-song-book": "^1.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-react": "^7.20.5",
+    "gatsby-plugin-eslint": "^2.0.8"
+  }
+}
