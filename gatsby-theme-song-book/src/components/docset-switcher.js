@@ -174,7 +174,6 @@ export default function DocsetSwitcher(props) {
       top: top + height + 2,
       left
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, width, props.open]);
 
   function handleWrapperClick(event) {
@@ -218,11 +217,11 @@ export default function DocsetSwitcher(props) {
           <FooterNav>
             <Fragment>
               {props.footerNavConfig &&
-                Object.entries(props.footerNavConfig).map(([text, props]) => (
-                  <FooterNavItem key={text} {...props}>
-                    {text}
-                  </FooterNavItem>
-                ))}
+              Object.entries(props.footerNavConfig).map(([text, props]) => (
+                <FooterNavItem key={text} {...props}>
+                  {text}
+                </FooterNavItem>
+              ))}
               {hasSocialUrls && (
                 <SocialLinks>
                   {props.spectrumUrl && (
@@ -231,7 +230,7 @@ export default function DocsetSwitcher(props) {
                       title="Spectrum"
                       target="_blank"
                     >
-                      <SpectrumIcon />
+                      <SpectrumIcon/>
                     </SocialLink>
                   )}
                   {props.twitterUrl && (
@@ -240,7 +239,7 @@ export default function DocsetSwitcher(props) {
                       title="Twitter"
                       target="_blank"
                     >
-                      <IconTwitter />
+                      <IconTwitter/>
                     </SocialLink>
                   )}
                   {props.youtubeUrl && (
@@ -249,7 +248,7 @@ export default function DocsetSwitcher(props) {
                       title="YouTube"
                       target="_blank"
                     >
-                      <IconYoutube />
+                      <IconYoutube/>
                     </SocialLink>
                   )}
                 </SocialLinks>

@@ -22,6 +22,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-eslint',
       options: {
+        cache: true,
+        fix: true,
         test: /\.js$|\.jsx$/,
         exclude: /(node_modules|.cache|public)/,
         stages: ['develop'],

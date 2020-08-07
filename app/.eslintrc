@@ -26,7 +26,9 @@
       "version": "16"
     }
   },
+  "ignorePatterns": ["**/_this_is_virtual_fs_path_/**/*"],
   "rules": {
+    "strict": 0,
     "semi": ["error", "always"],
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
     "no-console": "off",

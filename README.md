@@ -7,6 +7,8 @@
   Starter for creating a Gatsby Theme workspace
 </h1>
 
+https://docs.google.com/document/d/1BKD0AtiNxkNaqFVfT6sltidQGFoxDZ_HlHsUy1rQOL8/edit#heading=h.v3ga3vya7baq
+
 ```shell
 gatsby new my-theme https://github.com/gatsbyjs/gatsby-starter-theme-workspace
 cd my-theme

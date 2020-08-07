@@ -8,7 +8,7 @@ export const Verse = ({ children, chords, perLine }) => {
   return (
     <div>
       {tmp.map((line, index) => (
-        <div>
+        <div key={index}>
           {line} {chords.slice(index, index + perLine)}
         </div>
       ))}
