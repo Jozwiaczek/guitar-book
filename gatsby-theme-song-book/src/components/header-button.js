@@ -41,7 +41,7 @@ export default function HeaderButton() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Launch Apollo Studio
+        Launch Guitar Tuner
         <StyledIcon weight="thin" />
       </StyledLink>
     </Container>

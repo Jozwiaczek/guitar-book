@@ -5,26 +5,20 @@ description: Wojtek Szumański
 
 import { LineWithChords, Verse, G, C } from 'gatsby-theme-song-book';
 
-<LineWithChords chords={['G', 'C']}>
-    Jeden chciałby być żołnierzem
-</LineWithChords>
+## Intro
 
-<Verse chords={['G', 'C', 'G', 'D', 'G', 'C', 'D', 'G']} perLine={2}>
-    Jeden chciałby być żołnierzem |
-    drugi chciałby być papieżem |
-    jeden ładny drugi brzydki |
-    a ja kocham twoje cycki.
-</Verse>
+<Verse text={`
+            Am                                    F
+There was a time, I used to look into my father's eyes
+           Am                                F
+In a happy home, I was a king I had a golden throne
+               G             Am                  F
+Those days are gone, now the memories are on the wall
+           G              Am                 F
+I hear the songs from the places where I was born
+`} />
 
-Jeden chciałby być żołnierzem<G/><C/>
-
-G D
-drugi chciałby być papieżem
-G C
-jeden ładny drugi brzydki
-D G
-a ja kocham twoje cycki.
-
+<Verse text={`
 G C
 Jeden chciałby być żołnierzem
 G D
@@ -33,7 +27,18 @@ G C
 jeden ładny drugi brzydki
 D G
 a ja kocham twoje cycki.
+`}/>
 
+<Verse text={`
+G C
+Jeden chciałby być żołnierzem
+G D
+drugi chciałby być papieżem
+G C
+jeden ładny drugi brzydki
+D G
+a ja kocham twoje cycki.
+--
 e C
 Gdybym nosił moro gacie
 G D
@@ -42,7 +47,7 @@ e C
 to bym uciekł bym był szybki
 D G
 aby zmacać twoje cycki
-
+--
 G C
 Jeśli mógł bym wybrać prace
 G D
@@ -51,7 +56,7 @@ G C
 chciałbym zostać masażystą
 D G
 robić masaż twoim cyckom
-
+--
 e C
 wymacałem już jednego
 G D
@@ -60,7 +65,7 @@ e C
 bo nie jestem tak okrutny
 D G
 by ten drugi miał być smutny
-
+--
 G C
 i choć wiem że ty nie umiesz
 G D
@@ -69,7 +74,7 @@ G C
 to ja nie mam cycków wcale
 D G
 więc mi użycz swoją parę
-
+--
 e C
 gdyby cycki mogły latać
 G D
@@ -78,7 +83,7 @@ e C
 i odlecieć gdzieś w obłoki
 D G
 z nimi zwiedzać świat szeroki
-
+--
 G C
 One lepsze są od wódki
 G D
@@ -87,7 +92,7 @@ G C
 i fajniejsze są od tego
 D G
 co jest lepsze od wszystkiego
-
+--
 e C
 Gdybym stracił obie ręce
 G D
@@ -96,3 +101,7 @@ e C
 mógłbym przy pomocy stóp
 D G
 macać cycki aż po grób
+`}/>
+
+<button style={{color: 'red', width: 100, height: 100}} onClick={() => window.location = "https://apps.apple.com/pl/app/guitartuna-guitar-bass-tuner/id527588389"}>navigate</button>
+

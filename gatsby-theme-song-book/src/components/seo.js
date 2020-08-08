@@ -17,6 +17,7 @@ export default function SEO({image, baseUrl, twitterHandle, title, description, 
       <meta name="twitter:description" content={description} />
       <link rel="icon" href={favicon} />
       <meta property="og:image" content={imagePath} />
+      <meta name="apple-mobile-web-app-capable" />
       {baseUrl && <meta name="twitter:image" content={baseUrl + imagePath} />}
       {twitterHandle && (
         <meta name="twitter:site" content={`@${twitterHandle}`} />

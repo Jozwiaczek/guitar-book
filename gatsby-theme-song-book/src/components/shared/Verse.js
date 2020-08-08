@@ -1,16 +1,14 @@
 import React from 'react';
 
-export const Verse = ({ children, chords, perLine }) => {
-  const tmp = children.split(' | ');
+export const Verse = ({ text }) => {
+  const tmp = text.replace(/ /g, '&nbsp;').split('\n');
 
-  if (!chords) return null;
+  const createMarkup = (text) => ({__html: text});
 
   return (
     <div>
       {tmp.map((line, index) => (
-        <div key={index}>
-          {line} {chords.slice(index, index + perLine)}
-        </div>
+        <p style={{ marginBottom: 0 }} key={index} dangerouslySetInnerHTML={createMarkup(line)}/>
       ))}
       <br/>
       <br/>
