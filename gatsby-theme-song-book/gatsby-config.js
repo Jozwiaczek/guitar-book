@@ -158,7 +158,19 @@ module.exports = ({
           failOnError: false
         }
       }
-    }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Song Book`,
+        short_name: `Song Book`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#3f20ba`,
+        display: `standalone`,
+      }
+    },
+    `gatsby-plugin-offline`
   ];
 
   if (gaTrackingId) {

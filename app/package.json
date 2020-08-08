@@ -13,7 +13,8 @@
   "scripts": {
     "clean": "gatsby clean",
     "develop": "gatsby develop --host 0.0.0.0 --port 8000 --open",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve --host 0.0.0.0 --port 8001 --open"
   },
   "dependencies": {
     "gatsby": "^2.24.26",

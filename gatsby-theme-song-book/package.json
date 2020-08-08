@@ -59,7 +59,10 @@
     "polished": "^2.3.3",
     "prop-types": "^15.6.2",
     "react-helmet": "^5.2.0",
-    "react-use": "^9.11.0"
+    "react-use": "^9.11.0",
+    "gatsby-plugin-manifest": "^2.4.22",
+    "gatsby-plugin-offline": "^3.2.22"
+
   },
   "peerDependencies": {
     "gatsby": "^2.6.0"
