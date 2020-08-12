@@ -1,21 +1,18 @@
-const themeOptions = require('gatsby-theme-song-book/theme-options');
+const themeOptions = require('gatsby-theme-guitar-book/theme-options');
 
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-theme-song-book`,
+      resolve: `gatsby-theme-guitar-book`,
       options: {
         ...themeOptions,
         root: __dirname,
-        subtitle: 'Song book Basics',
-        description: 'How to use the Apollo GraphQL platform',
-        githubRepo: 'jozwiaczek/song-book',
+        subtitle: 'Guitar book Basics',
+        description: 'How to use the Guitar Book platform',
+        githubRepo: 'jozwiaczek/guitar-book',
         spectrumPath: '/',
         sidebarCategories: {
-          null: ['index'],
-          'Wojtek Szumanski': [
-            'wojtek-szumanski/ballada-o-cyckach'
-          ]
+          null: ['index', 'ballada-o-cyckach']
         },
       }
     },

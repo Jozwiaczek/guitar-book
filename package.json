@@ -9,6 +9,6 @@
   },
   "workspaces": [
     "app",
-    "gatsby-theme-song-book"
+    "gatsby-theme-guitar-book"
   ]
 }

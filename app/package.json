@@ -7,18 +7,18 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jozwiaczek/song-book.git",
-    "directory": "song-book"
+    "url": "https://github.com/Jozwiaczek/guitar.git",
+    "directory": "guitar-book"
   },
   "scripts": {
     "clean": "gatsby clean",
     "develop": "gatsby develop --host 0.0.0.0 --port 8000 --open",
-    "build": "gatsby build",
+    "build": "yarn clean && gatsby build",
     "serve": "gatsby serve --host 0.0.0.0 --port 8001 --open"
   },
   "dependencies": {
     "gatsby": "^2.24.26",
-    "gatsby-theme-song-book": "^1.0.0",
+    "gatsby-theme-guitar-book": "^1.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

@@ -1,6 +1,7 @@
 ---
-title: Song Book Home
-description: Explore the Song Book platform
+title: Home
+description: Explore the Guitar Book platform
+song: false
 ---
 
 Index file test

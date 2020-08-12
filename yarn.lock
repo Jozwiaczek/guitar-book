@@ -12118,6 +12118,14 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-open-app@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-open-app/-/react-open-app-1.0.2.tgz#f3013a7bc38701091b6802d5673b6a3e8c2c98f8"
+  integrity sha512-yTEfNr2fWHWTQJXWGr6gEh35/qUTLlUUQh/eXuFOehrwZNxBbUk84Lh3+IMBuhMMMVzNHcq3ocOouDDgiC9XcQ==
+  dependencies:
+    babel-runtime "^6.26.0"
+    url-to-deep-link "^1.0.3"
+
 react-reconciler@^0.24.0:
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.24.0.tgz#5a396b2c2f5efe8554134a5935f49f546723f2dd"
@@ -14993,6 +15001,13 @@ url-parse@^1.1.8, url-parse@^1.4.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+url-to-deep-link@^1.0.3, url-to-deep-link@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/url-to-deep-link/-/url-to-deep-link-1.0.6.tgz#b8fa6b6c0719b504f4965f49d3a01729f3eb39bc"
+  integrity sha512-Bg0fGf5p5gQmHtcKnoSW29rRPq9eFTiCU6j6kGDoD4/BUALStSOW9TlyQHTA1UF0UDUwik+1s/e1dGBnK3v0Xg==
+  dependencies:
+    babel-runtime "^6.26.0"
 
 url-to-options@^1.0.1:
   version "1.0.1"

@@ -1,0 +1,39 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {withPrefix} from 'gatsby';
+import Helmet from "react-helmet";
+import favicon from '../assets/favicon.ico';
+
+export default function SEO({image, baseUrl, twitterHandle, title, description, siteName}) {
+  const imagePath = withPrefix('/' + image);
+
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:description" content={description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <link rel="icon" href={favicon} />
+      <meta property="og:image" content={imagePath} />
+      <meta name="apple-mobile-web-app-capable" />
+      {baseUrl && <meta name="twitter:image" content={baseUrl + imagePath} />}
+      {twitterHandle && (
+        <meta name="twitter:site" content={`@${twitterHandle}`} />
+      )}
+    </Helmet>
+  );
+}
+
+SEO.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  siteName: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  favicon: PropTypes.string,
+  baseUrl: PropTypes.string,
+  image: PropTypes.string.isRequired,
+  twitterHandle: PropTypes.string
+};
