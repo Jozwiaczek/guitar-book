@@ -1,11 +1,8 @@
 <p align="center">
   <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="60" />
+    <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="250" />
   </a>
 </p>
-<h1 align="center">
-  Guitar Book
-</h1>
 
 | Module   | Status | Public URL | Netlify |
 | -------- | --- | --- | --- |
