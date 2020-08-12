@@ -92,12 +92,10 @@ module.exports = {
 | baseDir           | string | No       | If your Gatsby site does not live in the root of your project directory/git repo, pass the subdirectory name here (`docs`, for example) |
 | contentDir        | string | No       | The directory where docs content exists (`content` by default)                                                                          |
 | githubRepo        | string | No       | The owner and name of the content repository on GitHub                                                                                  |
-| spectrumPath      | string | No       | The path to be appended to Spectrum links                                                                                               |
 | gaTrackingId      | string | No       | Your site's Google Analytics tracking ID                                                                                                |
 | algoliaApiKey     | string | No       | Your [Algolia DocSearch](https://community.algolia.com/docsearch/) API key                                                              |
 | algoliaIndexName  | string | No       | The name of your DocSearch index                                                                                                        |
 | baseUrl           | string | No       | The origin where your website will be hosted (e.g. `https://www.apollographql.com`)                                                     |
-| spectrumHandle    | string | No       | Your Spectrum community's handle/slug                                                                                                   |
 | twitterHandle     | string | No       | Your Twitter handle, without the "@"                                                                                                    |
 | youtubeUrl        | string | No       | The URL of your YouTube channel                                                                                                         |
 | defaultVersion    | string | No       | An identifier for the default selected version, served at the root of the docset (/)                                                    |
@@ -111,7 +109,7 @@ module.exports = {
 
 If omitted, only one version of docs will be built, based on the files in the theme consumer repository. If provided, the `versions` option expects an object mapping older versions' labels to their respective git branch. The current filesystem will still determine the "default" version. The default label for this version is "Latest", but is configurable by the `defaultVersion` option.
 
-```js
+```
 defaultVersion: '2.5',
 versions: {
   '2.4': 'version-2.4'
@@ -122,7 +120,7 @@ versions: {
 
 The `sidebarCategories` option is an object keyed by category titles. Each entry in the object is an array of page paths. The path should resemble the location of a Markdown/MDX file in the git repository, relative to `contentDir`, and without the _.md_ extension. Sidebar navigation items that are **not** a member of a category live under the `null` key. To add an external link to your sidebar, your can provide a string formatted like a Markdown link.
 
-```js
+```
 {
   null: [
     'index',
@@ -558,7 +556,7 @@ You can refer to the [default colors file](./src/utils/colors.js) for palette ke
 
 In order to deploy a Gatsby site to a subdirectory, there are a few extra steps to take. First, you must provide a `pathPrefix` property in your Gatsby config. This option combined with the `--prefix-paths` option in the Gatsby CLI will handle most of the hard work. Read more about path prefixing in Gatsby [here](https://www.gatsbyjs.org/docs/path-prefix/).
 
-```js
+```
 // gatsby-config.js
 module.exports = {
   ...

@@ -5,7 +5,6 @@ import useKey from 'react-use/lib/useKey';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import {IconTwitter} from '@apollo/space-kit/icons/IconTwitter';
 import {IconYoutube} from '@apollo/space-kit/icons/IconYoutube';
-import {ReactComponent as SpectrumIcon} from '../assets/spectrum.svg';
 import {boxShadow} from './search';
 import {colors} from '../utils/colors';
 import {smallCaps} from '../utils/typography';
@@ -183,7 +182,7 @@ export default function DocsetSwitcher(props) {
   }
 
   const hasSocialUrls = Boolean(
-    props.spectrumUrl || props.twitterUrl || props.youtubeUrl
+    props.twitterUrl || props.youtubeUrl
   );
   return (
     <Wrapper
@@ -224,15 +223,6 @@ export default function DocsetSwitcher(props) {
               ))}
               {hasSocialUrls && (
                 <SocialLinks>
-                  {props.spectrumUrl && (
-                    <SocialLink
-                      href={props.spectrumUrl}
-                      title="Spectrum"
-                      target="_blank"
-                    >
-                      <SpectrumIcon/>
-                    </SocialLink>
-                  )}
                   {props.twitterUrl && (
                     <SocialLink
                       href={props.twitterUrl}
@@ -268,7 +258,6 @@ DocsetSwitcher.propTypes = {
   siteName: PropTypes.string.isRequired,
   navItems: PropTypes.array.isRequired,
   footerNavConfig: PropTypes.object.isRequired,
-  spectrumUrl: PropTypes.string,
   twitterUrl: PropTypes.string,
   youtubeUrl: PropTypes.string
 };

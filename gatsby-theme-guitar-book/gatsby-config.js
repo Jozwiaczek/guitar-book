@@ -162,12 +162,14 @@ module.exports = ({
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Song Book`,
-        short_name: `Song Book`,
+        name: `Guitar Book`,
+        short_name: `Guitar Book`,
+        description: `Track and play best guitar songs for camping`,
         start_url: `/`,
-        background_color: `#f7f0eb`,
+        background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
+        icon: require.resolve('../node_modules/gatsby-theme-guitar-book/src/assets/icon.png')
       }
     },
     `gatsby-plugin-offline`

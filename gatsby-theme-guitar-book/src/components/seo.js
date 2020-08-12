@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withPrefix} from 'gatsby';
 import Helmet from "react-helmet";
-import favicon from '../assets/favicon.ico';
 
 export default function SEO({image, baseUrl, twitterHandle, title, description, siteName}) {
   const imagePath = withPrefix('/' + image);
@@ -16,7 +15,6 @@ export default function SEO({image, baseUrl, twitterHandle, title, description, 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <link rel="icon" href={favicon} />
       <meta property="og:image" content={imagePath} />
       <meta name="apple-mobile-web-app-capable" />
       {baseUrl && <meta name="twitter:image" content={baseUrl + imagePath} />}

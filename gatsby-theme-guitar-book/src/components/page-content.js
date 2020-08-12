@@ -11,7 +11,6 @@ import {colors} from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
 
 
-import {ReactComponent as SpectrumLogo} from '../assets/spectrum.svg';
 import {withPrefix} from 'gatsby';
 
 const Wrapper = styled.div({
@@ -210,11 +209,6 @@ export default function PageContent(props) {
           />
         )}
         {editLink}
-        {props.spectrumUrl && (
-          <AsideLink href={props.spectrumUrl}>
-            <SpectrumLogo /> Discuss on Spectrum
-          </AsideLink>
-        )}
         {props.graphManagerUrl && (
           <AsideLink href={props.graphManagerUrl}>
             <IconSchema /> Demo Apollo Studio
@@ -233,6 +227,5 @@ PageContent.propTypes = {
   hash: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   graphManagerUrl: PropTypes.string.isRequired,
-  headings: PropTypes.array.isRequired,
-  spectrumUrl: PropTypes.string
+  headings: PropTypes.array.isRequired
 };

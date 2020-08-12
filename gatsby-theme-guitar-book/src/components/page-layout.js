@@ -13,11 +13,11 @@ import {colors} from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
 import {Helmet} from 'react-helmet';
 import {IconLayoutModule} from '@apollo/space-kit/icons/IconLayoutModule';
-import {Link, graphql, navigate, useStaticQuery} from 'gatsby';
+import {graphql, Link, navigate, useStaticQuery} from 'gatsby';
 import {MobileLogo} from './mobile-logo';
 import {Select} from './select';
 import {SelectedLanguageContext} from './multi-code-block';
-import {getSpectrumUrl, getVersionBasePath} from '../utils';
+import {getVersionBasePath} from '../utils';
 import {size} from 'polished';
 import {trackCustomEvent} from 'gatsby-plugin-google-analytics';
 import {useResponsiveSidebar} from "./responsive-sidebar";
@@ -150,7 +150,6 @@ export default function PageLayout(props) {
     defaultVersion
   } = props.pageContext;
   const {
-    spectrumHandle,
     twitterHandle,
     youtubeUrl,
     navConfig = {},
@@ -283,7 +282,6 @@ export default function PageLayout(props) {
       {hasNavItems && (
         <DocsetSwitcher
           siteName={menuTitle || siteName}
-          spectrumUrl={spectrumHandle && getSpectrumUrl(spectrumHandle)}
           twitterUrl={twitterHandle && `https://twitter.com/${twitterHandle}`}
           youtubeUrl={youtubeUrl}
           navItems={navItems}

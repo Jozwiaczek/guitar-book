@@ -2,7 +2,7 @@ const jsYaml = require('js-yaml');
 const path = require('path');
 const git = require('simple-git')();
 const {createFilePath} = require('gatsby-source-filesystem');
-const {getVersionBasePath, getSpectrumUrl} = require('./src/utils');
+const {getVersionBasePath} = require('./src/utils');
 const {createPrinterNode} = require('gatsby-plugin-printer');
 
 function getConfigPaths(baseDir) {
@@ -224,8 +224,6 @@ exports.createPages = async (
     subtitle,
     githubRepo,
     sidebarCategories,
-    spectrumHandle,
-    spectrumPath,
     twitterHandle,
     localVersion,
     baseUrl
@@ -329,7 +327,6 @@ exports.createPages = async (
     }
 
     let githubUrl;
-    let repoPath;
 
     if (githubRepo) {
       const [owner, repo] = githubRepo.split('/');
@@ -343,8 +340,6 @@ exports.createPages = async (
           fields.versionRef || path.join(currentBranch, contentPath),
           relativePath
         );
-
-      repoPath = `/${repo}`;
     }
 
     actions.createPage({
@@ -357,9 +352,6 @@ exports.createPages = async (
         versionBasePath: getVersionBasePath(fields.version),
         sidebarContents: sidebarContents[fields.version],
         githubUrl,
-        spectrumUrl:
-          spectrumHandle &&
-          getSpectrumUrl(spectrumHandle) + (spectrumPath || repoPath),
         twitterHandle,
         versions: versionKeys, // only need to send version labels to client
         defaultVersion,

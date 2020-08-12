@@ -10,7 +10,6 @@ module.exports = {
         subtitle: 'Guitar book English',
         description: 'How to use the Guitar Book platform',
         githubRepo: 'jozwiaczek/guitar-book',
-        spectrumPath: '/',
         sidebarCategories: {
           null: ['index', 'ballada-o-cyckach']
         },

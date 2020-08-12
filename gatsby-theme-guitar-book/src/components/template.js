@@ -128,7 +128,6 @@ export default function Template(props) {
   const {
     sidebarContents,
     githubUrl,
-    spectrumUrl,
     twitterHandle,
     baseUrl
   } = props.pageContext;
@@ -158,7 +157,6 @@ export default function Template(props) {
           headings={headings}
           hash={hash}
           githubUrl={githubUrl}
-          spectrumUrl={spectrumUrl}
         >
           <CustomLinkContext.Provider
             value={{
