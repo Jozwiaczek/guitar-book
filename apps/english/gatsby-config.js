@@ -7,6 +7,7 @@ module.exports = {
       options: {
         ...themeOptions,
         root: __dirname,
+        baseDir: 'apps/english',
         subtitle: 'Guitar book English',
         description: 'How to use the Guitar Book platform',
         githubRepo: 'jozwiaczek/guitar-book',

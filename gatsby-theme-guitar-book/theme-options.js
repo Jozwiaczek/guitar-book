@@ -28,7 +28,6 @@ module.exports = {
   algoliaIndexName: 'guitarBookData',
   baseUrl: 'https://guitar-book.netlify.app/',
   logoLink: 'https://guitar-book.netlify.app//',
-  baseDir: 'songs',
   contentDir: 'content',
   navConfig,
   footerNavConfig
