@@ -4,11 +4,24 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "0BSD",
+  "pre-commit": [
+    "lint"
+  ],
   "scripts": {
-    "build": "yarn workspace app build"
+    "clean": "lerna bootstrap && lerna run clean",
+    "build:apps": "lerna bootstrap && lerna run build --scope {'polish-guitar-book, english-guitar-book'} --stream",
+    "serve:apps": "lerna bootstrap && lerna run serve --parallel --scope {'polish-guitar-book, english-guitar-book'} --stream",
+    "publish": "yarn lerna publish -y prerelease --dist-tag=\"beta\" --force-publish",
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint -- --fix",
+    "sort-package-json": "lerna exec npx sort-package-json"
   },
   "workspaces": [
-    "apps/polish",
+    "apps/*",
     "gatsby-theme-guitar-book"
-  ]
+  ],
+  "devDependencies": {
+    "lerna": "^3.22.1",
+    "pre-commit": "^1.2.2"
+  }
 }

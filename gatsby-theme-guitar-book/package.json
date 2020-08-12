@@ -1,15 +1,7 @@
 {
   "name": "gatsby-theme-guitar-book",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
   "description": "A Gatsby theme for building guitar book websites",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Jozwiaczek/guitar-book.git",
-    "directory": "gatsby-theme-guitar-book"
-  },
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -19,6 +11,17 @@
     "guitar",
     "singing"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/guitar-book.git",
+    "directory": "gatsby-theme-guitar-book"
+  },
+  "license": "MIT",
+  "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx --cache"
+  },
   "dependencies": {
     "@apollo/space-kit": "^7.7.0",
     "@emotion/core": "^10.0.7",
@@ -64,9 +67,6 @@
     "source-sans-pro": "^3.6.0",
     "striptags": "^3.1.1"
   },
-  "peerDependencies": {
-    "gatsby": "^2.6.0"
-  },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.6.0",
@@ -74,5 +74,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.5",
     "gatsby-plugin-eslint": "^2.0.8"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.6.0"
   }
 }
