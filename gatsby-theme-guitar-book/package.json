@@ -62,8 +62,7 @@
     "remark-typescript": "^0.3.0",
     "simple-git": "^2.7.0",
     "source-sans-pro": "^3.6.0",
-    "striptags": "^3.1.1",
-    "url-to-deep-link": "^1.0.6"
+    "striptags": "^3.1.1"
   },
   "peerDependencies": {
     "gatsby": "^2.6.0"

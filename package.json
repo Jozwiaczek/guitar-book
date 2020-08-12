@@ -1,5 +1,5 @@
 {
-  "name": "song-book",
+  "name": "guitar-book",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "build": "yarn workspace app build"
   },
   "workspaces": [
-    "app",
+    "apps/polish",
     "gatsby-theme-guitar-book"
   ]
 }
