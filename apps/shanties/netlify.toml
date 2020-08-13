@@ -6,3 +6,4 @@
     base = "apps/shanties/"
     publish = "public/"
     command = "yarn build"
+    ignore = "git diff --quiet master ."
