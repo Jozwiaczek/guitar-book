@@ -11,7 +11,7 @@
   "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
   "main": "index.js",
   "scripts": {
-    "build": "yarn clean && gatsby build",
+    "build": "yarn clean && gatsby build --prefix-paths && mkdir -p english && mv public/* english && mv english public/",
     "clean": "gatsby clean",
     "develop": "gatsby develop --host 0.0.0.0 --port 8010 --open",
     "lint": "eslint . --ext .js,.jsx --cache",

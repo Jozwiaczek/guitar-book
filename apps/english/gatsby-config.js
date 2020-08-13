@@ -1,6 +1,7 @@
 const themeOptions = require('gatsby-theme-guitar-book/theme-options');
 
 module.exports = {
+  pathPrefix: '/english',
   plugins: [
     {
       resolve: `gatsby-theme-guitar-book`,
