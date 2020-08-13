@@ -1,62 +1,53 @@
 import React from 'react';
+import styled from "@emotion/styled";
+import {getChord} from "./chords";
 
-// const Wrapper = styled.div({
-//   width: '100%',
-//   height: '100%',
-//   backgroundColor: transparentize(0.5, colors.text2),
-//   overflow: 'auto',
-//   position: 'fixed',
-//   top: 0,
-//   left: 0,
-//   zIndex: 3,
-//   perspective: '1000px',
-//   transitionProperty: 'opacity, visibility',
-//   transitionDuration: '150ms',
-//   transitionTimingFunction: 'ease-in-out'
-// });
-//
-// const transitionDuration = 150; // in ms
-// const Menu = styled.div({
-//   width: 700,
-//   marginBottom: 24,
-//   borderRadius: 4,
-//   boxShadow,
-//   backgroundColor: 'white',
-//   overflow: 'hidden',
-//   position: 'absolute',
-//   transformOrigin: '25% 25%',
-//   transition: `transform ${transitionDuration}ms ease-in-out`,
-//   outline: 'none',
-//   [breakpoints.md]: {
-//     width: 450
-//   },
-//   [breakpoints.sm]: {
-//     width: 'calc(100vw - 48px)'
-//   }
-// });
-//
-// const MenuTitle = styled.h6(smallCaps, {
-//   margin: 24,
-//   marginBottom: 0,
-//   fontSize: 13,
-//   fontWeight: 600,
-//   color: colors.text3
-// });
+const TooltipBody = styled.span`
+  display: none;
+  position: absolute;
+  left: -8px;
+  bottom: -13px;
+  transform: translateY(100%);
+  width: 284px;
+  padding: 19px 16px 12px;
+  background: rgb(237, 238, 255);
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 18px;
+  color: rgb(109, 113, 203);
+  z-index: 10;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 9px;
+    width: 0;
+    height: 0;
+    transform: translateY(-100%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgb(237, 238, 255);
+  }
+`;
+
+const TooltipWrapper = styled.span`
+  position: relative;
+
+  &:hover ${TooltipBody} {
+    display: block;
+  }
+`;
 
 const ChordPreview = ({ children }) => {
-  const [isHover, setHover] = React.useState(false);
-  const handleMouseHover = () => {
-    setHover(prev => !prev);
-  };
 
   return (
-    <span
-      onMouseEnter={handleMouseHover}
-      onMouseLeave={handleMouseHover}
-    >
-      {children}
-      {isHover && <p>Test</p>}
-    </span>
+    <TooltipWrapper>
+      <b>{children}</b>
+      <TooltipBody>
+        {getChord(children)}
+      </TooltipBody>
+    </TooltipWrapper>
   );
 };
 
