@@ -11,7 +11,21 @@ module.exports = {
         baseDir: 'apps/polish',
         subtitle: 'Shanties Songs',
         sidebarCategories: {
-          null: ['index', 'ballada-o-botany-bay']
+          null: [
+            'index',
+            'ballada-o-botany-bay',
+            'szanta-panien-i-mezatek',
+            'sztorm',
+            'historia-zlego-sternika',
+            'cztery-piwka',
+            'la-valette'
+          ],
+          'Fuck it ‍😈': [
+            'fuck-it/ballada-o-cyckach',
+            'fuck-it/piosenka-o-komarze',
+            'fuck-it/chryzantemy',
+            'fuck-it/hera-koka-hasz',
+          ],
         },
       }
     },
