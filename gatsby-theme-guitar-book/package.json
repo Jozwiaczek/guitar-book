@@ -65,7 +65,8 @@
     "remark-typescript": "^0.3.0",
     "simple-git": "^2.7.0",
     "source-sans-pro": "^3.6.0",
-    "striptags": "^3.1.1"
+    "striptags": "^3.1.1",
+    "@tombatossals/react-chords": "^0.2.10"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
