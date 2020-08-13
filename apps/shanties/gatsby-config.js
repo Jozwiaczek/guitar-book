@@ -7,10 +7,10 @@ module.exports = {
       options: {
         ...themeOptions,
         root: __dirname,
-        baseDir: 'apps/english',
-        subtitle: 'English Songs',
+        baseDir: 'apps/polish',
+        subtitle: 'Shanties Songs',
         sidebarCategories: {
-          null: ['index', 'seaside']
+          null: ['index', 'ballada-o-botany-bay']
         },
       }
     },

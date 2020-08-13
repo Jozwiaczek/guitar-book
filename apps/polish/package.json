@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Jozwiaczek/guitar.git",
-    "directory": "guitar-book"
+    "directory": "apps/polish"
   },
   "license": "MIT",
   "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",

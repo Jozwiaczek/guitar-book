@@ -22,6 +22,8 @@ const footerNavConfig = {};
 module.exports = {
   siteName: 'Guitar Book',
   pageTitle: 'Guitar Book',
+  description: 'Track and play best guitar songs for camping',
+  githubRepo: 'jozwiaczek/guitar-book',
   menuTitle: 'Songs Types',
   gaTrackingId: 'UA-122299419-2',
   algoliaApiKey: '768e823959d35bbd51e4b2439be13fb7',
@@ -29,6 +31,8 @@ module.exports = {
   baseUrl: 'https://guitar-book.netlify.app/',
   logoLink: 'https://guitar-book.netlify.app//',
   contentDir: 'content',
+  twitterHandle: 'jozwiaczek',
+  youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
   navConfig,
   footerNavConfig
 };

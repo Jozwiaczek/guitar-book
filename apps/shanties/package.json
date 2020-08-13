@@ -1,11 +1,11 @@
 {
-  "name": "english-guitar-book",
+  "name": "shanties-guitar-book",
   "version": "1.0.0",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/Jozwiaczek/guitar.git",
-    "directory": "apps/english"
+    "directory": "apps/shanties"
   },
   "license": "MIT",
   "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
@@ -13,9 +13,9 @@
   "scripts": {
     "build": "yarn clean && gatsby build",
     "clean": "gatsby clean",
-    "develop": "gatsby develop --host 0.0.0.0 --port 8010 --open",
+    "develop": "gatsby develop --host 0.0.0.0 --port 8020 --open",
     "lint": "eslint . --ext .js,.jsx --cache",
-    "serve": "gatsby serve --host 0.0.0.0 --port 8011 --open"
+    "serve": "yarn build && gatsby serve --host 0.0.0.0 --port 8021 --open"
   },
   "dependencies": {
     "gatsby": "^2.24.26",

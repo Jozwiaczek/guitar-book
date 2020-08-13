@@ -1,0 +1,8 @@
+#
+# https://docs.netlify.com/configure-builds/file-based-configuration
+#
+
+[build]
+    base = "apps/shanties/"
+    publish = "public/"
+    command = "yarn build"

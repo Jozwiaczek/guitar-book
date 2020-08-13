@@ -35,7 +35,6 @@ export const Verse = ({ text }) => {
 
         return <p style={{ marginBottom: 0 }} key={index} dangerouslySetInnerHTML={createMarkup(line)}/>;
       })}
-      <br/>
     </div>
   );
 };
