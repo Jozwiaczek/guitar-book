@@ -6,12 +6,12 @@ const navConfig = {
     omitLandingPage: true
   },
   'English Songs': {
-    url: 'https://guitar-book.netlify.app/',
+    url: 'https://guitar-book.netlify.app/english',
     description:
       'Navigate to guitar book with english songs'
   },
   'Shanties Songs': {
-    url: 'https://guitar-book.netlify.app/',
+    url: 'https://guitar-book.netlify.app/shanties',
     description:
       "Navigate to guitar book with shanties"
   }

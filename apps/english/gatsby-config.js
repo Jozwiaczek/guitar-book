@@ -12,7 +12,7 @@ module.exports = {
         description: 'How to use the Guitar Book platform',
         githubRepo: 'jozwiaczek/guitar-book',
         sidebarCategories: {
-          null: ['index', 'ballada-o-cyckach']
+          null: ['index', 'seaside']
         },
       }
     },
