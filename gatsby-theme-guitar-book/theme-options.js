@@ -26,8 +26,6 @@ module.exports = {
   githubRepo: 'jozwiaczek/guitar-book',
   menuTitle: 'Songs Types',
   gaTrackingId: 'UA-122299419-2',
-  algoliaApiKey: 'a10d7649a50afcb19084ecd607251a23',
-  algoliaIndexName: 'guitarBookData',
   baseUrl: 'https://guitar-book.netlify.app/',
   logoLink: 'https://guitar-book.netlify.app//',
   contentDir: 'content',
