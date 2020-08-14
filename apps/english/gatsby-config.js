@@ -26,6 +26,17 @@ module.exports = {
             'iris',
             'waiting-for-the-world-to-change',
             'we-dont-belive-whats-on-tv',
+            'blame-it-on-me',
+            'listening-to-the-men',
+            'love-yourself',
+            'all-i-want',
+            'when-i-was-your-men',
+            'hallelujah',
+            'hallelujah-2',
+            'dance-with-me',
+            'pompeii',
+            'dirty-paws',
+            'mountain-sound',
           ]
         },
       }
