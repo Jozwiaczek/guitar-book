@@ -27,19 +27,25 @@ const getChordPositions = (key, suffix = "major") => {
 export const getChord = (chordText) => {
   let chordPos;
 
-  chordText = chordText.replace("H","B").replace("h","b");
+  chordText = chordText.replace("H", "B").replace("h", "b");
 
-  if(chordText.length === 1) {
+  if (chordText.length === 1) {
     chordPos = (chordText === chordText.toUpperCase()) ?
       getChordPositions(chordText) : getChordPositions(chordText.toUpperCase(), "minor");
-  } else if(chordText.endsWith("#") || chordText.endsWith("is")){
+  } else if (chordText.endsWith("#") || chordText.endsWith("is")) {
     chordPos = getChordPositions(chordText.charAt(0).toUpperCase() + "sharp");
-  } else if(chordText.endsWith("m")){
+  } else if (chordText.endsWith("m") || chordText.endsWith("b")) {
     chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "minor");
-  } else if(chordText.endsWith("add9")){
+  } else if (chordText.endsWith("add9")) {
     chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "add9");
+  } else if (chordText.toLowerCase().endsWith("m7")) {
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "m7");
+  } else if (chordText.toLowerCase().endsWith("maj7")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "maj7");
   } else if(chordText.endsWith("7")){
     chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "7");
+  } else if(chordText.toLowerCase().endsWith("sus") || chordText.toLowerCase().endsWith("sus4") || chordText.endsWith("4")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "sus4");
   }
 
 

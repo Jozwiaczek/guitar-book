@@ -4,7 +4,7 @@ import ChordPreview from "../chordPreview";
 export const Verse = ({ text }) => {
   const tmp = text.replace(/ /g, '&ensp;').split(/\n/);
   const createMarkup = (text) => ({__html: text});
-  const chordRegEx = /^[A-Ha-h][m#7]?(add9)?$/;
+  const chordRegEx = /^[A-Ha-h][mb#74]?(add9)?(m7)?(maj7)?(sus)?(sus4)?$/;
 
   return (
     <div>
@@ -13,11 +13,11 @@ export const Verse = ({ text }) => {
           return <br key={index} />;
         }
 
-        let words = line.split("&ensp;").filter(w => !!w && !w.match(chordRegEx)).length;
+        let words = line.split(/&ensp;|\//).filter(w => !!w && !w.match(chordRegEx)).length;
         if(!words){
           if (index ===0 || index === tmp.length -1) return null;
 
-          line = line.split("&ensp;").map(c => {
+          line = line.split(/&ensp;|\//).map(c => {
             if (c.match(chordRegEx)) {
               return c;
             }
