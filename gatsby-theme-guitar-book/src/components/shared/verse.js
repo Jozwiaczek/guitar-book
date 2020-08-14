@@ -4,7 +4,7 @@ import ChordPreview from "../chordPreview";
 export const Verse = ({ text }) => {
   const tmp = text.replace(/ /g, '&ensp;').split(/\n/);
   const createMarkup = (text) => ({__html: text});
-  const chordRegEx = /^[A-Ha-h][mb#74]?(add9)?(m7)?(maj7)?(sus)?(sus4)?$/;
+  const chordRegEx = /^[A-Ha-h][mb#74]?(add9)?(m7)?(maj7)?(sus)?(sus4)?(is)?$/;
 
   return (
     <div>
