@@ -2,8 +2,9 @@ import React from 'react';
 import ChordPreview from "../chordPreview";
 
 export const Verse = ({ text }) => {
-  const tmp = text.replace(/ /g, '&nbsp;').split(/\n/);
+  const tmp = text.replace(/ /g, '&ensp;').split(/\n/);
   const createMarkup = (text) => ({__html: text});
+  const chordRegEx = /^[A-Ha-h][m#7]?(add9)?$/;
 
   return (
     <div>
@@ -12,12 +13,12 @@ export const Verse = ({ text }) => {
           return <br key={index} />;
         }
 
-        let words = line.split("&nbsp;").filter(w => !!w && !w.match(/^[A-Ha-h]m?$/)).length;
+        let words = line.split("&ensp;").filter(w => !!w && !w.match(chordRegEx)).length;
         if(!words){
           if (index ===0 || index === tmp.length -1) return null;
 
-          line = line.split("&nbsp;").map(c => {
-            if (c.match(/^[A-Ha-h]m?$/)) {
+          line = line.split("&ensp;").map(c => {
+            if (c.match(chordRegEx)) {
               return c;
             }
             return '';

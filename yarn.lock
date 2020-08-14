@@ -2536,6 +2536,11 @@
   dependencies:
     tippy.js "^6.2.0"
 
+"@tombatossals/chords-db@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@tombatossals/chords-db/-/chords-db-0.5.1.tgz#bd112b4cefb751933433ad1f7fe143e7fdf56ef8"
+  integrity sha512-5kLLtwOxmnFfpVTYfYiw1Q22NJ8msb5JeyDLre09XnUFx2l6KSeqPtJQPsVPOak4BUenlsv/j2H65KBVhB6qgQ==
+
 "@tombatossals/react-chords@^0.2.10":
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/@tombatossals/react-chords/-/react-chords-0.2.10.tgz#9af3696b065f0e3705f70d7b356970ee9b7fbcbe"

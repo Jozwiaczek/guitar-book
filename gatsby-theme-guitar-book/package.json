@@ -23,6 +23,7 @@
     "lint": "eslint . --ext .js,.jsx --cache"
   },
   "dependencies": {
+    "@tombatossals/chords-db": "^0.5.1",
     "@apollo/space-kit": "^7.7.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",

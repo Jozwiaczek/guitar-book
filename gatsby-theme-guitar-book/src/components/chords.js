@@ -1,48 +1,74 @@
 import React from 'react';
 import Chord from '@tombatossals/react-chords/lib/Chord';
+import db from '@tombatossals/chords-db/src/db';
+
+const { guitar } = db;
 
 const instrument = {
-  strings: 6,
-  fretsOnChord: 4,
-  name: 'Guitar',
-  keys: [],
+  ...guitar.main,
   tunings: {
     standard: ['6', '5', '4', '3', '2', '1']
   }
 };
 const lite = false;
 
-const G = {
-  frets: [3, 2, 0, 0, 3, 3],
-  fingers: [2, 1, 0, 0, 3, 4]
+const getChordPositions = (key, suffix = "major") => {
+  const chardKey = guitar.chords[key];
+  if(!chardKey)
+    return null;
+
+  let chord = chardKey.find(c => c.suffix === suffix);
+  if(!chord)
+    return null;
+
+  return chord.positions;
 };
 
-const C = {
-  frets: [0, 3, 2, 0, 1, 0],
-  fingers: [0, 3, 2, 0, 1, 0]
-};
+export const getChord = (chordText) => {
+  let chordPos;
 
-export const getChord = (chord) => {
-  switch (chord) {
-    case 'G':
-      return (
-        <Chord
-          chord={G}
-          instrument={instrument}
-          lite={lite}
-        />
-      );
-    case 'C':
-      return (
-        <Chord
-          chord={C}
-          instrument={instrument}
-          lite={lite}
-        />
-      );
-    default:
-      return <p>There isnt chord in schema</p>;
+  chordText = chordText.replace("H","B").replace("h","b");
+
+  if(chordText.length === 1) {
+    chordPos = (chordText === chordText.toUpperCase()) ?
+      getChordPositions(chordText) : getChordPositions(chordText.toUpperCase(), "minor");
+  } else if(chordText.endsWith("#") || chordText.endsWith("is")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase() + "sharp");
+  } else if(chordText.endsWith("m")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "minor");
+  } else if(chordText.endsWith("add9")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "add9");
+  } else if(chordText.endsWith("7")){
+    chordPos = getChordPositions(chordText.charAt(0).toUpperCase(), "7");
   }
+
+
+
+  if(chordPos) {
+    chordPos = chordPos.slice(0, 1);
+    return (
+      chordPos.map((c, key)=> {
+        let { frets, fingers } = c;
+        let chord = {
+          frets: frets.split("").map(c => {
+            let r = parseInt(c);
+            return (isNaN(r)) ? 0 : r;
+          }),
+          fingers: fingers.split("").map(c => parseInt(c)),
+          barres: (c.barres)? [c.barres] : undefined,
+          capo: (c.capo) ? c.capo : false
+        };
+        return( <Chord
+          key={key}
+          chord={chord}
+          instrument={instrument}
+          lite={lite}
+        />);
+      })
+
+    );
+  }
+  return <p>There isn&apos;t chord in schema</p>;
 };
 
 // EXAMPLE
