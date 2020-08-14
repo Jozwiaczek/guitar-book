@@ -11,7 +11,22 @@ module.exports = {
         baseDir: 'apps/english',
         subtitle: 'English Songs',
         sidebarCategories: {
-          null: ['index', 'seaside']
+          null: [
+            'index',
+            'seaside',
+            'dont-you-worry-child',
+            'cringe',
+            'riptade',
+            'wake-me-up',
+            'i-see-fire',
+            'little-talks',
+            '9-crimes',
+            'our-last-summer',
+            'sweater-weather',
+            'iris',
+            'waiting-for-the-world-to-change',
+            'we-dont-belive-whats-on-tv',
+          ]
         },
       }
     },
