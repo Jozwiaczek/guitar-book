@@ -42,7 +42,12 @@ module.exports = {
             'we-might-be-dead-by-tomorrow',
             'when-i-was-your-men',
             'youve-got-a-friend-in-me',
-          ]
+          ],
+          'Other Guitar Books': [
+            '[Polish 🇵🇱](https://guitar-book.netlify.app)',
+            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
+            'test'
+          ],
         },
       }
     },

@@ -62,6 +62,11 @@ module.exports = {
             'myslovitz/dla-ciebie',
             'myslovitz/dlugosc-dzwieku-samotnosci',
           ],
+          'Other Guitar Books': [
+            '[English 🇺🇸](https://guitar-book.netlify.app/english)',
+            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
+            'test'
+          ],
         },
       }
     },

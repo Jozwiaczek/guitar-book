@@ -51,6 +51,11 @@ module.exports = {
             'fuck-it/morskie-opowiesci',
             'fuck-it/piosenka-o-komarze',
           ],
+          'Other Guitar Books': [
+            '[Polish 🇵🇱](https://guitar-book.netlify.app)',
+            '[English 🇺🇸](https://guitar-book.netlify.app/english)',
+            'test'
+          ],
         },
       }
     },

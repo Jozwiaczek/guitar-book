@@ -1,16 +1,15 @@
 const navConfig = {
-  'Polish Songs': {
+  'Polish Songs 🇵🇱': {
     url: 'https://guitar-book.netlify.app/',
     description:
-      'Navigate to guitar book with polish songs',
-    omitLandingPage: true
+      'Navigate to guitar book with polish songs'
   },
-  'English Songs': {
+  'English Songs 🇺🇸': {
     url: 'https://guitar-book.netlify.app/english',
     description:
       'Navigate to guitar book with english songs'
   },
-  'Shanties Songs': {
+  'Shanties Songs 🏴‍': {
     url: 'https://guitar-book.netlify.app/shanties',
     description:
       "Navigate to guitar book with shanties"
