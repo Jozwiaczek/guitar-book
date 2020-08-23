@@ -196,8 +196,6 @@ export default function Search(props) {
     setFocused(false);
   }
 
-  const noResults = false;
-
   const resultsShown = focused && value.trim();
   return (
     <>
@@ -225,20 +223,16 @@ export default function Search(props) {
         {!focused && !value && <Hotkey>/</Hotkey>}
         {resultsShown &&
           <SuggestionBox>
-            {noResults ?
-              <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>:
+            {result ?
               <>
-                <Suggestion>
-                  <Title>Wehikuł Czasu</Title>
-                  <Author>Dżem</Author>
-                  <Lyrics>Pamitam dobrze ideał swój, ...</Lyrics>
-                </Suggestion>
-                <Suggestion>
-                  <Title>Wehikuł Czasu</Title>
-                  <Author>Dżem</Author>
-                  <Lyrics>Pamitam dobrze ideał swój, ...</Lyrics>
-                </Suggestion>
-              </>
+                {result.map((res,index) =>
+                  <Suggestion key={index} >
+                    <Title>{res.frontmatter.title}</Title>
+                    <Author>{res.frontmatter.description}</Author>
+                    <Lyrics>{res.lyrics}</Lyrics>
+                  </Suggestion>)}
+              </>:
+              <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>
             }
           </SuggestionBox>
         }
