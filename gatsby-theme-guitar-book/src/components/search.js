@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
-import {graphql, useStaticQuery} from 'gatsby';
+import {graphql, useStaticQuery, navigate} from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
 import {HEADER_HEIGHT} from '../utils';
@@ -45,6 +45,7 @@ const Container = styled.div({
 
 const SuggestionBox = styled.div({
   width: '100%',
+  overflowY: 'auto',
   maxWidth: '100%',
   minWidth: 'auto',
   marginTop: 14,
@@ -159,20 +160,6 @@ export default function Search(props) {
           return 0;
         }).slice(0, resultLimit);
   };
-  // SORTING
-  // 1. title
-  // 2. author
-  // 3. lyrics
-
-  // FILTER
-  // first 10 records per search
-
-  console.log('L:171 | slug: ', nodes);
-  console.log('L:173 | value: ', value);
-  console.log('L:196 | result: ', result);
-
-  // TODO: perPage: 10 records
-  // TODO: change desc into author
 
   // focus the input when the slash key is pressed
   useKey(
@@ -223,13 +210,18 @@ export default function Search(props) {
         {!focused && !value && <Hotkey>/</Hotkey>}
         {resultsShown &&
           <SuggestionBox>
-            {result ?
+            {result.length ?
               <>
                 {result.map((res,index) =>
-                  <Suggestion key={index} >
+                  <Suggestion
+                    key={index}
+                    onClick={ () => {
+                      navigate(`/${res.slug}/`);
+                    }}
+                  >
                     <Title>{res.frontmatter.title}</Title>
                     <Author>{res.frontmatter.description}</Author>
-                    <Lyrics>{res.lyrics}</Lyrics>
+                    <Lyrics>{res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}</Lyrics>
                   </Suggestion>)}
               </>:
               <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>
