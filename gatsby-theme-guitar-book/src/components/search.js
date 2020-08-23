@@ -113,6 +113,7 @@ export default function Search(props) {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
+  const [mouseOver, setMouseOver] = useState(false);
   const resultLimit = 10;
   const inputRef = useRef(null);
 
@@ -155,9 +156,17 @@ export default function Search(props) {
     }).filter(({filter: {title, author, lyrics}}) => title !== -1 || author !== -1 || lyrics !== -1)
         .sort(({filter: {title: titleA, author: authorA, lyrics: lyricsA}}, {filter: {title: titleB, author: authorB, lyrics: lyricsB}}) => {
           if(titleA !== -1 && titleB !== -1) return titleA - titleB;
+          else if(titleA !== -1) return -1;
+          else if(titleB !== -1) return 1;
+
           if(authorA !== -1 && authorB !== -1) return authorA - authorB;
+          else if(authorA !== -1) return -1;
+          else if(authorB !== -1) return 1;
+
           if(lyricsA !== -1 && lyricsB !== -1) return lyricsA - lyricsB;
-          return 0;
+          else if(lyricsA !== -1) return -1;
+          else if(lyricsB !== -1) return 1;
+          return 1;
         }).slice(0, resultLimit);
   };
 
@@ -183,7 +192,7 @@ export default function Search(props) {
     setFocused(false);
   }
 
-  const resultsShown = focused && value.trim();
+  const resultsShown = (focused && value.trim()) || mouseOver;
   return (
     <>
       <Overlay visible={resultsShown} />
@@ -215,8 +224,11 @@ export default function Search(props) {
                 {result.map((res,index) =>
                   <Suggestion
                     key={index}
+                    onMouseEnter={() => setMouseOver(true)}
+                    onMouseLeave={() => setMouseOver(false)}
                     onClick={ () => {
-                      navigate(`/${res.slug}/`);
+                        navigate(`/${res.slug}/`);
+                        setMouseOver(false)
                     }}
                   >
                     <Title>{res.frontmatter.title}</Title>
