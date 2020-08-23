@@ -6,7 +6,6 @@ import useKey from 'react-use/lib/useKey';
 import {HEADER_HEIGHT} from '../utils';
 import {TextField} from '@apollo/space-kit/TextField';
 import {colors} from '../utils/colors';
-import {smallCaps} from '../utils/typography';
 import breakpoints from '../utils/breakpoints';
 import {css} from '@emotion/core';
 import {position, size, transparentize} from 'polished';
@@ -32,6 +31,7 @@ const Hotkey = styled.div(verticalAlign, size(24), {
 
 const boxShadowColor = transparentize(0.9, 'black');
 export const boxShadow = `${boxShadowColor} 0 2px 12px`;
+
 const Container = styled.div({
   flexGrow: 1,
   marginRight: 40,
@@ -40,90 +40,56 @@ const Container = styled.div({
   zIndex: 1,
   [breakpoints.md]: {
     marginRight: 0
-  },
-  '.algolia-autocomplete': {
-    width: '100%',
-    '.ds-dropdown-menu': {
-      width: '100%',
-      maxWidth: '100%',
-      minWidth: 'auto',
-      marginTop: 14,
-      borderRadius,
-      boxShadow,
-      '&::before': {
-        display: 'none'
-      },
-      '[class^=ds-dataset-]': {
-        maxHeight: `calc(100vh - ${HEADER_HEIGHT}px - 32px)`,
-        padding: 0,
-        border,
-        borderRadius: 'inherit'
-      },
-      '.ds-suggestions': {
-        marginTop: 0
-      },
-      '.ds-suggestion': {
-        padding: '20px 32px',
-        borderBottom: `1px solid ${colors.divider}`,
-        '&.ds-cursor': {
-          backgroundColor: transparentize(0.5, colors.divider)
-        }
-      }
-    },
-    '.algolia-docsearch-suggestion': {
-      padding: 0,
-      color: 'inherit',
-      background: 'none',
-      textDecoration: 'none',
-      [['&--wrapper', '&--subcategory-column', '&--content']]: {
-        width: 'auto',
-        float: 'none'
-      },
-      '&--wrapper': {
-        paddingTop: 0
-      },
-      '&--category-header': {
-        marginTop: 0,
-        marginBottom: 4,
-        borderBottom: 0,
-        fontSize: 14,
-        color: 'inherit',
-        ...smallCaps
-      },
-      [['&--subcategory-column', '&--content']]: {
-        padding: 0,
-        '&::before': {
-          display: 'none'
-        }
-      },
-      '&--subcategory-column': {
-        marginBottom: 4,
-        fontSize: 22,
-        color: colors.text1,
-        textAlign: 'initial'
-      },
-      '&--content': {
-        background: 'none !important'
-      },
-      '&--title': {
-        marginBottom: 0,
-        fontSize: 18,
-        fontWeight: 'normal',
-        color: 'inherit'
-      },
-      '&--highlight': {
-        boxShadow: 'none !important',
-        color: `${colors.primary} !important`,
-        background: 'none !important'
-      },
-      '&--no-results': {
-        padding: 32
-      }
-    },
-    '.algolia-docsearch-footer': {
-      margin: 12
-    }
   }
+});
+
+const SuggestionBox = styled.div({
+  width: '100%',
+  maxWidth: '100%',
+  minWidth: 'auto',
+  marginTop: 14,
+  position: 'absolute',
+  background: 'white',
+  borderRadius,
+  boxShadow,
+  maxHeight: `calc(100vh - ${HEADER_HEIGHT}px - 32px)`,
+  padding: 0,
+  border
+});
+
+const Suggestion = styled.div({
+  color: 'inherit',
+  background: 'none',
+  textDecoration: 'none',
+  padding: '20px 32px',
+  borderBottom: `1px solid ${colors.divider}`,
+
+  ':hover': {
+    backgroundColor: transparentize(0.5, colors.divider),
+    cursor: 'pointer'
+  }
+});
+
+const Title = styled.div({
+  marginBottom: 4,
+  fontSize: 22,
+  color: colors.text1,
+  textAlign: 'initial'
+});
+
+const Author = styled.div({
+  marginBottom: 0,
+  fontSize: 18,
+  fontWeight: 'normal',
+  color: 'inherit'
+});
+
+const Lyrics = styled.div({});
+
+const NoResultsInfo = styled.p({
+  padding: 32,
+  marginBottom: 0,
+  textAlign: 'center'
 });
 
 const Overlay = styled.div(
@@ -202,6 +168,8 @@ export default function Search(props) {
     setFocused(false);
   }
 
+  const noResults = false;
+
   const resultsShown = focused && value.trim();
   return (
     <>
@@ -227,9 +195,25 @@ export default function Search(props) {
           placeholder={`Search ${props.siteName}`}
         />
         {!focused && !value && <Hotkey>/</Hotkey>}
-        {/*<ul>*/}
-        {/*  <li>Test</li>*/}
-        {/*</ul>*/}
+        {resultsShown &&
+          <SuggestionBox>
+            {noResults ?
+              <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>:
+              <>
+                <Suggestion>
+                  <Title>Wehikuł Czasu</Title>
+                  <Author>Dżem</Author>
+                  <Lyrics>Pamitam dobrze ideał swój, ...</Lyrics>
+                </Suggestion>
+                <Suggestion>
+                  <Title>Wehikuł Czasu</Title>
+                  <Author>Dżem</Author>
+                  <Lyrics>Pamitam dobrze ideał swój, ...</Lyrics>
+                </Suggestion>
+              </>
+            }
+          </SuggestionBox>
+        }
       </Container>
     </>
   );
