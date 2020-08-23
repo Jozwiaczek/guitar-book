@@ -111,6 +111,8 @@ const Overlay = styled.div(
 export default function Search(props) {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState('');
+  const [result, setResult] = useState([]);
+  const resultLimit = 10;
   const inputRef = useRef(null);
 
   const data = useStaticQuery(graphql`
@@ -132,8 +134,31 @@ export default function Search(props) {
     }
   `);
 
-  const nodes = data.allFile.edges;
+  const nodes = data.allFile.edges
+      .map(n => n.node.childMdx)
+      .filter(n => n && !!n.slug);
 
+  const search = (searchText) => {
+    searchText = searchText.trim();
+    if (!searchText) return [];
+    let searchRegExp = new RegExp(searchText, "i");
+    return nodes.map(n => {
+      n.lyrics = n.rawBody.substring(n.rawBody.indexOf('<Verse text={`') + 14, n.rawBody.lastIndexOf('`}/>'));
+      n.filter = {
+        title: n.frontmatter.title.search(searchRegExp),
+        author: n.frontmatter.description.search(searchRegExp),
+        lyrics: n.lyrics.search(searchRegExp)
+      };
+
+      return n;
+    }).filter(({filter: {title, author, lyrics}}) => title !== -1 || author !== -1 || lyrics !== -1)
+        .sort(({filter: {title: titleA, author: authorA, lyrics: lyricsA}}, {filter: {title: titleB, author: authorB, lyrics: lyricsB}}) => {
+          if(titleA !== -1 && titleB !== -1) return titleA - titleB;
+          if(authorA !== -1 && authorB !== -1) return authorA - authorB;
+          if(lyricsA !== -1 && lyricsB !== -1) return lyricsA - lyricsB;
+          return 0;
+        }).slice(0, resultLimit);
+  };
   // SORTING
   // 1. title
   // 2. author
@@ -144,6 +169,8 @@ export default function Search(props) {
 
   console.log('L:171 | slug: ', nodes);
   console.log('L:173 | value: ', value);
+  console.log('L:196 | result: ', result);
+
   // TODO: perPage: 10 records
   // TODO: change desc into author
 
@@ -159,6 +186,7 @@ export default function Search(props) {
 
   function onChange(event) {
     setValue(event.target.value);
+    setResult(search(event.target.value));
   }
 
   function onFocus() {
