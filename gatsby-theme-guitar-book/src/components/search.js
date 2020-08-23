@@ -1,6 +1,6 @@
-/* global docsearch */
 import PropTypes from 'prop-types';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
+import {graphql, useStaticQuery} from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
 import {HEADER_HEIGHT} from '../utils';
@@ -147,19 +147,39 @@ export default function Search(props) {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (typeof docsearch !== 'undefined') {
-      docsearch({
-        apiKey: props.apiKey,
-        indexName: props.indexName,
-        inputSelector: '#input',
-        // debug: true, // keeps the results list open
-        algoliaOptions: {
-          hitsPerPage: 10
+  const data = useStaticQuery(graphql`
+    query {
+      allFile {
+        edges {
+          node {
+            childMdx {
+              frontmatter {
+                title
+                description
+              }
+              slug
+              rawBody
+            }
+          }
         }
-      });
+      }
     }
-  }, [props.apiKey, props.indexName]);
+  `);
+
+  const nodes = data.allFile.edges;
+
+  // SORTING
+  // 1. title
+  // 2. author
+  // 3. lyrics
+
+  // FILTER
+  // first 10 records per search
+
+  console.log('L:171 | slug: ', nodes);
+  console.log('L:173 | value: ', value);
+  // TODO: perPage: 10 records
+  // TODO: change desc into author
 
   // focus the input when the slash key is pressed
   useKey(
@@ -184,7 +204,7 @@ export default function Search(props) {
 
   const resultsShown = focused && value.trim();
   return (
-    <Fragment>
+    <>
       <Overlay visible={resultsShown} />
       <Container>
         <TextField
@@ -207,13 +227,14 @@ export default function Search(props) {
           placeholder={`Search ${props.siteName}`}
         />
         {!focused && !value && <Hotkey>/</Hotkey>}
+        {/*<ul>*/}
+        {/*  <li>Test</li>*/}
+        {/*</ul>*/}
       </Container>
-    </Fragment>
+    </>
   );
 }
 
 Search.propTypes = {
   siteName: PropTypes.string.isRequired,
-  apiKey: PropTypes.string.isRequired,
-  indexName: PropTypes.string.isRequired
 };

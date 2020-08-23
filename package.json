@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "0BSD",
   "pre-commit": [
-    "lint"
+    "lint:fix"
   ],
   "scripts": {
     "clean": "lerna bootstrap && lerna run clean",

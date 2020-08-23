@@ -155,8 +155,6 @@ export default function PageLayout(props) {
     navConfig = {},
     footerNavConfig,
     logoLink,
-    algoliaApiKey,
-    algoliaIndexName,
     menuTitle
   } = props.pluginOptions;
 
@@ -263,13 +261,7 @@ export default function PageLayout(props) {
               <MenuButton onClick={openSidebar} />
               <MobileLogo width={32} fill="currentColor" />
             </MobileNav>
-            {algoliaApiKey && algoliaIndexName && (
-              <Search
-                siteName={siteName}
-                apiKey={algoliaApiKey}
-                indexName={algoliaIndexName}
-              />
-            )}
+            <Search siteName={siteName} />
             <HeaderButton />
           </Header>
           <SelectedLanguageContext.Provider value={selectedLanguageState}>
