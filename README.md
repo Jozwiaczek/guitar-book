@@ -1,22 +1,14 @@
-<p align="center">
+<div align="center">
   <a href="https://guitar-book.netlify.app">
     <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="250" />
   </a>
-</p>
-
-## Published Demo Guitar Books
-
-| Module   | Status | Public URL | Netlify |
-| -------- | --- | --- | --- |
-| Polish Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys) | https://guitar-book.netlify.app/ | https://app.netlify.com/sites/guitar-book/overview |
-| English Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys) | https://guitar-book.netlify.app/english | https://app.netlify.com/sites/guitar-book-english/overview |
-| Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties | https://app.netlify.com/sites/guitar-book-shanties/overview |
-
-# gatsby-theme-guitar-book
+  <h1 align="center">Gatsby Theme Guitar Book</h1>
+</div>
 
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files. 
 It also exports a series of [components](#components) that can be used within MDX pages.
 
+- [Published Demo Guitar Books](#published-demo-guitar-books)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Options](#options)
@@ -31,6 +23,14 @@ It also exports a series of [components](#components) that can be used within MD
 - [Migration](#migration)
 - [Examples](#examples)
 - [License](#license)
+
+## Published Demo Guitar Books
+
+| Module   | Status | Public URL | Netlify |
+| -------- | --- | --- | --- |
+| Polish Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys) | https://guitar-book.netlify.app/ | https://app.netlify.com/sites/guitar-book/overview |
+| English Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys) | https://guitar-book.netlify.app/english | https://app.netlify.com/sites/guitar-book-english/overview |
+| Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties | https://app.netlify.com/sites/guitar-book-shanties/overview |
 
 ## Installation
 
