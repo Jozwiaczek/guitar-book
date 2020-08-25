@@ -11,7 +11,7 @@
     "clean": "lerna bootstrap && lerna run clean",
     "build:apps": "lerna bootstrap && lerna run build --scope {'polish-guitar-book, english-guitar-book'} --stream",
     "serve:apps": "lerna bootstrap && lerna run serve --parallel --scope {'polish-guitar-book, english-guitar-book'} --stream",
-    "publish": "yarn lerna publish -y prerelease --dist-tag=\"beta\" --force-publish",
+    "publish": "yarn lerna publish -y prerelease --force-publish",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint -- --fix",
     "sort-package-json": "lerna exec npx sort-package-json"
