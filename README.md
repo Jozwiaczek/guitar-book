@@ -20,9 +20,8 @@ It also exports a series of [components](#components) that can be used within MD
   - [`Verse`](#verse)
   - [`ExpansionPanel`](#expansionpanel)
 - [Deployment](#deployment)
-- [Migration](#migration)
 - [Examples](#examples)
-- [License](#license)
+- [Template](#template)
 
 ## Published Demo Guitar Books
 
@@ -275,3 +274,11 @@ An expandable panel of content used to hide complex information or instructions 
 ## Deployment
 
 All apps sites will eventually be deployed into a subdirectory, as configured by the `pathPrefix` option&mdash;/shanties, for example.
+
+## Examples
+
+In `apps` directory you will find my 3 connected guitar-books (english, polish, shanties).
+
+## Template
+
+If you want to start with your own guitar check `template` directory with [tutorial how to start](apps/template/README.md).  
