@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import {IconMenu} from '@apollo/space-kit/icons/IconMenu';
 import {size} from 'polished';
 
-const padding = 20;
+const padding = 10;
 const StyledButton = styled.button({
   padding,
   marginLeft: -padding,

@@ -204,6 +204,7 @@ export default function Search(props) {
             <input
               ref={inputRef}
               id="input"
+              autoComplete="off"
               style={{
                 fontSize: 16,
                 boxShadow: resultsShown ? boxShadow : 'none'
@@ -227,8 +228,9 @@ export default function Search(props) {
                     onMouseEnter={() => setMouseOver(true)}
                     onMouseLeave={() => setMouseOver(false)}
                     onClick={ () => {
-                        navigate(`/${res.slug}/`);
-                        setMouseOver(false)
+                      navigate(`/${res.slug}/`);
+                      setMouseOver(false);
+                      setValue('');
                     }}
                   >
                     <Title>{res.frontmatter.title}</Title>

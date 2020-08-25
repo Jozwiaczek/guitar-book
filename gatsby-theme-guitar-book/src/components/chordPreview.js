@@ -1,6 +1,29 @@
+// import React from 'react';
+// import {getChord} from "./chords";
+// import {Tooltip} from "@apollo/space-kit/Tooltip";
+//
+// const ChordPreview = ({ children }) => {
+//
+//   return (
+//     <span>
+//       <Tooltip
+//         content={getChord(children)}
+//         interactive
+//       >
+//         <b>{children}</b>
+//       </Tooltip>
+//     </span>
+//   );
+// };
+//
+// export default ChordPreview;
+
 import React from 'react';
 import styled from "@emotion/styled";
 import {getChord} from "./chords";
+import {colors} from "../utils/colors";
+
+const color = colors.background;
 
 const TooltipBody = styled.span`
   display: none;
@@ -10,11 +33,10 @@ const TooltipBody = styled.span`
   transform: translateY(100%);
   width: 284px;
   padding: 19px 16px 12px;
-  background: rgb(237, 238, 255);
+  background: ${color};
   border-radius: 4px;
   font-size: 13px;
   line-height: 18px;
-  color: rgb(109, 113, 203);
   z-index: 10;
 
   &::before {
@@ -27,7 +49,7 @@ const TooltipBody = styled.span`
     transform: translateY(-100%);
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-bottom: 6px solid rgb(237, 238, 255);
+    border-bottom: 6px solid ${color};
   }
 `;
 

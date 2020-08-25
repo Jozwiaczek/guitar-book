@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import useMount from 'react-use/lib/useMount';
 import {HEADER_HEIGHT} from '../utils';
 import {IconGithub} from '@apollo/space-kit/icons/IconGithub';
-import {IconSchema} from '@apollo/space-kit/icons/IconSchema';
 import PageNav from './page-nav';
 import {colors} from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
@@ -209,11 +208,6 @@ export default function PageContent(props) {
           />
         )}
         {editLink}
-        {props.graphManagerUrl && (
-          <AsideLink href={props.graphManagerUrl}>
-            <IconSchema /> Demo Apollo Studio
-          </AsideLink>
-        )}
       </Aside>
     </Wrapper>
   );
@@ -226,6 +220,5 @@ PageContent.propTypes = {
   pages: PropTypes.array.isRequired,
   hash: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  graphManagerUrl: PropTypes.string.isRequired,
   headings: PropTypes.array.isRequired
 };

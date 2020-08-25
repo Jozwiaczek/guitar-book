@@ -12,6 +12,7 @@ import ContentWrapper from './content-wrapper';
 import PageHeader from "./page-header";
 import Footer from './footer';
 import PageContent from "./page-content";
+import {VideoBox} from "./videoBox";
 
 const CustomLinkContext = createContext();
 
@@ -149,6 +150,12 @@ export default function Template(props) {
       <ContentWrapper>
         <PageHeader {...frontmatter} />
         <hr />
+        {frontmatter.ytVideo &&
+          <>
+            <VideoBox videoUrl={frontmatter.ytVideo} />
+            <hr />
+          </>
+        }
         <PageContent
           title={frontmatter.title}
           graphManagerUrl={fields.graphManagerUrl}
@@ -213,6 +220,7 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
+          ytVideo
         }
         headings(depth: h2) {
           value

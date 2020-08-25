@@ -1,0 +1,101 @@
+import React, {useState} from 'react';
+import styled from '@emotion/styled';
+import {IconFilter} from '@apollo/space-kit/icons/IconFilter';
+import {IconHide} from '@apollo/space-kit/icons/IconHide';
+import {IconView} from '@apollo/space-kit/icons/IconView';
+import {IconOutlink} from '@apollo/space-kit/icons/IconOutlink';
+import {colors} from '@apollo/space-kit/colors';
+import {Popover} from "@apollo/space-kit/Popover";
+import {ListHeading} from "@apollo/space-kit/ListHeading";
+import {ListItem} from "@apollo/space-kit/ListItem";
+import breakpoints from "../utils/breakpoints";
+import AutoScroll from "./auto-scroll";
+
+const StyledLink = styled.a({
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer',
+  color: colors.indigo.dark,
+  lineHeight: 2,
+  textDecoration: 'none',
+  ':hover': {
+    color: colors.indigo.darker
+  }
+});
+
+const StyledIconToolbox = styled(IconFilter)({
+  height: '1.25em',
+  marginLeft: '0.7em'
+});
+
+const StyledIconOutlink = styled(IconOutlink)({
+  height: '0.75em',
+  marginLeft: '0.5em'
+});
+
+const StyledIconShow = styled(IconView)({
+  height: '1em',
+  marginLeft: '0.5em'
+});
+
+const StyledIconHide = styled(IconHide)({
+  height: '1em',
+  marginLeft: '0.5em'
+});
+
+const DesktopText = styled.span({
+  [breakpoints.md]: {
+    display: 'none'
+  }
+});
+
+export default function Toolbox({ pathname }) {
+  const [isAutoScrollShown, setAutoScrollOpen] = useState(false);
+
+  return (
+    <div>
+      <Popover
+        placement="bottom"
+        popperOptions={{ strategy: "absolute" }}
+        fallbackPlacements={["top"]}
+        iconSize="small"
+        content={
+          <>
+            <ListHeading>Toolbox</ListHeading>
+            {pathname !== '/' &&
+              <ListItem onClick={() => setAutoScrollOpen(prev => !prev)}>
+                {isAutoScrollShown ?
+                  <>
+                    Hide Auto Scroll
+                    <StyledIconHide/>
+                  </> :
+                  <>
+                    Show Auto Scroll
+                    <StyledIconShow/>
+                  </>}
+              </ListItem>
+            }
+            <ListItem>
+              <a
+                href="https://yousician.com/guitartuna"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+              Launch Guitar Tuner
+                <StyledIconOutlink weight="thin" />
+              </a>
+            </ListItem>
+          </>
+        }
+        trigger={
+          <StyledLink>
+            <DesktopText>Open Toolbox</DesktopText>
+            <StyledIconToolbox weight="thin" />
+          </StyledLink>
+        }
+      />
+      {pathname !== '/' && isAutoScrollShown && <AutoScroll/>}
+    </div>
+  );
+}

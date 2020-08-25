@@ -2,7 +2,6 @@ import '../prism.less';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import DocsetSwitcher from './docset-switcher';
 import Header from './header';
-import HeaderButton from './header-button';
 import PropTypes from 'prop-types';
 import React, {createContext, useMemo, useRef, useState} from 'react';
 import Search from './search';
@@ -14,7 +13,6 @@ import breakpoints from '../utils/breakpoints';
 import {Helmet} from 'react-helmet';
 import {IconLayoutModule} from '@apollo/space-kit/icons/IconLayoutModule';
 import {graphql, Link, navigate, useStaticQuery} from 'gatsby';
-import {MobileLogo} from './mobile-logo';
 import {Select} from './select';
 import {SelectedLanguageContext} from './multi-code-block';
 import {getVersionBasePath} from '../utils';
@@ -26,6 +24,7 @@ import FlexWrapper from "./flex-wrapper";
 import Sidebar from "./sidebar";
 import SidebarNav from "./sidebar-nav";
 import MenuButton from "./menu-button";
+import Toolbox from "./toolbox";
 
 const Main = styled.main({
   flexGrow: 1
@@ -51,7 +50,6 @@ const MobileNav = styled.div({
   [breakpoints.md]: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: 32,
     color: colors.text1
   }
 });
@@ -177,10 +175,6 @@ export default function PageLayout(props) {
       <Helmet
         titleTemplate={['%s', subtitle, title].filter(Boolean).join(' - ')}
       >
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
@@ -259,10 +253,9 @@ export default function PageLayout(props) {
           >
             <MobileNav>
               <MenuButton onClick={openSidebar} />
-              <MobileLogo width={32} fill="currentColor" />
             </MobileNav>
             <Search siteName={siteName} />
-            <HeaderButton />
+            <Toolbox pathname={pathname} />
           </Header>
           <SelectedLanguageContext.Provider value={selectedLanguageState}>
             <NavItemsContext.Provider value={navItems}>

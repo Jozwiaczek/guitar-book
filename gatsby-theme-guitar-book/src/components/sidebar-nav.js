@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 import styled from '@emotion/styled';
 import {IconArrowUp} from '@apollo/space-kit/icons/IconArrowUp';
+import {IconHome} from '@apollo/space-kit/icons/IconHome';
 import {IconCollapseList} from '@apollo/space-kit/icons/IconCollapseList';
 import {IconExpandList} from '@apollo/space-kit/icons/IconExpandList';
 import {IconOutlink} from '@apollo/space-kit/icons/IconOutlink';
@@ -115,6 +116,11 @@ const StyledOutlinkIcon = styled(IconOutlink)(size(14), {
   color: colors.text3
 });
 
+const StyledIconHome = styled(IconHome)({
+  height: '1em',
+  marginRight: '0.5em'
+});
+
 function isPageSelected(path, pathname) {
   const [a, b] = [withPrefix(path), pathname].map(string =>
     string.replace(/\/$/, '')
@@ -143,6 +149,7 @@ function NavItems(props) {
                 title={page.description}
                 onClick={props.onLinkClick}
               >
+                {page.path === '/' && <StyledIconHome />}
                 {pageTitle}
               </Link>
             )}
