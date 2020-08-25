@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
-  "license": "0BSD",
+  "license": "MIT",
   "pre-commit": [
     "lint:fix"
   ],
