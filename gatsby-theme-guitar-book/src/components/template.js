@@ -150,9 +150,9 @@ export default function Template(props) {
       <ContentWrapper>
         <PageHeader {...frontmatter} />
         <hr />
-        {frontmatter.ytVideo &&
+        {frontmatter.ytLink &&
           <>
-            <VideoBox videoUrl={frontmatter.ytVideo} />
+            <VideoBox videoUrl={frontmatter.ytLink} />
             <hr />
           </>
         }
@@ -220,7 +220,7 @@ export const pageQuery = graphql`
         frontmatter {
           title
           description
-          ytVideo
+          ytLink
         }
         headings(depth: h2) {
           value
