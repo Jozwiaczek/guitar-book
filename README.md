@@ -4,8 +4,6 @@
   </a>
 </p>
 
-This repo contains [Gatsby](https://gatsbyjs.org) themes made by [Jakub Jóźwiak](https://github.com/Jozwiaczek) based on Apollo docs theme.
-
 ## Published Demo Guitar Books
 
 | Module   | Status | Public URL | Netlify |
@@ -39,12 +37,12 @@ It also exports a series of [components](#components) that can be used within MD
 If you're using this package, you'll also need to install `gatsby` and its peer dependencies, `react` and `react-dom`. Next, install the theme:
 
 ```bash
-$ npm install gatsby-theme-guitar-book
+npm install gatsby-theme-guitar-book
 ```
 or
 
 ```bash
-$ yarn add gatsby-theme-guitar-book
+yarn add gatsby-theme-guitar-book
 ```
 
 ## Configuration
@@ -263,7 +261,3 @@ An expandable panel of content used to hide complex information or instructions 
 ## Deployment
 
 All apps sites will eventually be deployed into a subdirectory, as configured by the `pathPrefix` option&mdash;/shanties, for example.
-
-## License
-
-[MIT](./LICENSE)
