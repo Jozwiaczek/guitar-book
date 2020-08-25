@@ -34,13 +34,15 @@ It also exports a series of [components](#components) that can be used within MD
 
 <br/>
 <br/>
-<img alt="desktop preview" src="graphics/screenshots/desktop_preview.png" height="500" align="center" />
+<div align="center">
+    <img alt="desktop preview" src="graphics/screenshots/desktop_preview.png" height="500" />
+</div>
 <br/>
 <div align="center">
   <img alt="mobile preview" src="graphics/screenshots/mobile_preview.png" height="250" />
   &emsp;&emsp;&emsp;
   <img alt="mobile icon preview" src="graphics/screenshots/mobile_icon_preview.jpg" height="200" />
-<div/>
+</div>
 <br/>
 <br/>
 
