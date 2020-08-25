@@ -29,6 +29,7 @@ module.exports = {
   logoLink: 'https://guitar-book.netlify.app//',
   contentDir: 'content',
   twitterHandle: 'jozwiaczek',
+  adSense: 'ca-pub-8136370322211479',
   youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
   navConfig,
   footerNavConfig

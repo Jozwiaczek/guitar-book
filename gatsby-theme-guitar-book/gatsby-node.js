@@ -225,6 +225,7 @@ exports.createPages = async (
     githubRepo,
     sidebarCategories,
     twitterHandle,
+    adSense,
     localVersion,
     baseUrl
   }
@@ -353,6 +354,7 @@ exports.createPages = async (
         sidebarContents: sidebarContents[fields.version],
         githubUrl,
         twitterHandle,
+        adSense,
         versions: versionKeys, // only need to send version labels to client
         defaultVersion,
         baseUrl

@@ -130,6 +130,7 @@ export default function Template(props) {
     sidebarContents,
     githubUrl,
     twitterHandle,
+    adSense,
     baseUrl
   } = props.pageContext;
 
@@ -146,6 +147,7 @@ export default function Template(props) {
         baseUrl={baseUrl}
         image={fields.image}
         twitterHandle={twitterHandle}
+        adSense={adSense}
       />
       <ContentWrapper>
         <PageHeader {...frontmatter} />

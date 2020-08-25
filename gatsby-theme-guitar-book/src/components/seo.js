@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withPrefix} from 'gatsby';
 import Helmet from "react-helmet";
 
-export default function SEO({image, baseUrl, twitterHandle, title, description, siteName}) {
+export default function SEO({image, baseUrl, twitterHandle, title, description, siteName, adSense}) {
   const imagePath = withPrefix('/' + image);
 
   return (
@@ -21,11 +21,12 @@ export default function SEO({image, baseUrl, twitterHandle, title, description, 
       {twitterHandle && (
         <meta name="twitter:site" content={`@${twitterHandle}`} />
       )}
+      {adSense &&
       <script
-        data-ad-client="ca-pub-8136370322211479"
+        data-ad-client={adSense}
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      />
+      />}
     </Helmet>
   );
 }
@@ -38,5 +39,6 @@ SEO.propTypes = {
   favicon: PropTypes.string,
   baseUrl: PropTypes.string,
   image: PropTypes.string.isRequired,
-  twitterHandle: PropTypes.string
+  twitterHandle: PropTypes.string,
+  adSense: PropTypes.string
 };
