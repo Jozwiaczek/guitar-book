@@ -32,11 +32,17 @@ It also exports a series of [components](#components) that can be used within MD
 | English Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys) | https://guitar-book.netlify.app/english | https://app.netlify.com/sites/guitar-book-english/overview |
 | Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties | https://app.netlify.com/sites/guitar-book-shanties/overview |
 
-<div>
-    <img alt="desktop preview" src="graphics/screenshots/desktop_preview.png" width="200" />
-    <img alt="mobile preview" src="graphics/screenshots/mobile_preview.png" width="200" />
-    <img alt="mobile icon preview" src="graphics/screenshots/mobile_icon_preview.jpg" width="200" />
-</div>
+<br/>
+<br/>
+<img alt="desktop preview" src="graphics/screenshots/desktop_preview.png" height="500" align="center" />
+<br/>
+<div align="center">
+  <img alt="mobile preview" src="graphics/screenshots/mobile_preview.png" height="250" />
+  &emsp;&emsp;&emsp;
+  <img alt="mobile icon preview" src="graphics/screenshots/mobile_icon_preview.jpg" height="200" />
+<div/>
+<br/>
+<br/>
 
 ## Installation
 
