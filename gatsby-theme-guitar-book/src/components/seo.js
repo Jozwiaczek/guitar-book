@@ -21,6 +21,11 @@ export default function SEO({image, baseUrl, twitterHandle, title, description, 
       {twitterHandle && (
         <meta name="twitter:site" content={`@${twitterHandle}`} />
       )}
+      <script
+        data-ad-client="ca-pub-8136370322211479"
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+      />
     </Helmet>
   );
 }
