@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-guitar-book",
-  "version": "1.0.1-alpha.1",
+  "version": "1.0.1-alpha.2",
   "description": "A Gatsby theme for building guitar book websites",
   "keywords": [
     "gatsby",
@@ -79,5 +79,6 @@
   },
   "peerDependencies": {
     "gatsby": "^2.6.0"
-  }
+  },
+  "gitHead": "58e6b779c50342e1c9d6aada88db99f196439f0f"
 }
