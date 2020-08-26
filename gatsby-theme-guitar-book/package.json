@@ -79,6 +79,5 @@
   },
   "peerDependencies": {
     "gatsby": "^2.6.0"
-  },
-  "gitHead": "9fc5303561413779d4cbf50ffdb21703e02168f2"
+  }
 }
