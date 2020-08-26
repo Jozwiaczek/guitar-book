@@ -1,9 +1,4 @@
-<div align="center">
-  <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="src/assets/GuitarBookIcon.svg" width="300" />
-  </a>
-  <hr/>
-</div>
+# Gatsby Theme Guitar Book
 
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files. 
 It also exports a series of [components](#components) that can be used within MDX pages.
@@ -47,20 +42,6 @@ It also exports a series of [components](#components) that can be used within MD
 | Polish Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys) | https://guitar-book.netlify.app/ |
 | English Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys) | https://guitar-book.netlify.app/english |
 | Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties |
-
-<br/>
-<br/>
-<div align="center">
-    <img alt="desktop preview" src="src/assets/screenshots/desktop_preview.png" height="500" />
-</div>
-<br/>
-<div align="center">
-  <img alt="mobile preview" src="src/assets/screenshots/mobile_preview.png" height="250" />
-  &emsp;&emsp;&emsp;
-  <img alt="mobile icon preview" src="src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
-</div>
-<br/>
-<br/>
 
 ## Installation
 

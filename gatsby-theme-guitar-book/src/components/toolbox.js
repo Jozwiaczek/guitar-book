@@ -49,6 +49,46 @@ const DesktopText = styled.span({
   }
 });
 
+const DesktopLink = styled.a({
+  [breakpoints.md]: {
+    display: 'none'
+  }
+});
+
+const MobileLink = styled.a({
+  display: 'none',
+  [breakpoints.md]: {
+    display: 'flex'
+  }
+});
+
+const LaunchTunerButton = () => {
+  const content = (
+    <>
+      Launch Guitar Tuner
+      <StyledIconOutlink weight="thin" />
+    </>
+  );
+
+  return (
+    <>
+      <DesktopLink
+        href="https://yousician.com/guitartuna"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
+        {content}
+      </DesktopLink>
+      <MobileLink
+        onClick={ () => window.location="https://apps.apple.com/pl/app/guitartuna-guitar-bass-tuner/id527588389" }
+      >
+        {content}
+      </MobileLink>
+    </>
+  );
+};
+
 export default function Toolbox({ pathname }) {
   const [isAutoScrollShown, setAutoScrollOpen] = useState(false);
 
@@ -76,15 +116,7 @@ export default function Toolbox({ pathname }) {
               </ListItem>
             }
             <ListItem>
-              <a
-                href="https://yousician.com/guitartuna"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: 'black' }}
-              >
-              Launch Guitar Tuner
-                <StyledIconOutlink weight="thin" />
-              </a>
+              <LaunchTunerButton/>
             </ListItem>
           </>
         }
