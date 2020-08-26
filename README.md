@@ -5,6 +5,10 @@
   <hr/>
 </div>
 
+![GitHub last commit](https://img.shields.io/github/last-commit/Jozwiaczek/guitar-book)
+![GitHub issues](https://img.shields.io/github/issues/Jozwiaczek/guitar-book)
+![npm](https://img.shields.io/npm/v/gatsby-theme-guitar-book)
+
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files. 
 It also exports a series of [components](#components) that can be used within MDX pages.
 
