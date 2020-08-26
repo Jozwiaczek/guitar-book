@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="../../gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="250" />
-  </a>
-</p>
-
 # Guitar Book Template
 
 > **Important note:** Guitar book always must have at least one .md **and** mdx file to build successfully.
