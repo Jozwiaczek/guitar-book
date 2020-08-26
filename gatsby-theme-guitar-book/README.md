@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
+    <img alt="Guitar Book" src="src/assets/GuitarBookIcon.svg" width="300" />
   </a>
   <hr/>
 </div>
@@ -51,13 +51,13 @@ It also exports a series of [components](#components) that can be used within MD
 <br/>
 <br/>
 <div align="center">
-    <img alt="desktop preview" src="gatsby-theme-guitar-book/src/assets/screenshots/desktop_preview.png" height="500" />
+    <img alt="desktop preview" src="src/assets/screenshots/desktop_preview.png" height="500" />
 </div>
 <br/>
 <div align="center">
-  <img alt="mobile preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_preview.png" height="250" />
+  <img alt="mobile preview" src="src/assets/screenshots/mobile_preview.png" height="250" />
   &emsp;&emsp;&emsp;
-  <img alt="mobile icon preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
+  <img alt="mobile icon preview" src="src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
 </div>
 <br/>
 <br/>
