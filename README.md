@@ -12,6 +12,7 @@
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files. 
 It also exports a series of [components](#components) that can be used within MDX pages.
 
+- [Features](#features)
 - [Published Demo Guitar Books](#published-demo-guitar-books)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -26,6 +27,22 @@ It also exports a series of [components](#components) that can be used within MD
 - [Deployment](#deployment)
 - [Examples](#examples)
 - [Template](#template)
+
+## Features
+
+- Plug and Play
+- Fully customizable
+- Mobile, Tablet and Desktop version
+- SEO friendly
+- App works offline, and it can be added to phone home screen
+- Free storing space for songs
+- Easy to edit songs
+- Editing songs without programming knowledge 
+- Integrated with Google Analytic and Ad Sense
+- Lyrics Auto scroll
+- Chords mapping and their preview with how to play them
+- Music Video for every song with just link from YouTube
+- Fully covered search
 
 ## Published Demo Guitar Books
 
