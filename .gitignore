@@ -4,3 +4,4 @@ node_modules
 .eslintcache
 .idea
 yarn-error.log
+lerna-debug.log
