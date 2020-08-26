@@ -32,7 +32,7 @@ It also exports a series of [components](#components) that can be used within MD
 
 - Plug and Play
 - Fully customizable
-- Mobile, Tablet and Desktop version
+- Mobile, Tablet and Desktop friendly
 - SEO friendly
 - App works offline, and it can be added to phone/desktop home screen
 - Free storing space for songs
