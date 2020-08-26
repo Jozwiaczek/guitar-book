@@ -30,7 +30,7 @@ It also exports a series of [components](#components) that can be used within MD
 - Fully customizable
 - Mobile, Tablet and Desktop version
 - SEO friendly
-- App works offline, and it can be added to phone home screen
+- App works offline, and it can be added to phone/desktop home screen
 - Free storing space for songs
 - Easy to edit songs
 - Editing songs without programming knowledge 
