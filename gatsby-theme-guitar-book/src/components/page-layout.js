@@ -12,7 +12,7 @@ import {colors} from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
 import {Helmet} from 'react-helmet';
 import {IconLayoutModule} from '@apollo/space-kit/icons/IconLayoutModule';
-import {graphql, Link, navigate, useStaticQuery} from 'gatsby';
+import {graphql, navigate, useStaticQuery} from 'gatsby';
 import {Select} from './select';
 import {SelectedLanguageContext} from './multi-code-block';
 import {getVersionBasePath} from '../utils';
@@ -59,23 +59,6 @@ const HeaderInner = styled.span({
   alignItems: 'center',
   justifyContent: 'space-between',
   marginBottom: 32
-});
-
-const Eyebrow = styled.div({
-  flexShrink: 0,
-  padding: '8px 56px',
-  backgroundColor: colors.background,
-  color: colors.primary,
-  fontSize: 14,
-  position: 'sticky',
-  top: 0,
-  a: {
-    color: 'inherit',
-    fontWeight: 600
-  },
-  [breakpoints.md]: {
-    padding: '8px 24px'
-  }
 });
 
 function getVersionLabel(version) {
@@ -238,19 +221,7 @@ export default function PageLayout(props) {
           )}
         </Sidebar>
         <Main>
-          <Header
-            beforeContent={
-              versionDifference !== 0 && (
-                <Eyebrow>
-                  You&apos;re viewing documentation for a{' '}
-                  {versionDifference > 0
-                    ? 'version of this software that is in development'
-                    : 'previous version of this software'}
-                  . <Link to="/">Switch to the latest stable version</Link>
-                </Eyebrow>
-              )
-            }
-          >
+          <Header>
             <MobileNav>
               <MenuButton onClick={openSidebar} />
             </MobileNav>

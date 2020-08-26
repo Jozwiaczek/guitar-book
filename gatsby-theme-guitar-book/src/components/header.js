@@ -25,13 +25,11 @@ const InnerWrapper = styled.div({
 export default function Header(props) {
   return (
     <Wrapper>
-      {props.beforeContent}
       <InnerWrapper>{props.children}</InnerWrapper>
     </Wrapper>
   );
 }
 
 Header.propTypes = {
-  beforeContent: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired
 };
