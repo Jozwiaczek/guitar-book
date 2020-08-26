@@ -20,7 +20,6 @@ module.exports = {
         subtitle: 'Template Songs',
         menuTitle: 'Songs Types',
         contentDir: 'content',
-        baseDir: 'apps/template',
         sidebarCategories: {
           null: ['index'],
           'Author X': [

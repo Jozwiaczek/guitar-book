@@ -6,6 +6,10 @@
 
 # Guitar Book Template
 
+> **Important note:** Guitar book always must have at least one .md **and** mdx file to build successfully.
+
+> **Important note:** To build successfully project with gatsby-theme-guitar-book plugin you must init git in project and publish it with some provider (it can be private repo and no matter which provider).
+
 ## How to copy template into new project
 1. Clone [guitar-book](https://github.com/Jozwiaczek/guitar-book) repository
 2. Copy whole `template` directory from _apps/template_ into a new project
