@@ -169,7 +169,7 @@ module.exports = ({
         background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
-        icon: require.resolve('../node_modules/gatsby-theme-guitar-book/src/assets/icon.png')
+        icon: require.resolve('./src/assets/icon.png')
       }
     },
     `gatsby-plugin-offline`
