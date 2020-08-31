@@ -7,7 +7,7 @@
 ## How to copy template into new project
 1. Clone [guitar-book](https://github.com/Jozwiaczek/guitar-book) repository
 2. Copy whole `template` directory from _apps/template_ into a new project
-3. Setup `gatsby-config.js` based on [Instruction](../../README.md)
+3. Setup `gatsby-config.js` based on [Instruction](../../README.md) (Not required to start app)
 4. Test guitar book locally: (inside template directory)
     1. `yarn install` - Install dependencies
     2. `yarn dev` - Start app (It will open app in your default browser)
