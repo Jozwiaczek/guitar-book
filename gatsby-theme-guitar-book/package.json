@@ -47,6 +47,7 @@
     "gatsby-remark-mermaid": "^1.2.0",
     "gatsby-remark-prismjs": "^3.2.8",
     "gatsby-remark-rewrite-relative-links": "^1.0.8",
+    "gatsby-source-contentful": "^3.0.6",
     "gatsby-source-filesystem": "^2.0.29",
     "gatsby-source-git": "^1.0.1",
     "gatsby-transformer-remark": "^2.6.30",

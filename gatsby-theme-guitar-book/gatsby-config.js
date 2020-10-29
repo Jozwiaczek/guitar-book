@@ -1,6 +1,6 @@
-const path = require('path');
-const mapKeys = require('lodash/mapKeys');
-const {colors} = require('./src/utils/colors');
+const path = require("path");
+const mapKeys = require("lodash/mapKeys");
+const { colors } = require("./src/utils/colors");
 
 module.exports = ({
   root,
@@ -8,25 +8,27 @@ module.exports = ({
   pageTitle,
   description,
   githubRepo,
-  baseDir = '',
-  contentDir = 'content',
+  baseDir = "",
+  contentDir = "content",
   versions = {},
+  contentfulAPIKey,
+  contentfulSpaceId,
   gaTrackingId,
   ignore,
   checkLinksOptions
 }) => {
   const gatsbyRemarkPlugins = [
     {
-      resolve: 'gatsby-remark-autolink-headers',
+      resolve: "gatsby-remark-autolink-headers"
     },
     {
-      resolve: 'gatsby-remark-copy-linked-files',
+      resolve: "gatsby-remark-copy-linked-files",
       options: {
         ignoreFileExtensions: []
       }
     },
     {
-      resolve: 'gatsby-remark-mermaid',
+      resolve: "gatsby-remark-mermaid",
       options: {
         mermaidOptions: {
           themeCSS: `
@@ -86,73 +88,78 @@ module.exports = ({
         }
       }
     },
-    'gatsby-remark-code-titles',
+    "gatsby-remark-code-titles",
     {
-      resolve: 'gatsby-remark-prismjs',
+      resolve: "gatsby-remark-prismjs",
       options: {
         showLineNumbers: true
       }
     },
-    'gatsby-remark-rewrite-relative-links',
+    "gatsby-remark-rewrite-relative-links",
     {
-      resolve: 'gatsby-remark-check-links',
+      resolve: "gatsby-remark-check-links",
       options: checkLinksOptions
     }
   ];
 
   const plugins = [
-    'gatsby-plugin-svgr',
-    'gatsby-plugin-emotion',
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-svgr",
+    "gatsby-plugin-emotion",
+    "gatsby-plugin-react-helmet",
     {
-      resolve: 'gatsby-plugin-less',
+      resolve: "gatsby-plugin-less",
       options: {
         modifyVars: mapKeys(colors, (value, key) => `color-${key}`)
       }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
         path: path.join(root, contentDir),
-        name: 'docs',
-        ignore,
+        name: "docs",
+        ignore
       }
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: gatsbyRemarkPlugins
       }
     },
     {
-      resolve: 'gatsby-plugin-mdx',
+      resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins,
-        remarkPlugins: [
-          [{wrapperComponent: 'MultiCodeBlock'}]
-        ]
+        remarkPlugins: [[{ wrapperComponent: "MultiCodeBlock" }]]
       }
     },
-    'gatsby-plugin-printer',
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: contentfulSpaceId,
+        accessToken: contentfulAPIKey
+      }
+    },
+    "gatsby-plugin-printer",
     ...Object.entries(versions).map(([name, branch]) => ({
-      resolve: 'gatsby-source-git',
+      resolve: "gatsby-source-git",
       options: {
         name,
         branch,
         remote: `https://github.com/${githubRepo}`,
         patterns: [
-          path.join(baseDir, contentDir, '**'),
-          path.join(baseDir, 'gatsby-config.js'),
-          path.join(baseDir, '_config.yml')
+          path.join(baseDir, contentDir, "**"),
+          path.join(baseDir, "gatsby-config.js"),
+          path.join(baseDir, "_config.yml")
         ]
       }
     })),
     {
-      resolve: 'gatsby-plugin-eslint',
+      resolve: "gatsby-plugin-eslint",
       options: {
         test: /\.js$|\.jsx$/,
         exclude: /(node_modules|.cache|public)/,
-        stages: ['develop'],
+        stages: ["develop"],
         options: {
           emitWarning: true,
           failOnError: false
@@ -169,7 +176,7 @@ module.exports = ({
         background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
-        icon: require.resolve('./src/assets/icon.png')
+        icon: require.resolve("./src/assets/icon.png")
       }
     },
     `gatsby-plugin-offline`
@@ -177,7 +184,7 @@ module.exports = ({
 
   if (gaTrackingId) {
     plugins.push({
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: "gatsby-plugin-google-analytics",
       options: {
         trackingId: gaTrackingId
       }
