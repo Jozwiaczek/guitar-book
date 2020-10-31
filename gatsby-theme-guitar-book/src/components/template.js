@@ -1,37 +1,32 @@
-import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer';
-import PropTypes from 'prop-types';
-import React, {createContext, useContext} from 'react';
-import rehypeReact from 'rehype-react';
-import styled from '@emotion/styled';
-import {colors} from '../utils/colors';
-import {smallCaps} from '../utils/typography';
-import {MDXProvider} from '@mdx-js/react';
-import {graphql, navigate} from 'gatsby';
+import PropTypes from "prop-types";
+import React, { createContext, useContext } from "react";
+import { graphql, navigate } from "gatsby";
 import SEO from "./seo";
-import ContentWrapper from './content-wrapper';
+import ContentWrapper from "./content-wrapper";
 import PageHeader from "./page-header";
-import Footer from './footer';
+import Footer from "./footer";
 import PageContent from "./page-content";
-import {VideoBox} from "./videoBox";
+import { VideoBox } from "./videoBox";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const CustomLinkContext = createContext();
 
 function CustomLink(props) {
-  const {pathPrefix, baseUrl} = useContext(CustomLinkContext);
+  const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
 
-  const linkProps = {...props};
+  const linkProps = { ...props };
   if (props.href) {
-    if (props.href.startsWith('/')) {
+    if (props.href.startsWith("/")) {
       linkProps.onClick = function handleClick(event) {
-        const href = event.target.getAttribute('href');
-        if (href.startsWith('/')) {
+        const href = event.target.getAttribute("href");
+        if (href.startsWith("/")) {
           event.preventDefault();
-          navigate(href.replace(pathPrefix, ''));
+          navigate(href.replace(pathPrefix, ""));
         }
       };
-    } else if (!props.href.startsWith('#') && !props.href.startsWith(baseUrl)) {
-      linkProps.target = '_blank';
-      linkProps.rel = 'noopener noreferrer';
+    } else if (!props.href.startsWith("#") && !props.href.startsWith(baseUrl)) {
+      linkProps.target = "_blank";
+      linkProps.rel = "noopener noreferrer";
     }
   }
 
@@ -42,90 +37,12 @@ CustomLink.propTypes = {
   href: PropTypes.string
 };
 
-const TableWrapper = styled.div({
-  overflow: 'auto',
-  marginBottom: '1.45rem'
-});
-
-const tableBorder = `1px solid ${colors.divider}`;
-const StyledTable = styled.table({
-  border: tableBorder,
-  borderSpacing: 0,
-  borderRadius: 4,
-  [['th', 'td']]: {
-    padding: 16,
-    borderBottom: tableBorder
-  },
-  'tbody tr:last-child td': {
-    border: 0
-  },
-  th: {
-    ...smallCaps,
-    fontSize: 13,
-    fontWeight: 'normal',
-    color: colors.text2,
-    textAlign: 'inherit'
-  },
-  td: {
-    verticalAlign: 'top',
-    p: {
-      fontSize: 'inherit',
-      lineHeight: 'inherit'
-    },
-    code: {
-      whiteSpace: 'normal'
-    }
-  }
-});
-
-function CustomTable(props) {
-  return (
-    <TableWrapper>
-      <StyledTable {...props} />
-    </TableWrapper>
-  );
-}
-
-function createCustomHeading(tag) {
-  // eslint-disable-next-line react/display-name, react/prop-types
-  return ({children, ...props}) =>
-    React.createElement(
-      tag,
-      props,
-      // eslint-disable-next-line react/prop-types
-      <a className="headingLink" href={'#' + props.id}>
-        {Array.isArray(children)
-          ? // eslint-disable-next-line react/prop-types
-          children.filter(
-            child => child.type !== CustomLink && child.props?.mdxType !== 'a'
-          )
-          : children}
-      </a>
-    );
-}
-
-const components = {
-  a: CustomLink,
-  table: CustomTable,
-  h1: createCustomHeading('h1'),
-  h2: createCustomHeading('h2'),
-  h3: createCustomHeading('h3'),
-  h4: createCustomHeading('h4'),
-  h5: createCustomHeading('h5'),
-  h6: createCustomHeading('h6')
-};
-
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-  components
-}).Compiler;
-
 export default function Template(props) {
-  const {hash, pathname} = props.location;
-  const {file, site} = props.data;
-  const {frontmatter, headings, fields} =
-  file.childMarkdownRemark || file.childMdx;
-  const {title, description} = site.siteMetadata;
+  const { hash, pathname } = props.location;
+  const { file, site, contentfulSong } = props.data;
+  const { frontmatter, headings, fields } =
+    file.childMarkdownRemark || file.childMdx;
+  const { title, description } = site.siteMetadata;
   const {
     sidebarContents,
     githubUrl,
@@ -135,8 +52,20 @@ export default function Template(props) {
   } = props.pageContext;
 
   const pages = sidebarContents
-    .reduce((acc, {pages}) => acc.concat(pages), [])
+    .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter(page => !page.anchor);
+
+  const formattedContentful = {
+    id: contentfulSong.id,
+    title: contentfulSong.title,
+    videoLink: contentfulSong.videoLink,
+    lyrics: contentfulSong.lyrics.lyrics,
+    lyrics2: contentfulSong.lyrics2.lyrics2,
+    json: contentfulSong.childContentfulSongLyrics2RichTextNode.json,
+    author: contentfulSong.author.name
+  };
+
+  console.log("L:168 | formattedContentful: ", formattedContentful.lyrics2);
 
   return (
     <>
@@ -152,12 +81,12 @@ export default function Template(props) {
       <ContentWrapper>
         <PageHeader {...frontmatter} />
         <hr />
-        {frontmatter.ytLink &&
+        {formattedContentful.videoLink && (
           <>
-            <VideoBox videoUrl={frontmatter.ytLink} />
+            <VideoBox videoUrl={formattedContentful.videoLink} />
             <hr />
           </>
-        }
+        )}
         <PageContent
           title={frontmatter.title}
           graphManagerUrl={fields.graphManagerUrl}
@@ -173,13 +102,25 @@ export default function Template(props) {
               baseUrl
             }}
           >
-            {file.childMdx ? (
-              <MDXProvider components={components}>
-                <MDXRenderer>{file.childMdx.body}</MDXRenderer>
-              </MDXProvider>
-            ) : (
-              renderAst(file.childMarkdownRemark.htmlAst)
-            )}
+            <div style={{ whiteSpace: "break-spaces" }}>
+              {formattedContentful.lyrics}
+            </div>
+            <br />
+            <br />
+            <div style={{ whiteSpace: "break-spaces" }}>
+              {documentToReactComponents(formattedContentful.json)}
+              {console.log(
+                "L:196 | documentToReactComponents(formattedContentful.json): ",
+                documentToReactComponents(formattedContentful.json)
+              )}
+            </div>
+            {/*{file.childMdx ? (*/}
+            {/*  <MDXProvider components={components}>*/}
+            {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer>*/}
+            {/*  </MDXProvider>*/}
+            {/*) : (*/}
+            {/*  renderAst(file.childMarkdownRemark.htmlAst)*/}
+            {/*)}*/}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
@@ -203,7 +144,24 @@ export const pageQuery = graphql`
         description
       }
     }
-    file(id: {eq: $id}) {
+    contentfulSong {
+      id
+      author {
+        name
+      }
+      title
+      lyrics {
+        lyrics
+      }
+      lyrics2 {
+        lyrics2
+      }
+      childContentfulSongLyrics2RichTextNode {
+        json
+      }
+      videoLink
+    }
+    file(id: { eq: $id }) {
       childMarkdownRemark {
         frontmatter {
           title

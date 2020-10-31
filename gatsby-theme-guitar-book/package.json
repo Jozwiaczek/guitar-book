@@ -68,7 +68,8 @@
     "remark-typescript": "^0.3.0",
     "simple-git": "^2.7.0",
     "source-sans-pro": "^3.6.0",
-    "striptags": "^3.1.1"
+    "striptags": "^3.1.1",
+    "@contentful/rich-text-react-renderer": "^14.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

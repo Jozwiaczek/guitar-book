@@ -249,6 +249,33 @@ exports.createPages = async (
     }
   `);
 
+  const contentful = await graphql(`
+    {
+      contentfulSong {
+        id
+        author {
+          name
+        }
+        title
+        lyrics {
+          lyrics
+        }
+        videoLink
+      }
+    }
+  `);
+
+  const tmp = contentful.data.contentfulSong;
+  const formattedContentful = {
+    id: tmp.id,
+    title: tmp.title,
+    videoLink: tmp.videoLink,
+    ...tmp.lyrics,
+    author: tmp.author.name
+  };
+
+  console.log("L:277 | formattedContentful: ", formattedContentful);
+
   const { edges } = data.allFile;
   const mainVersion = localVersion || defaultVersion;
   const contentPath = path.join(baseDir, contentDir);
