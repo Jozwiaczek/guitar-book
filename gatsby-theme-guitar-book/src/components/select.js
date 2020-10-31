@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import useClickAway from 'react-use/lib/useClickAway';
-import {Button} from '@apollo/space-kit/Button';
-import {IconArrowDown} from '@apollo/space-kit/icons/IconArrowDown';
-import {colors} from '../utils/colors';
-import {size} from 'polished';
+import { Button } from '@apollo/space-kit/Button';
+import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
+
+import { size } from 'polished';
+
+import { colors } from '../utils/colors';
 
 const Wrapper = styled.div({
-  position: 'relative'
+  position: 'relative',
 });
 
 const StyledIcon = styled(IconArrowDown)(size('1em'), {
-  marginLeft: 12
+  marginLeft: 12,
 });
 
 const Menu = styled.div({
@@ -22,13 +24,13 @@ const Menu = styled.div({
   boxShadow: [
     '0 3px 4px 0 rgba(18, 21, 26, 0.04)',
     '0 4px 8px 0 rgba(18, 21, 26, 0.08)',
-    '0 0 0 1px rgba(18, 21, 26, 0.08)'
+    '0 0 0 1px rgba(18, 21, 26, 0.08)',
   ].toString(),
   backgroundColor: 'white',
   position: 'absolute',
   left: 0,
   top: '100%',
-  zIndex: 1
+  zIndex: 1,
 });
 
 const MenuItem = styled.button({
@@ -43,29 +45,29 @@ const MenuItem = styled.button({
   cursor: 'pointer',
   outline: 'none',
   ':hover': {
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
   },
   '&.selected': {
     backgroundColor: colors.primary,
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
 const LabelWrapper = styled.div({
-  position: 'relative'
+  position: 'relative',
 });
 
 const Spacer = styled.div({
-  visibility: 'hidden'
+  visibility: 'hidden',
 });
 
 const Label = styled.div({
   position: 'absolute',
   top: 0,
-  left: 0
+  left: 0,
 });
 
-export function Select({className, style, options, value, onChange, ...props}) {
+export function Select({ className, style, options, value, onChange, ...props }) {
   const wrapperRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -86,14 +88,14 @@ export function Select({className, style, options, value, onChange, ...props}) {
   });
 
   function handleClick() {
-    setOpen(prevOpen => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   }
 
   return (
     <Wrapper className={className} style={style} ref={wrapperRef}>
       <Button {...props} onClick={handleClick}>
-        <LabelWrapper style={{height: labelHeight}}>
-          {optionKeys.map(key => (
+        <LabelWrapper style={{ height: labelHeight }}>
+          {optionKeys.map((key) => (
             <Spacer key={key}>{options[key]}</Spacer>
           ))}
           <Label>{options[value]}</Label>
@@ -102,16 +104,16 @@ export function Select({className, style, options, value, onChange, ...props}) {
       </Button>
       {open && (
         <Menu>
-          {optionKeys.map(key => {
+          {optionKeys.map((key) => {
             const text = options[key];
             return (
               <MenuItem
                 key={key}
+                className={key === value && 'selected'}
                 onClick={() => {
                   onChange(key);
                   setOpen(false);
                 }}
-                className={key === value && 'selected'}
               >
                 {text}
               </MenuItem>
@@ -129,5 +131,5 @@ Select.propTypes = {
   size: PropTypes.string,
   value: PropTypes.string.isRequired,
   options: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };

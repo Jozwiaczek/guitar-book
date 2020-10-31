@@ -1,10 +1,14 @@
-import Logo from './logo';
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
-import breakpoints from '../utils/breakpoints';
+import React, { Fragment } from 'react';
+
 import styled from '@emotion/styled';
-import {colors} from '../utils/colors';
-import {transparentize} from 'polished';
+
+import { transparentize } from 'polished';
+
+import breakpoints from '../utils/breakpoints';
+import { colors } from '../utils/colors';
+
+import Logo from './logo';
 
 const Container = styled.aside({
   flexShrink: 0,
@@ -14,10 +18,10 @@ const Container = styled.aside({
   borderRight: `1px solid ${colors.divider}`,
   overflowY: 'auto',
   position: 'sticky',
-  top: 0
+  top: 0,
 });
 
-const ResponsiveContainer = styled(Container)(props => ({
+const ResponsiveContainer = styled(Container)((props) => ({
   [breakpoints.md]: {
     height: '100%',
     backgroundColor: 'white',
@@ -29,30 +33,30 @@ const ResponsiveContainer = styled(Container)(props => ({
     transform: props.open ? 'none' : 'translateX(-100%)',
     transitionProperty: 'transform, opacity, visibility',
     transitionDuration: '150ms',
-    transitionTimingFunction: 'ease-in-out'
-  }
+    transitionTimingFunction: 'ease-in-out',
+  },
 }));
 
 const Header = styled.div({
   display: 'flex',
-  marginBottom: 24
+  marginBottom: 24,
 });
 
 const StyledLink = styled.a({
   color: colors.text1,
-  textDecoration: 'none'
+  textDecoration: 'none',
 });
 
 const Sidebar = React.forwardRef((props, ref) => {
   const content = (
-    <Fragment>
+    <>
       <Header>
         <StyledLink href={props.logoLink}>
           <Logo />
         </StyledLink>
       </Header>
       <div className={props.className}>{props.children}</div>
-    </Fragment>
+    </>
   );
 
   if (props.responsive) {
@@ -73,11 +77,11 @@ Sidebar.propTypes = {
   open: PropTypes.bool,
   responsive: PropTypes.bool,
   logoLink: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 Sidebar.defaultProps = {
-  logoLink: '/'
+  logoLink: '/',
 };
 
 export default Sidebar;

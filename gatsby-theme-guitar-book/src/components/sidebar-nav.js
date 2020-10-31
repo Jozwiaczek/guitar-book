@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import {IconArrowUp} from '@apollo/space-kit/icons/IconArrowUp';
-import {IconHome} from '@apollo/space-kit/icons/IconHome';
-import {IconCollapseList} from '@apollo/space-kit/icons/IconCollapseList';
-import {IconExpandList} from '@apollo/space-kit/icons/IconExpandList';
-import {IconOutlink} from '@apollo/space-kit/icons/IconOutlink';
-import {Link, withPrefix} from 'gatsby';
-import {colors} from '../utils/colors';
-import {size} from 'polished';
-import {smallCaps} from '../utils/typography';
+import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
+import { IconHome } from '@apollo/space-kit/icons/IconHome';
+import { IconCollapseList } from '@apollo/space-kit/icons/IconCollapseList';
+import { IconExpandList } from '@apollo/space-kit/icons/IconExpandList';
+import { IconOutlink } from '@apollo/space-kit/icons/IconOutlink';
+import { Link, withPrefix } from 'gatsby';
+
+import { size } from 'polished';
+
+import { colors } from '../utils/colors';
+import { smallCaps } from '../utils/typography';
 
 const ExpandAll = styled.button(smallCaps, {
   display: 'flex',
@@ -25,18 +27,18 @@ const ExpandAll = styled.button(smallCaps, {
   cursor: 'pointer',
   color: 'inherit',
   ':hover': {
-    opacity: colors.hoverOpacity
+    opacity: colors.hoverOpacity,
   },
   svg: {
     ...size(12),
-    marginRight: 8
-  }
+    marginRight: 8,
+  },
 });
 
 const StyledList = styled.ul({
   marginLeft: 0,
   marginBottom: 32,
-  listStyle: 'none'
+  listStyle: 'none',
 });
 
 const StyledListItem = styled.li({
@@ -47,13 +49,13 @@ const StyledListItem = styled.li({
     color: 'inherit',
     textDecoration: 'none',
     ':hover': {
-      opacity: colors.hoverOpacity
+      opacity: colors.hoverOpacity,
     },
     '&.active': {
       color: colors.primary,
-      pointerEvents: 'none'
-    }
-  }
+      pointerEvents: 'none',
+    },
+  },
 });
 
 const Category = styled.div({
@@ -61,8 +63,8 @@ const Category = styled.div({
   zIndex: 0,
   [StyledList]: {
     position: 'relative',
-    zIndex: 2
-  }
+    zIndex: 2,
+  },
 });
 
 const categoryTitleStyles = {
@@ -77,16 +79,16 @@ const categoryTitleStyles = {
   ...smallCaps,
   svg: size(10),
   '&.active': {
-    color: colors.primary
-  }
+    color: colors.primary,
+  },
 };
 
 const CategoryTitle = styled.div(categoryTitleStyles);
 const CategoryLink = styled(Link)(categoryTitleStyles, {
   textDecoration: 'none',
   ':hover': {
-    opacity: colors.hoverOpacity
-  }
+    opacity: colors.hoverOpacity,
+  },
 });
 
 const StyledCheckbox = styled.input({
@@ -98,33 +100,31 @@ const StyledCheckbox = styled.input({
   opacity: 0,
   zIndex: 1,
   [`:hover ~ ${CategoryTitle}`]: {
-    opacity: colors.hoverOpacity
+    opacity: colors.hoverOpacity,
   },
   ':not(:checked) ~': {
     [`${CategoryTitle} svg`]: {
-      transform: 'scaleY(-1)'
+      transform: 'scaleY(-1)',
     },
     [StyledList]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 });
 
 const StyledOutlinkIcon = styled(IconOutlink)(size(14), {
   verticalAlign: -1,
   marginLeft: 8,
-  color: colors.text3
+  color: colors.text3,
 });
 
 const StyledIconHome = styled(IconHome)({
   height: '1em',
-  marginRight: '0.5em'
+  marginRight: '0.5em',
 });
 
 function isPageSelected(path, pathname) {
-  const [a, b] = [withPrefix(path), pathname].map(string =>
-    string.replace(/\/$/, '')
-  );
+  const [a, b] = [withPrefix(path), pathname].map((string) => string.replace(/\/$/, ''));
   return a === b;
 }
 
@@ -142,9 +142,7 @@ function NavItems(props) {
               </a>
             ) : (
               <Link
-                className={
-                  isPageSelected(page.path, props.pathname) ? 'active' : null
-                }
+                className={isPageSelected(page.path, props.pathname) ? 'active' : null}
                 to={page.path}
                 title={page.description}
                 onClick={props.onLinkClick}
@@ -163,23 +161,21 @@ function NavItems(props) {
 NavItems.propTypes = {
   pages: PropTypes.array.isRequired,
   pathname: PropTypes.string.isRequired,
-  onLinkClick: PropTypes.func
+  onLinkClick: PropTypes.func,
 };
 
 export default function SidebarNav(props) {
   const categoriesRef = useRef();
 
   const [allExpanded, setAllExpanded] = useState(false);
-  const categories = props.contents.filter(content => content.title);
-  const [root] = props.contents.filter(content => !content.title);
+  const categories = props.contents.filter((content) => content.title);
+  const [root] = props.contents.filter((content) => !content.title);
 
   function toggleAll() {
-    const checkboxes = Array.from(
-      categoriesRef.current.querySelectorAll('input[type="checkbox"]')
-    );
+    const checkboxes = Array.from(categoriesRef.current.querySelectorAll('input[type="checkbox"]'));
 
-    const expanded = !checkboxes.every(checkbox => checkbox.checked);
-    checkboxes.forEach(checkbox => (checkbox.checked = expanded));
+    const expanded = !checkboxes.every((checkbox) => checkbox.checked);
+    checkboxes.forEach((checkbox) => (checkbox.checked = expanded));
     setAllExpanded(expanded);
 
     if (props.onToggleAll) {
@@ -188,12 +184,10 @@ export default function SidebarNav(props) {
   }
 
   function toggleCategory(event) {
-    const {value, checked, parentElement} = event.target;
+    const { value, checked, parentElement } = event.target;
 
-    const checkboxes = parentElement.parentElement.querySelectorAll(
-      'input[type="checkbox"]'
-    );
-    const expanded = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    const checkboxes = parentElement.parentElement.querySelectorAll('input[type="checkbox"]');
+    const expanded = Array.from(checkboxes).every((checkbox) => checkbox.checked);
     setAllExpanded(expanded);
 
     if (props.onToggleCategory) {
@@ -204,11 +198,7 @@ export default function SidebarNav(props) {
   return (
     <>
       {root && (
-        <NavItems
-          pages={root.pages}
-          pathname={props.pathname}
-          onLinkClick={props.onLinkClick}
-        />
+        <NavItems pages={root.pages} pathname={props.pathname} onLinkClick={props.onLinkClick} />
       )}
       {!props.alwaysExpanded && categories.length > 1 && (
         <ExpandAll onClick={toggleAll}>
@@ -218,8 +208,8 @@ export default function SidebarNav(props) {
       )}
       <div ref={categoriesRef}>
         {categories.map((category, index) => {
-          const isSelected = category.pages.some(page =>
-            isPageSelected(page.path, props.pathname)
+          const isSelected = category.pages.some((page) =>
+            isPageSelected(page.path, props.pathname),
           );
           const className = isSelected ? 'active' : null;
           return (
@@ -228,8 +218,8 @@ export default function SidebarNav(props) {
                 <StyledCheckbox
                   type="checkbox"
                   value={category.title}
-                  onChange={toggleCategory}
                   defaultChecked={isSelected}
+                  onChange={toggleCategory}
                 />
               )}
               {props.alwaysExpanded && category.path ? (
@@ -261,5 +251,5 @@ SidebarNav.propTypes = {
   pathname: PropTypes.string.isRequired,
   onToggleAll: PropTypes.func,
   onToggleCategory: PropTypes.func,
-  onLinkClick: PropTypes.func
+  onLinkClick: PropTypes.func,
 };

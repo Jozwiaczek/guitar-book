@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
-import {colors} from '../utils/colors';
+
+import { colors } from '../utils/colors';
 
 const Heading = styled.h1({
   ':not(:last-child)': {
-    marginBottom: 8
-  }
+    marginBottom: 8,
+  },
 });
 
 const Subheading = styled.h3({
-  color: colors.text2
+  color: colors.text2,
 });
 
 export default function PageHeader(props) {
@@ -24,5 +25,5 @@ export default function PageHeader(props) {
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
 };

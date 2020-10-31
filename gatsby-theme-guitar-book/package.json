@@ -20,7 +20,8 @@
   "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --cache"
+    "lint": "eslint . --ext .js,.jsx --cache",
+    "lint:fix": "eslint . --ext .js,.jsx --cache --fix"
   },
   "dependencies": {
     "@apollo/space-kit": "^7.7.0",

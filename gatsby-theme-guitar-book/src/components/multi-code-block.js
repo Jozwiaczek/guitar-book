@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
-import React, {createContext, useContext, useMemo} from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import styled from '@emotion/styled';
-import {trackCustomEvent} from 'gatsby-plugin-google-analytics';
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 export const GA_EVENT_CATEGORY_CODE_BLOCK = 'Code Block';
 export const MultiCodeBlockContext = createContext({});
 export const SelectedLanguageContext = createContext();
 
 const Container = styled.div({
-  position: 'relative'
+  position: 'relative',
 });
 
 const langLabels = {
   js: 'JavaScript',
   ts: 'TypeScript',
   'hooks-js': 'Hooks (JS)',
-  'hooks-ts': 'Hooks (TS)'
+  'hooks-ts': 'Hooks (TS)',
 };
 
 function getUnifiedLang(language) {
@@ -38,10 +38,10 @@ function getLang(child) {
 }
 
 export function MultiCodeBlock(props) {
-  const {codeBlocks, titles} = useMemo(() => {
+  const { codeBlocks, titles } = useMemo(() => {
     const defaultState = {
       codeBlocks: {},
-      titles: {}
+      titles: {},
     };
 
     if (!Array.isArray(props.children)) {
@@ -55,8 +55,8 @@ export function MultiCodeBlock(props) {
           ...acc,
           codeBlocks: {
             ...acc.codeBlocks,
-            [lang]: child
-          }
+            [lang]: child,
+          },
         };
       }
 
@@ -69,8 +69,8 @@ export function MultiCodeBlock(props) {
             ...acc,
             titles: {
               ...acc.titles,
-              [lang]: title
-            }
+              [lang]: title,
+            },
           };
         }
       }
@@ -80,9 +80,7 @@ export function MultiCodeBlock(props) {
   }, [props.children]);
 
   const languages = useMemo(() => Object.keys(codeBlocks), [codeBlocks]);
-  const [selectedLanguage, setSelectedLanguage] = useContext(
-    SelectedLanguageContext
-  );
+  const [selectedLanguage, setSelectedLanguage] = useContext(SelectedLanguageContext);
 
   if (!languages.length) {
     return props.children;
@@ -93,26 +91,25 @@ export function MultiCodeBlock(props) {
     trackCustomEvent({
       category: GA_EVENT_CATEGORY_CODE_BLOCK,
       action: 'Change language',
-      label: language
+      label: language,
     });
   }
 
   const defaultLanguage = languages[0];
-  const renderedLanguage =
-    selectedLanguage in codeBlocks ? selectedLanguage : defaultLanguage;
+  const renderedLanguage = selectedLanguage in codeBlocks ? selectedLanguage : defaultLanguage;
 
   return (
     <Container>
       <MultiCodeBlockContext.Provider
         value={{
           selectedLanguage: renderedLanguage,
-          languages: languages.map(lang => ({
+          languages: languages.map((lang) => ({
             lang,
             label:
               // try to find a label or capitalize the provided lang
-              langLabels[lang] || lang.charAt(0).toUpperCase() + lang.slice(1)
+              langLabels[lang] || lang.charAt(0).toUpperCase() + lang.slice(1),
           })),
-          onLanguageChange: handleLanguageChange
+          onLanguageChange: handleLanguageChange,
         }}
       >
         <div className="gatsby-code-title">{titles[renderedLanguage]}</div>
@@ -123,5 +120,5 @@ export function MultiCodeBlock(props) {
 }
 
 MultiCodeBlock.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

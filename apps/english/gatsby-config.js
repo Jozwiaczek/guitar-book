@@ -49,10 +49,10 @@ module.exports = {
           'Other Guitar Books': [
             '[Polish 🇵🇱](https://guitar-book.netlify.app)',
             '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
-            'test'
+            'test',
           ],
         },
-      }
+      },
     },
     {
       resolve: 'gatsby-plugin-eslint',
@@ -64,9 +64,9 @@ module.exports = {
         stages: ['develop'],
         options: {
           emitWarning: true,
-          failOnError: false
-        }
-      }
-    }
-  ]
+          failOnError: false,
+        },
+      },
+    },
+  ],
 };

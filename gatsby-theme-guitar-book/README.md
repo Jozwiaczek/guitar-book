@@ -1,6 +1,6 @@
 # Gatsby Theme Guitar Book
 
-This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files. 
+This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files.
 It also exports a series of [components](#components) that can be used within MDX pages.
 
 - [Features](#features)
@@ -28,7 +28,7 @@ It also exports a series of [components](#components) that can be used within MD
 - App works offline, and it can be added to phone/desktop home screen
 - Free storing space for songs
 - Easy to edit songs
-- Editing songs without programming knowledge 
+- Editing songs without programming knowledge
 - Integrated with Google Analytic and Ad Sense
 - Lyrics Auto scroll
 - Chords mapping and their preview with how to play them
@@ -37,10 +37,10 @@ It also exports a series of [components](#components) that can be used within MD
 
 ## Published Demo Guitar Books
 
-| Module   | Status | Public URL |
-| -------- | --- | --- |
-| Polish Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys) | https://guitar-book.netlify.app/ |
-| English Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys) | https://guitar-book.netlify.app/english |
+| Module         | Status                                                                                                                                                                    | Public URL                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Polish Songs   | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys)          | https://guitar-book.netlify.app/         |
+| English Songs  | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys)  | https://guitar-book.netlify.app/english  |
 | Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties |
 
 ## Installation
@@ -50,6 +50,7 @@ If you're using this package, you'll also need to install `gatsby` and its peer 
 ```bash
 npm install gatsby-theme-guitar-book
 ```
+
 or
 
 ```bash
@@ -85,35 +86,29 @@ module.exports = {
         youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
         navConfig: {
           'Polish Songs 🇵🇱': {
-              url: 'https://guitar-book.netlify.app/',
-              description:
-                'Navigate to guitar book with polish songs'
-            },
-            'English Songs 🇺🇸': {
-              url: 'https://guitar-book.netlify.app/english',
-              description:
-                'Navigate to guitar book with english songs'
-            },
-            'Shanties Songs 🏴‍': {
-              url: 'https://guitar-book.netlify.app/shanties',
-              description:
-                "Navigate to guitar book with shanties"
-            }
+            url: 'https://guitar-book.netlify.app/',
+            description: 'Navigate to guitar book with polish songs',
+          },
+          'English Songs 🇺🇸': {
+            url: 'https://guitar-book.netlify.app/english',
+            description: 'Navigate to guitar book with english songs',
+          },
+          'Shanties Songs 🏴‍': {
+            url: 'https://guitar-book.netlify.app/shanties',
+            description: 'Navigate to guitar book with shanties',
+          },
         },
         sidebarCategories: {
           null: ['index'],
-          'George Ezra': [
-            'blame-it-on-me',
-            'listening-to-the-men'
-          ],
+          'George Ezra': ['blame-it-on-me', 'listening-to-the-men'],
           'Other Guitar Books': [
             '[Polish 🇵🇱](https://guitar-book.netlify.app)',
-            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)'
+            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
           ],
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 };
 ```
 
@@ -121,25 +116,25 @@ module.exports = {
 
 ## Options
 
-| Option name       | Type   | Required | Description                                                                                                                             |
-| ----------------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| root              | string | Yes      | Must be `__dirname`                                                                                                                     |
-| siteName          | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site                                           |
-| description       | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                                                              |
-| sidebarCategories | object | Yes      | An object mapping categories to page paths (see [`sidebarCategories` reference](#sidebarcategories))                                    |
-| subtitle          | string | No       | The page title that gets rendered above the sidebar navigation                                                                          |
-| pageTitle         | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.                                             |
+| Option name       | Type   | Required | Description                                                                                                                                |
+| ----------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| root              | string | Yes      | Must be `__dirname`                                                                                                                        |
+| siteName          | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site                                              |
+| description       | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                                                                 |
+| sidebarCategories | object | Yes      | An object mapping categories to page paths (see [`sidebarCategories` reference](#sidebarcategories))                                       |
+| subtitle          | string | No       | The page title that gets rendered above the sidebar navigation                                                                             |
+| pageTitle         | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.                                                |
 | baseDir           | string | No       | If your Gatsby site does not live in the root of your project directory/git repo, pass the subdirectory name here (`english`, for example) |
-| contentDir        | string | No       | The directory where songs content exists (`content` by default)                                                                          |
-| githubRepo        | string | No       | The owner and name of the content repository on GitHub                                                                                  |
-| gaTrackingId      | string | No       | Your site's Google Analytics tracking ID                                                                                                |
-| adSense           | string | No       | Your site's Google AdSense tracking ID                                                                                                |
-| baseUrl           | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)                                                     |
-| twitterHandle     | string | No       | Your Twitter handle, without the "@"                                                                                                    |
-| youtubeUrl        | string | No       | The URL of your YouTube channel                                                                                                         |
-| navConfig         | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))                                              |
-| checkLinksOptions | object | No       | Options accepted by [`gastby-remark-check-links`](https://github.com/trevorblades/gatsby-remark-check-links#options)                    |
-| ignore            | array  | No       | Files to ignore using [anymatch](https://github.com/es128/anymatch)-compatible definition pattern
+| contentDir        | string | No       | The directory where songs content exists (`content` by default)                                                                            |
+| githubRepo        | string | No       | The owner and name of the content repository on GitHub                                                                                     |
+| gaTrackingId      | string | No       | Your site's Google Analytics tracking ID                                                                                                   |
+| adSense           | string | No       | Your site's Google AdSense tracking ID                                                                                                     |
+| baseUrl           | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)                                                      |
+| twitterHandle     | string | No       | Your Twitter handle, without the "@"                                                                                                       |
+| youtubeUrl        | string | No       | The URL of your YouTube channel                                                                                                            |
+| navConfig         | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))                                                 |
+| checkLinksOptions | object | No       | Options accepted by [`gastby-remark-check-links`](https://github.com/trevorblades/gatsby-remark-check-links#options)                       |
+| ignore            | array  | No       | Files to ignore using [anymatch](https://github.com/es128/anymatch)-compatible definition pattern                                          |
 
 ### `sidebarCategories`
 
@@ -172,12 +167,13 @@ To add new song use [Verse component](#verse) with .mdx file.
 ---
 title: Hallelujah
 description: Jeff Buckley
-ytLink: https://www.youtube.com/watch?v=y8AWFf7EAc4 
+ytLink: https://www.youtube.com/watch?v=y8AWFf7EAc4
 ---
 
 import { Verse } from 'gatsby-theme-guitar-book';
 
-<Verse text={`
+<Verse
+  text={`
 [Intro]
 C Am C Am
 \n
@@ -198,7 +194,8 @@ The baffled king composing hallelujah
 [Chorus]
      F           Am          F           C    G   C
 Hallelujah, hallelujah, hallelujah, hallelu-u-u-u-jah ....
-`}/>
+`}
+/>
 ```
 
 Page URLs will be derived from the file paths of your Markdown. You can nest Markdown files within directories to create pages with additional path segments. You can overwrite this default path by adding a `slug` field to your Markdown frontmatter header.
@@ -209,9 +206,9 @@ You can customize a website using this theme further by taking advantage of comp
 
 ```js
 import React from 'react';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
-export default function SEO({title, description, siteName}) {
+export default function SEO({ title, description, siteName }) {
   return (
     <Helmet>
       <link rel="icon" href="/path/to/custom-favicon.ico" />
@@ -229,14 +226,15 @@ This theme exports React components that you can use in MDX files throughout a d
 
 This component gives you ability to show the lyrics with mapped preview of chords.
 
-| Prop     | Type   | Description                                                                                                                                    |
-| -------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| text     | string | New lines in lyrics must be split by `\n`, other way you will get error. All chords should be placed on top of song line to be properly mapped |
+| Prop | Type   | Description                                                                                                                                    |
+| ---- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| text | string | New lines in lyrics must be split by `\n`, other way you will get error. All chords should be placed on top of song line to be properly mapped |
 
 ```js
 import { Verse } from 'gatsby-theme-guitar-book';
 
-<Verse text={`
+<Verse
+  text={`
 [Intro]
 C Am C Am
 \n
@@ -257,7 +255,8 @@ The baffled king composing hallelujah
 [Chorus]
      F           Am          F           C    G   C
 Hallelujah, hallelujah, hallelujah, hallelu-u-u-u-jah ....
-`}/>
+`}
+/>;
 ```
 
 ### `ExpansionPanel`
@@ -283,5 +282,4 @@ If you want to start with your own guitar check `template` directory with [tutor
 
 > **Important note:** Guitar book always must have at least one .md **and** mdx file to build successfully.
 
-> **Important note:** To build successfully project with gatsby-theme-guitar-book plugin you must init git in project and publish it with some provider (it can be private repo and no matter which provider).   
-
+> **Important note:** To build successfully project with gatsby-theme-guitar-book plugin you must init git in project and publish it with some provider (it can be private repo and no matter which provider).

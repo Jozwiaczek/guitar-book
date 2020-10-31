@@ -1,4 +1,4 @@
-const {colors} = require('@apollo/space-kit/colors');
+const { colors } = require('@apollo/space-kit/colors');
 
 exports.colors = {
   primary: colors.indigo.dark,
@@ -18,5 +18,5 @@ exports.colors = {
   highlight: colors.blue.base,
   highlight2: colors.blue.lighter,
   highlight3: colors.blue.lightest,
-  hoverOpacity: 0.8
+  hoverOpacity: 0.8,
 };

@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
-import React, {Fragment, useEffect, useMemo, useRef} from 'react';
+import React, { Fragment, useEffect, useMemo, useRef } from 'react';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
 import useWindowSize from 'react-use/lib/useWindowSize';
-import {IconTwitter} from '@apollo/space-kit/icons/IconTwitter';
-import {IconYoutube} from '@apollo/space-kit/icons/IconYoutube';
-import {boxShadow} from './search';
-import {colors} from '../utils/colors';
-import {smallCaps} from '../utils/typography';
+import { IconTwitter } from '@apollo/space-kit/icons/IconTwitter';
+import { IconYoutube } from '@apollo/space-kit/icons/IconYoutube';
+
+import { size, transparentize } from 'polished';
+
+import { boxShadow } from './search';
+import { colors } from '../utils/colors';
+import { smallCaps } from '../utils/typography';
 import breakpoints from '../utils/breakpoints';
-import {size, transparentize} from 'polished';
 
 const Wrapper = styled.div({
   width: '100%',
@@ -23,7 +25,7 @@ const Wrapper = styled.div({
   perspective: '1000px',
   transitionProperty: 'opacity, visibility',
   transitionDuration: '150ms',
-  transitionTimingFunction: 'ease-in-out'
+  transitionTimingFunction: 'ease-in-out',
 });
 
 const transitionDuration = 150; // in ms
@@ -39,11 +41,11 @@ const Menu = styled.div({
   transition: `transform ${transitionDuration}ms ease-in-out`,
   outline: 'none',
   [breakpoints.md]: {
-    width: 450
+    width: 450,
   },
   [breakpoints.sm]: {
-    width: 'calc(100vw - 48px)'
-  }
+    width: 'calc(100vw - 48px)',
+  },
 });
 
 const MenuTitle = styled.h6(smallCaps, {
@@ -51,21 +53,21 @@ const MenuTitle = styled.h6(smallCaps, {
   marginBottom: 0,
   fontSize: 13,
   fontWeight: 600,
-  color: colors.text3
+  color: colors.text3,
 });
 
 const StyledNav = styled.nav({
   display: 'flex',
   flexWrap: 'wrap',
-  margin: 12
+  margin: 12,
 });
 
 const NavItem = styled.div({
   display: 'block',
   width: '50%',
   [breakpoints.md]: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 const NavItemInner = styled.a({
@@ -84,16 +86,16 @@ const NavItemInner = styled.a({
       color: 'white',
       backgroundColor: colors.primary,
       p: {
-        color: colors.primaryLight
-      }
-    }
-  }
+        color: colors.primaryLight,
+      },
+    },
+  },
 });
 
 export const NavItemTitle = styled.h4({
   marginBottom: 8,
   fontWeight: 600,
-  color: 'inherit'
+  color: 'inherit',
 });
 
 export const NavItemDescription = styled.p({
@@ -101,7 +103,7 @@ export const NavItemDescription = styled.p({
   fontSize: 14,
   lineHeight: 1.5,
   color: colors.text3,
-  transition: 'color 150ms ease-in-out'
+  transition: 'color 150ms ease-in-out',
 });
 
 const FooterNav = styled.nav({
@@ -110,47 +112,47 @@ const FooterNav = styled.nav({
   padding: '16px 24px',
   backgroundColor: colors.background,
   [breakpoints.md]: {
-    display: 'block'
-  }
+    display: 'block',
+  },
 });
 
 const FooterNavItem = styled.a({
   color: colors.text2,
   textDecoration: 'none',
   ':hover': {
-    color: colors.text3
+    color: colors.text3,
   },
   ':not(:last-child)': {
-    marginRight: 24
-  }
+    marginRight: 24,
+  },
 });
 
 const SocialLinks = styled.div({
   display: 'flex',
   marginLeft: 'auto',
   [breakpoints.md]: {
-    marginTop: 8
-  }
+    marginTop: 8,
+  },
 });
 
 const SocialLink = styled.a({
   color: colors.text2,
   ':hover': {
-    color: colors.text3
+    color: colors.text3,
   },
   ':not(:last-child)': {
-    marginRight: 24
+    marginRight: 24,
   },
   svg: {
     ...size(24),
     display: 'block',
-    fill: 'currentColor'
-  }
+    fill: 'currentColor',
+  },
 });
 
 export default function DocsetSwitcher(props) {
   const menuRef = useRef(null);
-  const {width} = useWindowSize();
+  const { width } = useWindowSize();
   useKey('Escape', props.onClose);
 
   useEffect(() => {
@@ -162,16 +164,16 @@ export default function DocsetSwitcher(props) {
     }
   }, [props.open]);
 
-  const {current} = props.buttonRef;
+  const { current } = props.buttonRef;
   const menuStyles = useMemo(() => {
     if (!current) {
       return null;
     }
 
-    const {top, left, height} = current.getBoundingClientRect();
+    const { top, left, height } = current.getBoundingClientRect();
     return {
       top: top + height + 2,
-      left
+      left,
     };
   }, [current, width, props.open]);
 
@@ -181,29 +183,26 @@ export default function DocsetSwitcher(props) {
     }
   }
 
-  const hasSocialUrls = Boolean(
-    props.twitterUrl || props.youtubeUrl
-  );
+  const hasSocialUrls = Boolean(props.twitterUrl || props.youtubeUrl);
   return (
     <Wrapper
-      onClick={handleWrapperClick}
       style={{
         opacity: props.open ? 1 : 0,
-        visibility: props.open ? 'visible' : 'hidden'
+        visibility: props.open ? 'visible' : 'hidden',
       }}
+      onClick={handleWrapperClick}
     >
       <Menu
         ref={menuRef}
         tabIndex={-1}
         style={{
           ...menuStyles,
-          transform:
-            !props.open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)'
+          transform: !props.open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)',
         }}
       >
         <MenuTitle>{props.siteName}</MenuTitle>
         <StyledNav>
-          {props.navItems.map(navItem => (
+          {props.navItems.map((navItem) => (
             <NavItem key={navItem.url}>
               <NavItemInner href={navItem.url}>
                 <NavItemTitle>{navItem.title}</NavItemTitle>
@@ -214,36 +213,28 @@ export default function DocsetSwitcher(props) {
         </StyledNav>
         {(props.footerNavConfig || hasSocialUrls) && (
           <FooterNav>
-            <Fragment>
+            <>
               {props.footerNavConfig &&
-              Object.entries(props.footerNavConfig).map(([text, props]) => (
-                <FooterNavItem key={text} {...props}>
-                  {text}
-                </FooterNavItem>
-              ))}
+                Object.entries(props.footerNavConfig).map(([text, props]) => (
+                  <FooterNavItem key={text} {...props}>
+                    {text}
+                  </FooterNavItem>
+                ))}
               {hasSocialUrls && (
                 <SocialLinks>
                   {props.twitterUrl && (
-                    <SocialLink
-                      href={props.twitterUrl}
-                      title="Twitter"
-                      target="_blank"
-                    >
-                      <IconTwitter/>
+                    <SocialLink href={props.twitterUrl} title="Twitter" target="_blank">
+                      <IconTwitter />
                     </SocialLink>
                   )}
                   {props.youtubeUrl && (
-                    <SocialLink
-                      href={props.youtubeUrl}
-                      title="YouTube"
-                      target="_blank"
-                    >
-                      <IconYoutube/>
+                    <SocialLink href={props.youtubeUrl} title="YouTube" target="_blank">
+                      <IconYoutube />
                     </SocialLink>
                   )}
                 </SocialLinks>
               )}
-            </Fragment>
+            </>
           </FooterNav>
         )}
       </Menu>
@@ -259,5 +250,5 @@ DocsetSwitcher.propTypes = {
   navItems: PropTypes.array.isRequired,
   footerNavConfig: PropTypes.object.isRequired,
   twitterUrl: PropTypes.string,
-  youtubeUrl: PropTypes.string
+  youtubeUrl: PropTypes.string,
 };

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
-import {IconMenu} from '@apollo/space-kit/icons/IconMenu';
-import {size} from 'polished';
+import { IconMenu } from '@apollo/space-kit/icons/IconMenu';
+import { size } from 'polished';
 
 const padding = 10;
 const StyledButton = styled.button({
@@ -12,12 +12,12 @@ const StyledButton = styled.button({
   border: 'none',
   background: 'none',
   outline: 'none',
-  cursor: 'pointer'
+  cursor: 'pointer',
 });
 
 const StyledIcon = styled(IconMenu)(size(24), {
   display: 'block',
-  fill: 'currentColor'
+  fill: 'currentColor',
 });
 
 export default function MenuButton(props) {
@@ -29,5 +29,5 @@ export default function MenuButton(props) {
 }
 
 MenuButton.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };

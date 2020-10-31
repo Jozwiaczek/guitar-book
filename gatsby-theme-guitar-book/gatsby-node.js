@@ -1,45 +1,48 @@
-const jsYaml = require("js-yaml");
-const path = require("path");
-const git = require("simple-git")();
-const { createFilePath } = require("gatsby-source-filesystem");
-const { getVersionBasePath } = require("./src/utils");
-const { createPrinterNode } = require("gatsby-plugin-printer");
+const path = require('path');
+
+const jsYaml = require('js-yaml');
+const git = require('simple-git')();
+const { createFilePath } = require('gatsby-source-filesystem');
+
+const { createPrinterNode } = require('gatsby-plugin-printer');
+
+const { getVersionBasePath } = require('./src/utils');
 
 function getConfigPaths(baseDir) {
   return [
-    path.join(baseDir, "gatsby-config.js"), // new gatsby config
-    path.join(baseDir, "_config.yml") // old hexo config
+    path.join(baseDir, 'gatsby-config.js'), // new gatsby config
+    path.join(baseDir, '_config.yml'), // old hexo config
   ];
 }
 
 async function onCreateNode(
   { node, actions, getNode, loadNodeContent },
   {
-    baseDir = "",
-    contentDir = "content",
-    defaultVersion = "default",
+    baseDir = '',
+    contentDir = 'content',
+    defaultVersion = 'default',
     localVersion,
     siteName,
     subtitle,
-    sidebarCategories
-  }
+    sidebarCategories,
+  },
 ) {
   const configPaths = getConfigPaths(baseDir);
   if (configPaths.includes(node.relativePath)) {
     const value = await loadNodeContent(node);
     actions.createNodeField({
-      name: "raw",
+      name: 'raw',
       node,
-      value
+      value,
     });
   }
 
-  if (["MarkdownRemark", "Mdx"].includes(node.internal.type)) {
+  if (['MarkdownRemark', 'Mdx'].includes(node.internal.type)) {
     const parent = getNode(node.parent);
     let version = localVersion || defaultVersion;
     let slug = createFilePath({
       node,
-      getNode
+      getNode,
     });
 
     if (node.frontmatter.slug) {
@@ -48,12 +51,12 @@ async function onCreateNode(
 
     let category;
     const fileName = parent.name;
-    const outputDir = "social-cards";
+    const outputDir = 'social-cards';
 
     for (const key in sidebarCategories) {
-      if (key !== "null") {
+      if (key !== 'null') {
         const categories = sidebarCategories[key];
-        const trimmedSlug = slug.replace(/^\/|\/$/g, "");
+        const trimmedSlug = slug.replace(/^\/|\/$/g, '');
         if (categories.includes(trimmedSlug)) {
           category = key;
           break;
@@ -69,25 +72,25 @@ async function onCreateNode(
       data: {
         title,
         subtitle: subtitle || siteName,
-        category
+        category,
       },
-      component: require.resolve("./src/components/social-card.js")
+      component: require.resolve('./src/components/social-card.js'),
     });
 
     actions.createNodeField({
-      name: "image",
+      name: 'image',
       node,
-      value: path.join(outputDir, fileName + ".png")
+      value: path.join(outputDir, `${fileName}.png`),
     });
 
-    let versionRef = "";
+    let versionRef = '';
     if (parent.gitRemote___NODE) {
       const gitRemote = getNode(parent.gitRemote___NODE);
       version = gitRemote.sourceInstanceName;
       versionRef = gitRemote.ref;
 
-      const dirPattern = new RegExp(path.join("^", baseDir, contentDir));
-      slug = slug.replace(dirPattern, "");
+      const dirPattern = new RegExp(path.join('^', baseDir, contentDir));
+      slug = slug.replace(dirPattern, '');
     }
 
     if (version !== defaultVersion) {
@@ -96,32 +99,32 @@ async function onCreateNode(
 
     actions.createNodeField({
       node,
-      name: "version",
-      value: version
+      name: 'version',
+      value: version,
     });
 
     actions.createNodeField({
       node,
-      name: "versionRef",
-      value: versionRef
+      name: 'versionRef',
+      value: versionRef,
     });
 
     actions.createNodeField({
       node,
-      name: "slug",
-      value: slug
+      name: 'slug',
+      value: slug,
     });
 
     actions.createNodeField({
       node,
-      name: "sidebarTitle",
-      value: sidebar_title || ""
+      name: 'sidebarTitle',
+      value: sidebar_title || '',
     });
 
     actions.createNodeField({
       node,
-      name: "graphManagerUrl",
-      value: graphManagerUrl || ""
+      name: 'graphManagerUrl',
+      value: graphManagerUrl || '',
     });
   }
 }
@@ -133,27 +136,26 @@ function getPageFromEdge({ node }) {
 }
 
 function getSidebarContents(sidebarCategories, edges, version, dirPattern) {
-  return Object.keys(sidebarCategories).map(key => ({
-    title: key === "null" ? null : key,
+  return Object.keys(sidebarCategories).map((key) => ({
+    title: key === 'null' ? null : key,
     pages: sidebarCategories[key]
-      .map(linkPath => {
+      .map((linkPath) => {
         const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
         if (match) {
           return {
             anchor: true,
             title: match[1],
-            path: match[2]
+            path: match[2],
           };
         }
 
-        const edge = edges.find(edge => {
+        const edge = edges.find((edge) => {
           const { relativePath } = edge.node;
           const { fields } = getPageFromEdge(edge);
           return (
             fields.version === version &&
-            relativePath
-              .slice(0, relativePath.lastIndexOf("."))
-              .replace(dirPattern, "") === linkPath
+            relativePath.slice(0, relativePath.lastIndexOf('.')).replace(dirPattern, '') ===
+              linkPath
           );
         });
 
@@ -166,29 +168,27 @@ function getSidebarContents(sidebarCategories, edges, version, dirPattern) {
           title: frontmatter.title,
           sidebarTitle: fields.sidebarTitle,
           description: frontmatter.description,
-          path: fields.slug
+          path: fields.slug,
         };
       })
-      .filter(Boolean)
+      .filter(Boolean),
   }));
 }
 
 function getVersionSidebarCategories(gatsbyConfig, hexoConfig) {
   if (gatsbyConfig) {
-    const trimmed = gatsbyConfig.slice(
-      gatsbyConfig.indexOf("sidebarCategories")
-    );
+    const trimmed = gatsbyConfig.slice(gatsbyConfig.indexOf('sidebarCategories'));
 
     const json = trimmed
-      .slice(0, trimmed.indexOf("}"))
+      .slice(0, trimmed.indexOf('}'))
       // wrap object keys in double quotes
       .replace(/['"]?(\w[\w\s&-]+)['"]?:/g, '"$1":')
       // replace single-quoted array values with double quoted ones
       .replace(/'([\w-/.]+)'/g, '"$1"')
       // remove trailing commas
       .trim()
-      .replace(/,\s*\]/g, "]")
-      .replace(/,\s*$/, "");
+      .replace(/,\s*\]/g, ']')
+      .replace(/,\s*$/, '');
 
     const { sidebarCategories } = JSON.parse(`{${json}}}`);
     return sidebarCategories;
@@ -217,9 +217,9 @@ const pageFragment = `
 exports.createPages = async (
   { actions, graphql },
   {
-    baseDir = "",
-    contentDir = "content",
-    defaultVersion = "default",
+    baseDir = '',
+    contentDir = 'content',
+    defaultVersion = 'default',
     versions = {},
     subtitle,
     githubRepo,
@@ -227,8 +227,8 @@ exports.createPages = async (
     twitterHandle,
     adSense,
     localVersion,
-    baseUrl
-  }
+    baseUrl,
+  },
 ) => {
   const { data } = await graphql(`
     {
@@ -271,10 +271,10 @@ exports.createPages = async (
     title: tmp.title,
     videoLink: tmp.videoLink,
     ...tmp.lyrics,
-    author: tmp.author.name
+    author: tmp.author.name,
   };
 
-  console.log("L:277 | formattedContentful: ", formattedContentful);
+  console.log('L:277 | formattedContentful: ', formattedContentful);
 
   const { edges } = data.allFile;
   const mainVersion = localVersion || defaultVersion;
@@ -282,12 +282,7 @@ exports.createPages = async (
   const dirPattern = new RegExp(`^${contentPath}/`);
 
   const sidebarContents = {
-    [mainVersion]: getSidebarContents(
-      sidebarCategories,
-      edges,
-      mainVersion,
-      dirPattern
-    )
+    [mainVersion]: getSidebarContents(sidebarCategories, edges, mainVersion, dirPattern),
   };
 
   const configPaths = getConfigPaths(baseDir);
@@ -299,7 +294,7 @@ exports.createPages = async (
 
     // grab the old config files for each older version
     const configs = await Promise.all(
-      configPaths.map(async configPath => {
+      configPaths.map(async (configPath) => {
         const response = await graphql(`
           {
             file(
@@ -315,14 +310,14 @@ exports.createPages = async (
 
         const { file } = response.data;
         return file && file.fields.raw;
-      })
+      }),
     );
 
     sidebarContents[version] = getSidebarContents(
       getVersionSidebarCategories(...configs),
       edges,
       version,
-      dirPattern
+      dirPattern,
     );
   }
 
@@ -336,11 +331,10 @@ exports.createPages = async (
   // get the current git branch
   // try to use the BRANCH env var from Netlify
   // fall back to using git rev-parse if BRANCH is not available
-  const currentBranch =
-    process.env.BRANCH || (await git.revparse(["--abbrev-ref", "HEAD"]));
+  const currentBranch = process.env.BRANCH || (await git.revparse(['--abbrev-ref', 'HEAD']));
 
-  const template = require.resolve("./src/components/template");
-  edges.forEach(edge => {
+  const template = require.resolve('./src/components/template');
+  edges.forEach((edge) => {
     const { id, relativePath } = edge.node;
     const { fields } = getPageFromEdge(edge);
 
@@ -357,17 +351,15 @@ exports.createPages = async (
     let githubUrl;
 
     if (githubRepo) {
-      const [owner, repo] = githubRepo.split("/");
-      githubUrl =
-        "https://" +
-        path.join(
-          "github.com",
-          owner,
-          repo,
-          "tree",
-          fields.versionRef || path.join(currentBranch, contentPath),
-          relativePath
-        );
+      const [owner, repo] = githubRepo.split('/');
+      githubUrl = `https://${path.join(
+        'github.com',
+        owner,
+        repo,
+        'tree',
+        fields.versionRef || path.join(currentBranch, contentPath),
+        relativePath,
+      )}`;
     }
 
     actions.createPage({
@@ -384,8 +376,8 @@ exports.createPages = async (
         adSense,
         versions: versionKeys, // only need to send version labels to client
         defaultVersion,
-        baseUrl
-      }
+        baseUrl,
+      },
     });
   });
 };

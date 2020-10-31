@@ -11,7 +11,7 @@ module.exports = {
         baseDir: 'apps/polish',
         subtitle: 'Shanties Songs',
         sidebarCategories: {
-          null: [ 'index' ],
+          null: ['index'],
           'Fast ⚡️': [
             'fast/bitwa',
             'fast/czemu-zeglujesz',
@@ -54,10 +54,10 @@ module.exports = {
           'Other Guitar Books': [
             '[Polish 🇵🇱](https://guitar-book.netlify.app)',
             '[English 🇺🇸](https://guitar-book.netlify.app/english)',
-            'test'
+            'test',
           ],
         },
-      }
+      },
     },
     {
       resolve: 'gatsby-plugin-eslint',
@@ -69,9 +69,9 @@ module.exports = {
         stages: ['develop'],
         options: {
           emitWarning: true,
-          failOnError: false
-        }
-      }
-    }
-  ]
+          failOnError: false,
+        },
+      },
+    },
+  ],
 };

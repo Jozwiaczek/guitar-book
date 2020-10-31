@@ -1,19 +1,16 @@
 const navConfig = {
   'Polish Songs 🇵🇱': {
     url: 'https://guitar-book.netlify.app/',
-    description:
-      'Navigate to guitar book with polish songs'
+    description: 'Navigate to guitar book with polish songs',
   },
   'English Songs 🇺🇸': {
     url: 'https://guitar-book.netlify.app/english',
-    description:
-      'Navigate to guitar book with english songs'
+    description: 'Navigate to guitar book with english songs',
   },
   'Shanties Songs 🏴‍': {
     url: 'https://guitar-book.netlify.app/shanties',
-    description:
-      "Navigate to guitar book with shanties"
-  }
+    description: 'Navigate to guitar book with shanties',
+  },
 };
 
 const footerNavConfig = {};
@@ -32,5 +29,5 @@ module.exports = {
   adSense: 'ca-pub-8136370322211479',
   youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
   navConfig,
-  footerNavConfig
+  footerNavConfig,
 };

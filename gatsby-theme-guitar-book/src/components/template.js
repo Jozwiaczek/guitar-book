@@ -1,13 +1,15 @@
-import PropTypes from "prop-types";
-import React, { createContext, useContext } from "react";
-import { graphql, navigate } from "gatsby";
-import SEO from "./seo";
-import ContentWrapper from "./content-wrapper";
-import PageHeader from "./page-header";
-import Footer from "./footer";
-import PageContent from "./page-content";
-import { VideoBox } from "./videoBox";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import PropTypes from 'prop-types';
+import React, { createContext, useContext } from 'react';
+import { graphql, navigate } from 'gatsby';
+
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+import SEO from './seo';
+import ContentWrapper from './content-wrapper';
+import PageHeader from './page-header';
+import Footer from './footer';
+import PageContent from './page-content';
+import { VideoBox } from './videoBox';
 
 const CustomLinkContext = createContext();
 
@@ -16,17 +18,17 @@ function CustomLink(props) {
 
   const linkProps = { ...props };
   if (props.href) {
-    if (props.href.startsWith("/")) {
+    if (props.href.startsWith('/')) {
       linkProps.onClick = function handleClick(event) {
-        const href = event.target.getAttribute("href");
-        if (href.startsWith("/")) {
+        const href = event.target.getAttribute('href');
+        if (href.startsWith('/')) {
           event.preventDefault();
-          navigate(href.replace(pathPrefix, ""));
+          navigate(href.replace(pathPrefix, ''));
         }
       };
-    } else if (!props.href.startsWith("#") && !props.href.startsWith(baseUrl)) {
-      linkProps.target = "_blank";
-      linkProps.rel = "noopener noreferrer";
+    } else if (!props.href.startsWith('#') && !props.href.startsWith(baseUrl)) {
+      linkProps.target = '_blank';
+      linkProps.rel = 'noopener noreferrer';
     }
   }
 
@@ -34,26 +36,19 @@ function CustomLink(props) {
 }
 
 CustomLink.propTypes = {
-  href: PropTypes.string
+  href: PropTypes.string,
 };
 
 export default function Template(props) {
   const { hash, pathname } = props.location;
   const { file, site, contentfulSong } = props.data;
-  const { frontmatter, headings, fields } =
-    file.childMarkdownRemark || file.childMdx;
+  const { frontmatter, headings, fields } = file.childMarkdownRemark || file.childMdx;
   const { title, description } = site.siteMetadata;
-  const {
-    sidebarContents,
-    githubUrl,
-    twitterHandle,
-    adSense,
-    baseUrl
-  } = props.pageContext;
+  const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
     .reduce((acc, { pages }) => acc.concat(pages), [])
-    .filter(page => !page.anchor);
+    .filter((page) => !page.anchor);
 
   const formattedContentful = {
     id: contentfulSong.id,
@@ -62,10 +57,10 @@ export default function Template(props) {
     lyrics: contentfulSong.lyrics.lyrics,
     lyrics2: contentfulSong.lyrics2.lyrics2,
     json: contentfulSong.childContentfulSongLyrics2RichTextNode.json,
-    author: contentfulSong.author.name
+    author: contentfulSong.author.name,
   };
 
-  console.log("L:168 | formattedContentful: ", formattedContentful.lyrics2);
+  console.log('L:168 | formattedContentful: ', formattedContentful.lyrics2);
 
   return (
     <>
@@ -99,28 +94,26 @@ export default function Template(props) {
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
-              baseUrl
+              baseUrl,
             }}
           >
-            <div style={{ whiteSpace: "break-spaces" }}>
-              {formattedContentful.lyrics}
-            </div>
+            <div style={{ whiteSpace: 'break-spaces' }}>{formattedContentful.lyrics}</div>
             <br />
             <br />
-            <div style={{ whiteSpace: "break-spaces" }}>
+            <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(formattedContentful.json)}
               {console.log(
-                "L:196 | documentToReactComponents(formattedContentful.json): ",
-                documentToReactComponents(formattedContentful.json)
+                'L:196 | documentToReactComponents(formattedContentful.json): ',
+                documentToReactComponents(formattedContentful.json),
               )}
             </div>
-            {/*{file.childMdx ? (*/}
-            {/*  <MDXProvider components={components}>*/}
-            {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer>*/}
-            {/*  </MDXProvider>*/}
-            {/*) : (*/}
-            {/*  renderAst(file.childMarkdownRemark.htmlAst)*/}
-            {/*)}*/}
+            {/* {file.childMdx ? ( */}
+            {/*  <MDXProvider components={components}> */}
+            {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer> */}
+            {/*  </MDXProvider> */}
+            {/* ) : ( */}
+            {/*  renderAst(file.childMarkdownRemark.htmlAst) */}
+            {/* )} */}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
@@ -132,7 +125,7 @@ export default function Template(props) {
 Template.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 };
 
 export const pageQuery = graphql`
