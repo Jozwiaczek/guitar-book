@@ -199,7 +199,7 @@ export default function PageContent(props) {
       </InnerWrapper>
       <Aside>
         <AsideHeading>{props.title}</AsideHeading>
-        {props.headings.length > 0 && (
+        {props.headings?.length > 0 && (
           <SectionNav
             headings={props.headings}
             contentRef={contentRef}

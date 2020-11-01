@@ -175,207 +175,45 @@ function getSidebarContents(sidebarCategories, edges, version, dirPattern) {
   }));
 }
 
-function getVersionSidebarCategories(gatsbyConfig, hexoConfig) {
-  if (gatsbyConfig) {
-    const trimmed = gatsbyConfig.slice(gatsbyConfig.indexOf('sidebarCategories'));
-
-    const json = trimmed
-      .slice(0, trimmed.indexOf('}'))
-      // wrap object keys in double quotes
-      .replace(/['"]?(\w[\w\s&-]+)['"]?:/g, '"$1":')
-      // replace single-quoted array values with double quoted ones
-      .replace(/'([\w-/.]+)'/g, '"$1"')
-      // remove trailing commas
-      .trim()
-      .replace(/,\s*\]/g, ']')
-      .replace(/,\s*$/, '');
-
-    const { sidebarCategories } = JSON.parse(`{${json}}}`);
-    return sidebarCategories;
-  }
-
-  const { sidebar_categories } = jsYaml.load(hexoConfig);
-  return sidebar_categories;
-}
-
-const pageFragment = `
-  internal {
-    type
-  }
-  frontmatter {
-    title
-    description
-  }
-  fields {
-    slug
-    version
-    versionRef
-    sidebarTitle
-  }
-`;
-
 exports.createPages = async (
   { actions, graphql },
-  {
-    baseDir = '',
-    contentDir = 'content',
-    defaultVersion = 'default',
-    versions = {},
-    subtitle,
-    githubRepo,
-    sidebarCategories,
-    twitterHandle,
-    adSense,
-    localVersion,
-    baseUrl,
-  },
+  { subtitle, sidebarCategories, twitterHandle, adSense, baseUrl },
 ) => {
   const { data } = await graphql(`
     {
-      allFile(filter: {extension: {in: ["md", "mdx"]}}) {
+      allContentfulSong(filter: { node_locale: { eq: "en-US" } }) {
         edges {
           node {
+            title
+            author {
+              name
+            }
             id
-            relativePath
-            childMarkdownRemark {
-              ${pageFragment}
-            }
-            childMdx {
-              ${pageFragment}
-            }
           }
         }
       }
     }
   `);
-
-  const contentful = await graphql(`
-    {
-      contentfulSong {
-        id
-        author {
-          name
-        }
-        title
-        lyrics {
-          lyrics
-        }
-        videoLink
-      }
-    }
-  `);
-
-  const tmp = contentful.data.contentfulSong;
-  const formattedContentful = {
-    id: tmp.id,
-    title: tmp.title,
-    videoLink: tmp.videoLink,
-    ...tmp.lyrics,
-    author: tmp.author.name,
-  };
-
-  console.log('L:277 | formattedContentful: ', formattedContentful);
-
-  const { edges } = data.allFile;
-  const mainVersion = localVersion || defaultVersion;
-  const contentPath = path.join(baseDir, contentDir);
-  const dirPattern = new RegExp(`^${contentPath}/`);
-
-  const sidebarContents = {
-    [mainVersion]: getSidebarContents(sidebarCategories, edges, mainVersion, dirPattern),
-  };
-
-  const configPaths = getConfigPaths(baseDir);
-  const versionKeys = [localVersion].filter(Boolean);
-  for (const version in versions) {
-    if (version !== defaultVersion) {
-      versionKeys.push(version);
-    }
-
-    // grab the old config files for each older version
-    const configs = await Promise.all(
-      configPaths.map(async (configPath) => {
-        const response = await graphql(`
-          {
-            file(
-              relativePath: {eq: "${configPath}"}
-              gitRemote: {sourceInstanceName: {eq: "${version}"}}
-            ) {
-              fields {
-                raw
-              }
-            }
-          }
-        `);
-
-        const { file } = response.data;
-        return file && file.fields.raw;
-      }),
-    );
-
-    sidebarContents[version] = getSidebarContents(
-      getVersionSidebarCategories(...configs),
-      edges,
-      version,
-      dirPattern,
-    );
-  }
-
-  let defaultVersionNumber = null;
-  try {
-    defaultVersionNumber = parseFloat(defaultVersion, 10);
-  } catch (error) {
-    // let it slide
-  }
-
-  // get the current git branch
-  // try to use the BRANCH env var from Netlify
-  // fall back to using git rev-parse if BRANCH is not available
-  const currentBranch = process.env.BRANCH || (await git.revparse(['--abbrev-ref', 'HEAD']));
 
   const template = require.resolve('./src/components/template');
-  edges.forEach((edge) => {
-    const { id, relativePath } = edge.node;
-    const { fields } = getPageFromEdge(edge);
 
-    let versionDifference = 0;
-    if (defaultVersionNumber) {
-      try {
-        const versionNumber = parseFloat(fields.version, 10);
-        versionDifference = versionNumber - defaultVersionNumber;
-      } catch (error) {
-        // do nothing
-      }
-    }
+  data.allContentfulSong.edges.forEach(({ node }) => {
+    const { id, author, title } = node;
+    const slugAuthor = author.name.toLowerCase().replace(/ /g, '-');
+    const slugTitle = title.toLowerCase().replace(/ /g, '-');
+    const slug = `${slugAuthor}/${slugTitle}`;
 
-    let githubUrl;
-
-    if (githubRepo) {
-      const [owner, repo] = githubRepo.split('/');
-      githubUrl = `https://${path.join(
-        'github.com',
-        owner,
-        repo,
-        'tree',
-        fields.versionRef || path.join(currentBranch, contentPath),
-        relativePath,
-      )}`;
-    }
+    console.log('L:244 | slug: ', slug);
 
     actions.createPage({
-      path: fields.slug,
+      path: slug,
       component: template,
       context: {
         id,
         subtitle,
-        versionDifference,
-        versionBasePath: getVersionBasePath(fields.version),
-        sidebarContents: sidebarContents[fields.version],
-        githubUrl,
+        sidebarContents: [],
         twitterHandle,
         adSense,
-        versions: versionKeys, // only need to send version labels to client
-        defaultVersion,
         baseUrl,
       },
     });

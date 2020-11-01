@@ -18,7 +18,7 @@ export const Verse = ({ text }) => {
 
         const words = line.split(/&ensp;|\//).filter((w) => !!w && !w.match(chordRegEx)).length;
         if (!words) {
-          if (index === 0 || index === tmp.length - 1) return null;
+          if (index === tmp.length - 1) return null;
 
           line = line.split(/&ensp;|\//).map((c) => {
             if (c.match(chordRegEx)) {
@@ -43,7 +43,7 @@ export const Verse = ({ text }) => {
           <p style={{ marginBottom: 0 }} key={index} dangerouslySetInnerHTML={createMarkup(line)} />
         );
       })}
-      {allChords.length > 0 && <AllChordsPreview chords={Array.from(new Set(allChords))} />}
+      {/* {allChords.length > 0 && <AllChordsPreview chords={Array.from(new Set(allChords))} />} */}
     </div>
   );
 };

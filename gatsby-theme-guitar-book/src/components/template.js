@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 
 import SEO from './seo';
 import ContentWrapper from './content-wrapper';
@@ -10,6 +12,7 @@ import PageHeader from './page-header';
 import Footer from './footer';
 import PageContent from './page-content';
 import { VideoBox } from './videoBox';
+import { Verse } from './shared/verse';
 
 const CustomLinkContext = createContext();
 
@@ -41,8 +44,7 @@ CustomLink.propTypes = {
 
 export default function Template(props) {
   const { hash, pathname } = props.location;
-  const { file, site, contentfulSong } = props.data;
-  const { frontmatter, headings, fields } = file.childMarkdownRemark || file.childMdx;
+  const { site, contentfulSong } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
@@ -50,44 +52,36 @@ export default function Template(props) {
     .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
 
-  const formattedContentful = {
-    id: contentfulSong.id,
-    title: contentfulSong.title,
-    videoLink: contentfulSong.videoLink,
-    lyrics: contentfulSong.lyrics.lyrics,
-    lyrics2: contentfulSong.lyrics2.lyrics2,
-    json: contentfulSong.childContentfulSongLyrics2RichTextNode.json,
-    author: contentfulSong.author.name,
+  const options = {
+    renderText: (text) => {
+      console.log('L:66 | text: ', text);
+      return <Verse text={text} />;
+    },
   };
-
-  console.log('L:168 | formattedContentful: ', formattedContentful.lyrics2);
 
   return (
     <>
       <SEO
-        title={frontmatter.title}
-        description={frontmatter.description || description}
+        title={contentfulSong.title}
+        description={contentfulSong.author.name || description}
         siteName={title}
         baseUrl={baseUrl}
-        image={fields.image}
         twitterHandle={twitterHandle}
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader {...frontmatter} />
+        <PageHeader />
         <hr />
-        {formattedContentful.videoLink && (
+        {contentfulSong.videoLink && (
           <>
-            <VideoBox videoUrl={formattedContentful.videoLink} />
+            <VideoBox videoUrl={contentfulSong.videoLink} />
             <hr />
           </>
         )}
         <PageContent
-          title={frontmatter.title}
-          graphManagerUrl={fields.graphManagerUrl}
+          title={contentfulSong.title}
           pathname={pathname}
           pages={pages}
-          headings={headings}
           hash={hash}
           githubUrl={githubUrl}
         >
@@ -97,15 +91,8 @@ export default function Template(props) {
               baseUrl,
             }}
           >
-            <div style={{ whiteSpace: 'break-spaces' }}>{formattedContentful.lyrics}</div>
-            <br />
-            <br />
             <div style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(formattedContentful.json)}
-              {console.log(
-                'L:196 | documentToReactComponents(formattedContentful.json): ',
-                documentToReactComponents(formattedContentful.json),
-              )}
+              {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
             {/* {file.childMdx ? ( */}
             {/*  <MDXProvider components={components}> */}
@@ -137,22 +124,15 @@ export const pageQuery = graphql`
         description
       }
     }
-    contentfulSong {
-      id
+    contentfulSong(id: { eq: $id }) {
+      lyrics {
+        json
+      }
+      title
+      videoLink
       author {
         name
       }
-      title
-      lyrics {
-        lyrics
-      }
-      lyrics2 {
-        lyrics2
-      }
-      childContentfulSongLyrics2RichTextNode {
-        json
-      }
-      videoLink
     }
     file(id: { eq: $id }) {
       childMarkdownRemark {
