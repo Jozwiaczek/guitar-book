@@ -1,7 +1,5 @@
 const path = require('path');
 
-const jsYaml = require('js-yaml');
-const git = require('simple-git')();
 const { createFilePath } = require('gatsby-source-filesystem');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
@@ -11,7 +9,6 @@ const { getVersionBasePath } = require('./src/utils');
 function getConfigPaths(baseDir) {
   return [
     path.join(baseDir, 'gatsby-config.js'), // new gatsby config
-    path.join(baseDir, '_config.yml'), // old hexo config
   ];
 }
 
@@ -39,7 +36,7 @@ async function onCreateNode(
 
   if (['MarkdownRemark', 'Mdx'].includes(node.internal.type)) {
     const parent = getNode(node.parent);
-    let version = localVersion || defaultVersion;
+    const version = localVersion || defaultVersion;
     let slug = createFilePath({
       node,
       getNode,
@@ -83,31 +80,7 @@ async function onCreateNode(
       value: path.join(outputDir, `${fileName}.png`),
     });
 
-    let versionRef = '';
-    if (parent.gitRemote___NODE) {
-      const gitRemote = getNode(parent.gitRemote___NODE);
-      version = gitRemote.sourceInstanceName;
-      versionRef = gitRemote.ref;
-
-      const dirPattern = new RegExp(path.join('^', baseDir, contentDir));
-      slug = slug.replace(dirPattern, '');
-    }
-
-    if (version !== defaultVersion) {
-      slug = getVersionBasePath(version) + slug;
-    }
-
-    actions.createNodeField({
-      node,
-      name: 'version',
-      value: version,
-    });
-
-    actions.createNodeField({
-      node,
-      name: 'versionRef',
-      value: versionRef,
-    });
+    slug = getVersionBasePath(version) + slug;
 
     actions.createNodeField({
       node,
@@ -131,53 +104,34 @@ async function onCreateNode(
 
 exports.onCreateNode = onCreateNode;
 
-function getPageFromEdge({ node }) {
-  return node.childMarkdownRemark || node.childMdx;
-}
-
-function getSidebarContents(sidebarCategories, edges, version, dirPattern) {
-  return Object.keys(sidebarCategories).map((key) => ({
-    title: key === 'null' ? null : key,
-    pages: sidebarCategories[key]
-      .map((linkPath) => {
-        const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
-        if (match) {
-          return {
-            anchor: true,
-            title: match[1],
-            path: match[2],
-          };
-        }
-
-        const edge = edges.find((edge) => {
-          const { relativePath } = edge.node;
-          const { fields } = getPageFromEdge(edge);
-          return (
-            fields.version === version &&
-            relativePath.slice(0, relativePath.lastIndexOf('.')).replace(dirPattern, '') ===
-              linkPath
-          );
-        });
-
-        if (!edge) {
-          return null;
-        }
-
-        const { frontmatter, fields } = getPageFromEdge(edge);
-        return {
-          title: frontmatter.title,
-          sidebarTitle: fields.sidebarTitle,
-          description: frontmatter.description,
-          path: fields.slug,
-        };
-      })
-      .filter(Boolean),
-  }));
-}
+// function getSidebarContents(sidebarCategories, edges, dirPattern) {
+//   return Object.keys(sidebarCategories).map((key) => ({
+//     title: key === 'null' ? null : key,
+//     pages: sidebarCategories[key]
+//       .map((linkPath) => {
+//         const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
+//         if (match) {
+//           return {
+//             anchor: true,
+//             title: match[1],
+//             path: match[2],
+//           };
+//         }
+//
+//         return {
+//           title: frontmatter.title,
+//           sidebarTitle: fields.sidebarTitle,
+//           description: frontmatter.description,
+//           path: fields.slug,
+//         };
+//       })
+//       .filter(Boolean),
+//   }));
+// }
 
 exports.createPages = async (
   { actions, graphql },
-  { subtitle, sidebarCategories, twitterHandle, adSense, baseUrl },
+  { subtitle, twitterHandle, adSense, baseUrl },
 ) => {
   const { data } = await graphql(`
     {
@@ -192,6 +146,28 @@ exports.createPages = async (
           }
         }
       }
+      allContentfulSidebar(filter: { node_locale: { eq: "en-US" } }) {
+        edges {
+          node {
+            name
+            items {
+              ... on ContentfulSidebarSongs {
+                id
+                name
+                songs {
+                  title
+                  author {
+                    name
+                  }
+                }
+              }
+              ... on ContentfulSong {
+                title
+              }
+            }
+          }
+        }
+      }
     }
   `);
 
@@ -203,7 +179,7 @@ exports.createPages = async (
     const slugTitle = title.toLowerCase().replace(/ /g, '-');
     const slug = `${slugAuthor}/${slugTitle}`;
 
-    console.log('L:244 | slug: ', slug);
+    console.log('L:182 | data.allContentfulSidebar.edges: ', data.allContentfulSidebar.edges);
 
     actions.createPage({
       path: slug,
