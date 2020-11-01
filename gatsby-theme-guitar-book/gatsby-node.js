@@ -1,3 +1,5 @@
+import { getSlug } from './src/utils/getSlug';
+
 const path = require('path');
 
 const { createFilePath } = require('gatsby-source-filesystem');
@@ -12,23 +14,9 @@ function getConfigPaths(baseDir) {
   ];
 }
 
-const getSlug = (authorName, title) => {
-  const slugAuthor = authorName.toLowerCase().replace(/ /g, '-');
-  const slugTitle = title.toLowerCase().replace(/ /g, '-');
-  return `/${slugAuthor}/${slugTitle}`;
-};
-
 async function onCreateNode(
   { node, actions, getNode, loadNodeContent },
-  {
-    baseDir = '',
-    contentDir = 'content',
-    defaultVersion = 'default',
-    localVersion,
-    siteName,
-    subtitle,
-    sidebarCategories,
-  },
+  { baseDir = '', defaultVersion = 'default', localVersion, siteName, subtitle, sidebarCategories },
 ) {
   const configPaths = getConfigPaths(baseDir);
   if (configPaths.includes(node.relativePath)) {
