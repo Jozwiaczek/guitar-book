@@ -125,9 +125,10 @@ export default function PageLayout(props) {
     setMenuOpen(false);
   }
 
-  const { pathname } = props.location;
+  const pathname = decodeURI(props.location.pathname);
   const { siteName, title } = data.site.siteMetadata;
   const { subtitle, sidebarContents } = props.pageContext;
+
   const {
     twitterHandle,
     youtubeUrl,

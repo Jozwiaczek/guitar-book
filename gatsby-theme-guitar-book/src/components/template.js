@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-
-import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 
 import SEO from './seo';
 import ContentWrapper from './content-wrapper';
@@ -54,7 +52,6 @@ export default function Template(props) {
 
   const options = {
     renderText: (text) => {
-      console.log('L:66 | text: ', text);
       return <Verse text={text} />;
     },
   };
@@ -94,13 +91,6 @@ export default function Template(props) {
             <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
-            {/* {file.childMdx ? ( */}
-            {/*  <MDXProvider components={components}> */}
-            {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer> */}
-            {/*  </MDXProvider> */}
-            {/* ) : ( */}
-            {/*  renderAst(file.childMarkdownRemark.htmlAst) */}
-            {/* )} */}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />

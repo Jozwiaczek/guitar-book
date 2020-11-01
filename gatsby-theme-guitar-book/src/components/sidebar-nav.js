@@ -142,6 +142,7 @@ function NavItems(props) {
               </a>
             ) : (
               <Link
+                replace
                 className={isPageSelected(page.path, props.pathname) ? 'active' : null}
                 to={page.path}
                 title={page.description}
@@ -223,7 +224,7 @@ export default function SidebarNav(props) {
                 />
               )}
               {props.alwaysExpanded && category.path ? (
-                <CategoryLink className={className} to={category.path}>
+                <CategoryLink replace className={className} to={category.path}>
                   {category.title}
                 </CategoryLink>
               ) : (
