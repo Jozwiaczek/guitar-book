@@ -70,10 +70,6 @@ const HeaderInner = styled.span({
   marginBottom: 32,
 });
 
-function getVersionLabel(version) {
-  return `v${version}`;
-}
-
 const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 
 function handleToggleAll(expanded) {
@@ -129,16 +125,10 @@ export default function PageLayout(props) {
     setMenuOpen(false);
   }
 
-  const { pathname } = props.location;
+  const pathname = decodeURI(props.location.pathname);
   const { siteName, title } = data.site.siteMetadata;
-  const {
-    subtitle,
-    sidebarContents,
-    versions,
-    versionDifference,
-    versionBasePath,
-    defaultVersion,
-  } = props.pageContext;
+  const { subtitle, sidebarContents } = props.pageContext;
+
   const {
     twitterHandle,
     youtubeUrl,
@@ -190,24 +180,6 @@ export default function PageLayout(props) {
               </ButtonWrapper>
             ) : (
               sidebarTitle
-            )}
-            {versions && versions.length > 0 && (
-              <Select
-                feel="flat"
-                size="small"
-                value={versionDifference ? versionBasePath : '/'}
-                style={{ marginLeft: 8 }}
-                options={versions.reduce(
-                  (acc, version) => ({
-                    ...acc,
-                    [getVersionBasePath(version)]: getVersionLabel(version),
-                  }),
-                  {
-                    '/': defaultVersion ? getVersionLabel(defaultVersion) : 'Latest',
-                  },
-                )}
-                onChange={navigate}
-              />
             )}
           </HeaderInner>
           {sidebarContents && (

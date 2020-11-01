@@ -4,8 +4,6 @@ import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import { BLOCKS, MARKS } from '@contentful/rich-text-types';
-
 import SEO from './seo';
 import ContentWrapper from './content-wrapper';
 import PageHeader from './page-header';
@@ -95,13 +93,6 @@ export default function Template(props) {
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
             {allChords.length > 0 && <AllChordsPreview allChords={allChords} />}
-            {/* {file.childMdx ? ( */}
-            {/*  <MDXProvider components={components}> */}
-            {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer> */}
-            {/*  </MDXProvider> */}
-            {/* ) : ( */}
-            {/*  renderAst(file.childMarkdownRemark.htmlAst) */}
-            {/* )} */}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />

@@ -1,7 +1,5 @@
 const path = require('path');
 
-const jsYaml = require('js-yaml');
-const git = require('simple-git')();
 const { createFilePath } = require('gatsby-source-filesystem');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
@@ -11,9 +9,14 @@ const { getVersionBasePath } = require('./src/utils');
 function getConfigPaths(baseDir) {
   return [
     path.join(baseDir, 'gatsby-config.js'), // new gatsby config
-    path.join(baseDir, '_config.yml'), // old hexo config
   ];
 }
+
+const getSlug = (authorName, title) => {
+  const slugAuthor = authorName.toLowerCase().replace(/ /g, '-');
+  const slugTitle = title.toLowerCase().replace(/ /g, '-');
+  return `/${slugAuthor}/${slugTitle}`;
+};
 
 async function onCreateNode(
   { node, actions, getNode, loadNodeContent },
@@ -39,7 +42,7 @@ async function onCreateNode(
 
   if (['MarkdownRemark', 'Mdx'].includes(node.internal.type)) {
     const parent = getNode(node.parent);
-    let version = localVersion || defaultVersion;
+    const version = localVersion || defaultVersion;
     let slug = createFilePath({
       node,
       getNode,
@@ -83,31 +86,7 @@ async function onCreateNode(
       value: path.join(outputDir, `${fileName}.png`),
     });
 
-    let versionRef = '';
-    if (parent.gitRemote___NODE) {
-      const gitRemote = getNode(parent.gitRemote___NODE);
-      version = gitRemote.sourceInstanceName;
-      versionRef = gitRemote.ref;
-
-      const dirPattern = new RegExp(path.join('^', baseDir, contentDir));
-      slug = slug.replace(dirPattern, '');
-    }
-
-    if (version !== defaultVersion) {
-      slug = getVersionBasePath(version) + slug;
-    }
-
-    actions.createNodeField({
-      node,
-      name: 'version',
-      value: version,
-    });
-
-    actions.createNodeField({
-      node,
-      name: 'versionRef',
-      value: versionRef,
-    });
+    slug = getVersionBasePath(version) + slug;
 
     actions.createNodeField({
       node,
@@ -131,53 +110,127 @@ async function onCreateNode(
 
 exports.onCreateNode = onCreateNode;
 
-function getPageFromEdge({ node }) {
-  return node.childMarkdownRemark || node.childMdx;
-}
+// function getSidebarContents(sidebarCategories, edges, dirPattern) {
+//   return Object.keys(sidebarCategories).map((key) => ({
+//     title: key === 'null' ? null : key,
+//     pages: sidebarCategories[key]
+//       .map((linkPath) => {
+//         const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
+//         if (match) {
+//           return {
+//             anchor: true,
+//             title: match[1],
+//             path: match[2],
+//           };
+//         }
+//
+//         return {
+//           title: frontmatter.title,
+//           sidebarTitle: fields.sidebarTitle,
+//           description: frontmatter.description,
+//           path: fields.slug,
+//         };
+//       })
+//       .filter(Boolean),
+//   }));
+// }
 
-function getSidebarContents(sidebarCategories, edges, version, dirPattern) {
-  return Object.keys(sidebarCategories).map((key) => ({
-    title: key === 'null' ? null : key,
-    pages: sidebarCategories[key]
-      .map((linkPath) => {
-        const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
-        if (match) {
-          return {
-            anchor: true,
-            title: match[1],
-            path: match[2],
-          };
-        }
+// function getSidebarContents(sidebarCategories, edges) {
+// return {
+//             anchor: true,
+//             title: match[1],
+//             path: match[2],
+//           };
+//
+// pages ->
+// title
+//
+//	return {
+//            title: frontmatter.title,
+//            author: frontmatter.description,
+//            path: fields.slug,
+//          };
+// }
 
-        const edge = edges.find((edge) => {
-          const { relativePath } = edge.node;
-          const { fields } = getPageFromEdge(edge);
-          return (
-            fields.version === version &&
-            relativePath.slice(0, relativePath.lastIndexOf('.')).replace(dirPattern, '') ===
-              linkPath
-          );
-        });
+function getSidebarContents(edges) {
+  const { items } = edges[0].node;
 
-        if (!edge) {
-          return null;
-        }
+  return items.reduce((sidebar, props) => {
+    const type = props.sys.contentType.sys.id;
 
-        const { frontmatter, fields } = getPageFromEdge(edge);
+    if (type === 'sidebarSongs') {
+      const songSidebarName = props.name;
+      const pages = props.songs.map(({ title, author }) => {
+        const authorName = author.name;
         return {
-          title: frontmatter.title,
-          sidebarTitle: fields.sidebarTitle,
-          description: frontmatter.description,
-          path: fields.slug,
+          title,
+          author: authorName,
+          path: getSlug(authorName, title),
         };
-      })
-      .filter(Boolean),
-  }));
+      });
+      sidebar.push({ title: songSidebarName, pages });
+      return sidebar;
+    }
+    if (type === 'song') {
+      const { title, author } = props;
+      const authorName = author.name;
+      const isAlready = !!sidebar.find((item) => {
+        return !item.title;
+      });
+
+      if (isAlready) {
+        return sidebar.map((item) => {
+          if (!item.title) {
+            item.pages.push({ title, author: authorName, path: getSlug(authorName, title) });
+          }
+          return item;
+        });
+      }
+
+      sidebar.push({
+        title: '',
+        pages: [{ title, author: authorName, path: getSlug(authorName, title) }],
+      });
+      return sidebar;
+    }
+    if (type === 'sidebarAnchor') {
+      const { title, link } = props;
+
+      const isAlready = !!sidebar.find((item) => !item.title);
+
+      if (isAlready) {
+        return sidebar.map((item) => {
+          if (!item.title) {
+            item.pages.push({
+              anchor: true,
+              title,
+              path: link,
+            });
+          }
+          return item;
+        });
+      }
+
+      sidebar.push({
+        title: '',
+        pages: [
+          {
+            anchor: true,
+            title,
+            path: link,
+          },
+        ],
+      });
+      return sidebar;
+    }
+    console.error('Unsupported sidebar link');
+    return sidebar;
+  }, []);
 }
 
 exports.createPages = async (
   { actions, graphql },
-  { subtitle, sidebarCategories, twitterHandle, adSense, baseUrl },
+  { subtitle, twitterHandle, adSense, baseUrl },
 ) => {
   const { data } = await graphql(`
     {
@@ -192,6 +245,54 @@ exports.createPages = async (
           }
         }
       }
+      allContentfulSidebar(filter: { node_locale: { eq: "en-US" } }) {
+        edges {
+          node {
+            items {
+              ... on ContentfulSidebarSongs {
+                name
+                songs {
+                  title
+                  author {
+                    name
+                  }
+                }
+                sys {
+                  contentType {
+                    sys {
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulSidebarAnchor {
+                link
+                title
+                sys {
+                  contentType {
+                    sys {
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulSong {
+                title
+                author {
+                  name
+                }
+                sys {
+                  contentType {
+                    sys {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   `);
 
@@ -199,19 +300,14 @@ exports.createPages = async (
 
   data.allContentfulSong.edges.forEach(({ node }) => {
     const { id, author, title } = node;
-    const slugAuthor = author.name.toLowerCase().replace(/ /g, '-');
-    const slugTitle = title.toLowerCase().replace(/ /g, '-');
-    const slug = `${slugAuthor}/${slugTitle}`;
-
-    console.log('L:244 | slug: ', slug);
 
     actions.createPage({
-      path: slug,
+      path: getSlug(author.name, title),
       component: template,
       context: {
         id,
         subtitle,
-        sidebarContents: [],
+        sidebarContents: getSidebarContents(data.allContentfulSidebar.edges),
         twitterHandle,
         adSense,
         baseUrl,

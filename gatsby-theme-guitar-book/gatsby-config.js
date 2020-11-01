@@ -140,6 +140,7 @@ module.exports = ({
       options: {
         spaceId: contentfulSpaceId,
         accessToken: contentfulAPIKey,
+        downloadLocal: true,
       },
     },
     'gatsby-plugin-printer',

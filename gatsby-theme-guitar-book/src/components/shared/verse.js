@@ -37,7 +37,6 @@ export const Verse = ({ text, setAllChords }) => {
         }
         return (
           <React.Fragment key={index}>
-            {/* eslint-disable-next-line react/no-danger */}
             <span
               style={{ marginBottom: 0 }}
               key={index}
