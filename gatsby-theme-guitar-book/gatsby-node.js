@@ -1,12 +1,10 @@
-import { getSlug } from './src/utils/getSlug';
-
 const path = require('path');
 
 const { createFilePath } = require('gatsby-source-filesystem');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getVersionBasePath } = require('./src/utils');
+const { getSlug } = require('./src/utils');
 
 function getConfigPaths(baseDir) {
   return [
@@ -16,7 +14,7 @@ function getConfigPaths(baseDir) {
 
 async function onCreateNode(
   { node, actions, getNode, loadNodeContent },
-  { baseDir = '', defaultVersion = 'default', localVersion, siteName, subtitle, sidebarCategories },
+  { baseDir = '', siteName, subtitle, sidebarCategories },
 ) {
   const configPaths = getConfigPaths(baseDir);
   if (configPaths.includes(node.relativePath)) {
@@ -30,7 +28,6 @@ async function onCreateNode(
 
   if (['MarkdownRemark', 'Mdx'].includes(node.internal.type)) {
     const parent = getNode(node.parent);
-    const version = localVersion || defaultVersion;
     let slug = createFilePath({
       node,
       getNode,
@@ -74,8 +71,6 @@ async function onCreateNode(
       value: path.join(outputDir, `${fileName}.png`),
     });
 
-    slug = getVersionBasePath(version) + slug;
-
     actions.createNodeField({
       node,
       name: 'slug',
@@ -97,48 +92,6 @@ async function onCreateNode(
 }
 
 exports.onCreateNode = onCreateNode;
-
-// function getSidebarContents(sidebarCategories, edges, dirPattern) {
-//   return Object.keys(sidebarCategories).map((key) => ({
-//     title: key === 'null' ? null : key,
-//     pages: sidebarCategories[key]
-//       .map((linkPath) => {
-//         const match = linkPath.match(/^\[(.+)\]\((https?:\/\/.+)\)$/);
-//         if (match) {
-//           return {
-//             anchor: true,
-//             title: match[1],
-//             path: match[2],
-//           };
-//         }
-//
-//         return {
-//           title: frontmatter.title,
-//           sidebarTitle: fields.sidebarTitle,
-//           description: frontmatter.description,
-//           path: fields.slug,
-//         };
-//       })
-//       .filter(Boolean),
-//   }));
-// }
-
-// function getSidebarContents(sidebarCategories, edges) {
-// return {
-//             anchor: true,
-//             title: match[1],
-//             path: match[2],
-//           };
-//
-// pages ->
-// title
-//
-//	return {
-//            title: frontmatter.title,
-//            author: frontmatter.description,
-//            path: fields.slug,
-//          };
-// }
 
 function getSidebarContents(edges) {
   const { items } = edges[0].node;

@@ -67,7 +67,7 @@ export default function Template(props) {
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader />
+        <PageHeader title={contentfulSong.title} description={contentfulSong.author?.name} />
         <hr />
         {contentfulSong.videoLink && (
           <>
