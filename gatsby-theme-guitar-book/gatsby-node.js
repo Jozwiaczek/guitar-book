@@ -129,6 +129,29 @@ exports.onCreateNode = onCreateNode;
 //   }));
 // }
 
+// function getSidebarContents(sidebarCategories, edges) {
+// return {
+//             anchor: true,
+//             title: match[1],
+//             path: match[2],
+//           };
+//
+// pages ->
+// title
+//
+//	return {
+//            title: frontmatter.title,
+//            author: frontmatter.description,
+//            path: fields.slug,
+//          };
+// }
+
+function getSidebarContents(edges) {
+  const tmp = edges.map(({ name, items }) => {
+    console.log('L:151 | items: ', items);
+  });
+}
+
 exports.createPages = async (
   { actions, graphql },
   { subtitle, twitterHandle, adSense, baseUrl },
@@ -173,13 +196,13 @@ exports.createPages = async (
 
   const template = require.resolve('./src/components/template');
 
+  getSidebarContents(data.allContentfulSidebar.edges);
+
   data.allContentfulSong.edges.forEach(({ node }) => {
     const { id, author, title } = node;
     const slugAuthor = author.name.toLowerCase().replace(/ /g, '-');
     const slugTitle = title.toLowerCase().replace(/ /g, '-');
     const slug = `${slugAuthor}/${slugTitle}`;
-
-    console.log('L:182 | data.allContentfulSidebar.edges: ', data.allContentfulSidebar.edges);
 
     actions.createPage({
       path: slug,
