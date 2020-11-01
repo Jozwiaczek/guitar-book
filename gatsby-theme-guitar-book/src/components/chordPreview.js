@@ -36,8 +36,6 @@ const TooltipBody = styled.span`
   padding: 19px 16px 12px;
   background: ${color};
   border-radius: 4px;
-  font-size: 13px;
-  line-height: 18px;
   z-index: 10;
 
   &::before {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
 import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
@@ -50,7 +50,7 @@ const Content = styled.div({
   },
 });
 
-export function AllChordsPreview({ chords }) {
+export function AllChordsPreview({ allChords }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = expanded ? IconArrowUp : IconArrowDown;
 
@@ -65,7 +65,7 @@ export function AllChordsPreview({ chords }) {
         {expanded && (
           <Content>
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-              {chords.map((chord, index) => {
+              {allChords.map((chord, index) => {
                 return (
                   <div
                     key={index}

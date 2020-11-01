@@ -3,47 +3,50 @@ import React from 'react';
 import ChordPreview from '../chordPreview';
 import { AllChordsPreview } from '../allChordsPreview';
 
-export const Verse = ({ text }) => {
-  const tmp = text.replace(/ /g, '&ensp;').split(/\n/);
+export const Verse = ({ text, setAllChords }) => {
+  const SPACE_CODE = ' ';
+  const lines = text.replace(/ /g, SPACE_CODE).split(/\n/);
   const createMarkup = (text) => ({ __html: text });
   const chordRegEx = /^[A-Ha-h][mb#74]?(add9)?(m7)?(maj7)?(sus)?(sus4)?(is)?$/;
-  const allChords = [];
 
   return (
-    <div>
-      {tmp.map((line, index) => {
-        if (!line && index !== 0 && index !== tmp.length - 1) {
-          return <br key={index} />;
+    <>
+      {lines.map((line, index) => {
+        if (!line || !line.length) {
+          return line;
         }
 
-        const words = line.split(/&ensp;|\//).filter((w) => !!w && !w.match(chordRegEx)).length;
-        if (!words) {
-          if (index === tmp.length - 1) return null;
-
-          line = line.split(/&ensp;|\//).map((c) => {
-            if (c.match(chordRegEx)) {
-              return c;
-            }
-            return '';
-          });
+        const wordsCount = line.split(SPACE_CODE).filter((w) => !!w && !w.match(chordRegEx)).length;
+        if (!wordsCount) {
+          line = line.split(SPACE_CODE);
 
           return (
-            <div key={index}>
+            <span key={index}>
               {line.map((item, lineIndex) => {
-                if (item === '') return <span key={lineIndex}>&ensp;</span>;
-                allChords.push(item);
-                return <ChordPreview key={lineIndex}>{item}</ChordPreview>;
+                if (item === '') return <span key={lineIndex}> </span>;
+                setAllChords((prev) => (prev.includes(item) ? prev : [...prev, item]));
+                return (
+                  <span key={lineIndex}>
+                    <ChordPreview>{item}</ChordPreview>{' '}
+                  </span>
+                );
               })}
-            </div>
+              {lines.length > 1 && <br />}
+            </span>
           );
         }
-
         return (
-          // eslint-disable-next-line react/no-danger
-          <p style={{ marginBottom: 0 }} key={index} dangerouslySetInnerHTML={createMarkup(line)} />
+          <React.Fragment key={index}>
+            {/* eslint-disable-next-line react/no-danger */}
+            <span
+              style={{ marginBottom: 0 }}
+              key={index}
+              dangerouslySetInnerHTML={createMarkup(line)}
+            />
+            {lines.length > 1 && !(index === lines.length - 1) && <br />}
+          </React.Fragment>
         );
       })}
-      {/* {allChords.length > 0 && <AllChordsPreview chords={Array.from(new Set(allChords))} />} */}
-    </div>
+    </>
   );
 };

@@ -13,6 +13,7 @@ import Footer from './footer';
 import PageContent from './page-content';
 import { VideoBox } from './videoBox';
 import { Verse } from './shared/verse';
+import { AllChordsPreview } from './allChordsPreview';
 
 const CustomLinkContext = createContext();
 
@@ -47,15 +48,14 @@ export default function Template(props) {
   const { site, contentfulSong } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
-
+  const [allChords, setAllChords] = useState([]);
   const pages = sidebarContents
     .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
 
   const options = {
     renderText: (text) => {
-      console.log('L:66 | text: ', text);
-      return <Verse text={text} />;
+      return <Verse text={text} setAllChords={setAllChords} />;
     },
   };
 
@@ -94,6 +94,7 @@ export default function Template(props) {
             <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
+            {allChords.length > 0 && <AllChordsPreview allChords={allChords} />}
             {/* {file.childMdx ? ( */}
             {/*  <MDXProvider components={components}> */}
             {/*    <MDXRenderer>{file.childMdx.body}</MDXRenderer> */}
