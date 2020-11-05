@@ -16,7 +16,7 @@ module.exports = {
         siteName: 'Guitar Book',
         description: 'Track and play best guitar songs for camping',
         pageTitle: 'Guitar Book',
-        subtitle: 'Template Songs',
+        subtitle: 'SongTemplate Songs',
         menuTitle: 'Songs Types',
         contentDir: 'content',
         sidebarCategories: {

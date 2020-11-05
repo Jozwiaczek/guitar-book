@@ -4,13 +4,11 @@ import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import SEO from './seo';
-import ContentWrapper from './content-wrapper';
-import PageHeader from './page-header';
-import Footer from './footer';
-import PageContent from './page-content';
-import { VideoBox } from './videoBox';
-import { Verse } from './shared/verse';
+import SEO from '../seo';
+import ContentWrapper from '../content-wrapper';
+import PageHeader from '../page-header';
+import Footer from '../footer';
+import PageContent from '../page-content';
 
 const CustomLinkContext = createContext();
 
@@ -40,9 +38,9 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
-export default function Template(props) {
+export default function SongTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulSong } = props.data;
+  const { site, contentfulHomepage } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
@@ -50,33 +48,20 @@ export default function Template(props) {
     .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
 
-  const options = {
-    renderText: (text) => {
-      return <Verse text={text} />;
-    },
-  };
-
   return (
     <>
       <SEO
-        title={contentfulSong.title}
-        description={contentfulSong.author.name || description}
+        title={contentfulHomepage.title}
+        description={contentfulHomepage.description || description}
         siteName={title}
         baseUrl={baseUrl}
         twitterHandle={twitterHandle}
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader title={contentfulSong.title} description={contentfulSong.author?.name} />
-        <hr />
-        {contentfulSong.videoLink && (
-          <>
-            <VideoBox videoUrl={contentfulSong.videoLink} />
-            <hr />
-          </>
-        )}
+        <PageHeader title={contentfulHomepage.title} description={contentfulHomepage.description} />
         <PageContent
-          title={contentfulSong.title}
+          title={contentfulHomepage.title}
           pathname={pathname}
           pages={pages}
           hash={hash}
@@ -89,7 +74,7 @@ export default function Template(props) {
             }}
           >
             <div style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(contentfulSong.lyrics.json, options)}
+              {documentToReactComponents(contentfulHomepage.welcomeSection.json)}
             </div>
           </CustomLinkContext.Provider>
         </PageContent>
@@ -99,14 +84,14 @@ export default function Template(props) {
   );
 }
 
-Template.propTypes = {
+SongTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 
-export const pageQuery = graphql`
-  query PageQuery($id: String) {
+export const HomepageTemplateQuery = graphql`
+  query HomepageTemplateQuery($id: String) {
     site {
       pathPrefix
       siteMetadata {
@@ -114,46 +99,12 @@ export const pageQuery = graphql`
         description
       }
     }
-    contentfulSong(id: { eq: $id }) {
-      lyrics {
+    contentfulHomepage(id: { eq: $id }) {
+      welcomeSection {
         json
       }
       title
-      videoLink
-      author {
-        name
-      }
-    }
-    file(id: { eq: $id }) {
-      childMarkdownRemark {
-        frontmatter {
-          title
-          description
-        }
-        headings(depth: h2) {
-          value
-        }
-        fields {
-          image
-          graphManagerUrl
-        }
-        htmlAst
-      }
-      childMdx {
-        frontmatter {
-          title
-          description
-          ytLink
-        }
-        headings(depth: h2) {
-          value
-        }
-        fields {
-          image
-          graphManagerUrl
-        }
-        body
-      }
+      description
     }
   }
 `;

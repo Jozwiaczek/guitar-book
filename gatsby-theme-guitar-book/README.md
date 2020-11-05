@@ -17,7 +17,7 @@ It also exports a series of [components](#components) that can be used within MD
   - [`ExpansionPanel`](#expansionpanel)
 - [Deployment](#deployment)
 - [Examples](#examples)
-- [Template](#template)
+- [SongTemplate](#template)
 
 ## Features
 
@@ -276,7 +276,7 @@ All apps sites will eventually be deployed into a subdirectory, as configured by
 
 In `apps` directory you will find my 3 connected guitar-books (english, polish, shanties).
 
-## Template
+## SongTemplate
 
 If you want to start with your own guitar check `template` directory with [tutorial how to start](apps/template/README.md).
 

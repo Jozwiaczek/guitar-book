@@ -1,4 +1,4 @@
-# Guitar Book Template
+# Guitar Book SongTemplate
 
 > **Important note:** Guitar book always must have at least one .md **and** mdx file to build successfully.
 

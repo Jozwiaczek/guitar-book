@@ -270,7 +270,7 @@ export default function Search(props) {
                     onMouseEnter={() => setMouseOver(true)}
                     onMouseLeave={() => setMouseOver(false)}
                     onClick={() => {
-                      navigate(`/${res.slug}/`);
+                      navigate(`${res.slug}`);
                       setMouseOver(false);
                       setValue('');
                     }}
