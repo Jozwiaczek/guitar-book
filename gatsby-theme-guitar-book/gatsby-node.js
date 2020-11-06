@@ -265,7 +265,7 @@ exports.createPages = async (
                   }
                 }
               }
-              ... on ContentfulSidebarAnchor {
+              ... on ContentfulAnchor {
                 link
                 title
                 sys {
@@ -276,15 +276,12 @@ exports.createPages = async (
                   }
                 }
               }
-              ... on ContentfulSong {
-                title
-                author {
-                  name
-                }
+              ... on ContentfulHomepage {
+                id
                 sys {
                   contentType {
                     sys {
-                      id
+                      type
                     }
                   }
                 }
