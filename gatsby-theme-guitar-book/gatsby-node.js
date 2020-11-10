@@ -4,7 +4,7 @@ const { createFilePath } = require('gatsby-source-filesystem');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug } = require('./src/utils');
+const { getSlug, getSlugPage } = require('./src/utils');
 
 function getConfigPaths(baseDir) {
   return [
@@ -114,9 +114,10 @@ function getSidebarContents(edges) {
       return sidebar;
     }
 
-    // Root homepage item
-    if (type === 'homepage') {
-      const { title, description } = props;
+    // Root page item
+    if (type === 'page') {
+      const { title, description, isHomepage } = props;
+      const path = getSlugPage(title, isHomepage);
       const isAlready = !!sidebar.find((item) => {
         return !item.title;
       });
@@ -124,7 +125,7 @@ function getSidebarContents(edges) {
       if (isAlready) {
         return sidebar.map((item) => {
           if (!item.title) {
-            item.pages.push({ title, author: description, path: '/' });
+            item.pages.push({ title, author: description, path });
           }
           return item;
         });
@@ -132,7 +133,7 @@ function getSidebarContents(edges) {
 
       sidebar.push({
         title: '',
-        pages: [{ title, author: description, path: '/' }],
+        pages: [{ title, author: description, path }],
       });
 
       return sidebar;
@@ -212,9 +213,10 @@ exports.createPages = async (
                   }
                 }
               }
-              ... on ContentfulHomepage {
+              ... on ContentfulPage {
                 id
                 title
+                isHomepage
                 description
                 sys {
                   contentType {
@@ -232,7 +234,7 @@ exports.createPages = async (
   `);
 
   const songTemplate = require.resolve('./src/components/templates/song-template');
-  const homepageTemplate = require.resolve('./src/components/templates/homepage-template');
+  const pageTemplate = require.resolve('./src/components/templates/page-template');
 
   data.allContentfulSidebar.edges[0].node.items.forEach((props) => {
     const type = props.sys.contentType.sys.id;
@@ -256,11 +258,11 @@ exports.createPages = async (
         });
         break;
       }
-      case 'homepage': {
-        const { id } = props;
+      case 'page': {
+        const { id, title, isHomepage } = props;
         actions.createPage({
-          path: '/',
-          component: homepageTemplate,
+          path: getSlugPage(title, isHomepage),
+          component: pageTemplate,
           context: {
             id,
             subtitle,
