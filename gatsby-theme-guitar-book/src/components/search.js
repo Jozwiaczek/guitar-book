@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
-import { graphql, useStaticQuery, navigate } from 'gatsby';
+import React, { useMemo, useRef, useState, useCallback } from 'react';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
+import Highlighter from 'react-highlight-words';
 
 import { TextField } from '@apollo/space-kit/TextField';
 
@@ -13,6 +14,7 @@ import { position, size, transparentize } from 'polished';
 import { HEADER_HEIGHT } from '../utils';
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
+import { getSlug } from '../utils/getSlug';
 
 const borderRadius = 5;
 const border = `1px solid ${colors.text3}`;
@@ -137,24 +139,51 @@ export default function Search(props) {
           }
         }
       }
+      allContentfulSong(filter: { node_locale: { eq: "en-US" } }) {
+        edges {
+          node {
+            title
+            author {
+              name
+            }
+            lyrics {
+              json
+            }
+          }
+        }
+      }
     }
   `);
 
-  const nodes = data.allFile.edges.map((n) => n.node.childMdx).filter((n) => n && !!n.slug);
+  const resultContentful = useMemo(
+    () =>
+      data.allContentfulSong.edges.map(({ node }) => {
+        const authorName = node.author.name;
+        return {
+          title: node.title,
+          lyrics: node.lyrics.json.content.reduce((externalAcc, { content }) => {
+            const joinedValues = content.reduce(
+              (innerAcc, { value }) => `${innerAcc} ${value}`,
+              '',
+            );
+            return `${externalAcc} ${joinedValues}`;
+          }, ''),
+          slug: getSlug(authorName, node.title),
+          author: authorName,
+        };
+      }),
+    [],
+  );
 
-  const search = (searchText) => {
+  const search = useCallback((searchText) => {
     searchText = searchText.trim();
     if (!searchText) return [];
     const searchRegExp = new RegExp(searchText, 'i');
-    return nodes
+    return resultContentful
       .map((n) => {
-        n.lyrics = n.rawBody.substring(
-          n.rawBody.indexOf('<Verse text={`') + 14,
-          n.rawBody.lastIndexOf('`}/>'),
-        );
         n.filter = {
-          title: n.frontmatter.title.search(searchRegExp),
-          author: n.frontmatter.description.search(searchRegExp),
+          title: n.title.search(searchRegExp),
+          author: n.author.search(searchRegExp),
           lyrics: n.lyrics.search(searchRegExp),
         };
 
@@ -183,7 +212,7 @@ export default function Search(props) {
         },
       )
       .slice(0, resultLimit);
-  };
+  }, []);
 
   // focus the input when the slash key is pressed
   useKey(
@@ -205,6 +234,15 @@ export default function Search(props) {
   function onBlur() {
     setFocused(false);
   }
+
+  const HighlightLabel = ({ label }) => (
+    <Highlighter
+      autoEscape
+      highlightStyle={{ background: colors.primaryLight }}
+      searchWords={[value]}
+      textToHighlight={label}
+    />
+  );
 
   const resultsShown = (focused && value.trim()) || mouseOver;
   return (
@@ -242,15 +280,21 @@ export default function Search(props) {
                     onMouseEnter={() => setMouseOver(true)}
                     onMouseLeave={() => setMouseOver(false)}
                     onClick={() => {
-                      navigate(`/${res.slug}/`);
+                      navigate(`${res.slug}`);
                       setMouseOver(false);
                       setValue('');
                     }}
                   >
-                    <Title>{res.frontmatter.title}</Title>
-                    <Author>{res.frontmatter.description}</Author>
+                    <Title>
+                      <HighlightLabel label={res.title} />
+                    </Title>
+                    <Author>
+                      <HighlightLabel label={res.author} />
+                    </Author>
                     <Lyrics>
-                      {res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}
+                      <HighlightLabel
+                        label={res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}
+                      />
                     </Lyrics>
                   </Suggestion>
                 ))}

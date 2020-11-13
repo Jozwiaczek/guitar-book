@@ -4,14 +4,14 @@ import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import SEO from './seo';
-import ContentWrapper from './content-wrapper';
-import PageHeader from './page-header';
-import Footer from './footer';
-import PageContent from './page-content';
-import { VideoBox } from './videoBox';
-import { Verse } from './shared/verse';
-import { AllChordsPreview } from './allChordsPreview';
+import SEO from '../seo';
+import ContentWrapper from '../content-wrapper';
+import PageHeader from '../page-header';
+import Footer from '../footer';
+import PageContent from '../page-content';
+import { VideoBox } from '../videoBox';
+import { Verse } from '../shared/verse';
+import { AllChordsPreview } from '../allChordsPreview';
 
 const CustomLinkContext = createContext();
 
@@ -41,7 +41,7 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
-export default function Template(props) {
+export default function SongTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulSong } = props.data;
   const { title, description } = site.siteMetadata;
@@ -68,7 +68,7 @@ export default function Template(props) {
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader />
+        <PageHeader title={contentfulSong.title} description={contentfulSong.author?.name} />
         <hr />
         {contentfulSong.videoLink && (
           <>
@@ -101,14 +101,14 @@ export default function Template(props) {
   );
 }
 
-Template.propTypes = {
+SongTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 
-export const pageQuery = graphql`
-  query PageQuery($id: String) {
+export const SongTemplateQuery = graphql`
+  query SongTemplateQuery($id: String) {
     site {
       pathPrefix
       siteMetadata {
@@ -124,37 +124,6 @@ export const pageQuery = graphql`
       videoLink
       author {
         name
-      }
-    }
-    file(id: { eq: $id }) {
-      childMarkdownRemark {
-        frontmatter {
-          title
-          description
-        }
-        headings(depth: h2) {
-          value
-        }
-        fields {
-          image
-          graphManagerUrl
-        }
-        htmlAst
-      }
-      childMdx {
-        frontmatter {
-          title
-          description
-          ytLink
-        }
-        headings(depth: h2) {
-          value
-        }
-        fields {
-          image
-          graphManagerUrl
-        }
-        body
       }
     }
   }

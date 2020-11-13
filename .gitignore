@@ -5,4 +5,5 @@ node_modules
 .idea
 yarn-error.log
 lerna-debug.log
-.env.development
+!.env.example
+.env.*

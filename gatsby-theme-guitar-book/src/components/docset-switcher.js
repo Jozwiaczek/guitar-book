@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Fragment, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
 import useWindowSize from 'react-use/lib/useWindowSize';
