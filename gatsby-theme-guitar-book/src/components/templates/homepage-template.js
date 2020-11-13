@@ -38,7 +38,7 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
-export default function SongTemplate(props) {
+export default function HomepageTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulHomepage } = props.data;
   const { title, description } = site.siteMetadata;
@@ -84,7 +84,7 @@ export default function SongTemplate(props) {
   );
 }
 
-SongTemplate.propTypes = {
+HomepageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,

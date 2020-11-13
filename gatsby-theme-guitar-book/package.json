@@ -71,7 +71,8 @@
     "source-sans-pro": "^3.6.0",
     "striptags": "^3.1.1",
     "@contentful/rich-text-react-renderer": "^14.1.1",
-    "@contentful/rich-text-types": "^14.1.1"
+    "@contentful/rich-text-types": "^14.1.1",
+    "react-highlight-words": "^0.16.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

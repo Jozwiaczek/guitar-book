@@ -3,6 +3,7 @@ import React, { useMemo, useRef, useState, useCallback } from 'react';
 import { graphql, navigate, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
+import Highlighter from 'react-highlight-words';
 
 import { TextField } from '@apollo/space-kit/TextField';
 
@@ -234,6 +235,15 @@ export default function Search(props) {
     setFocused(false);
   }
 
+  const HighlightLabel = ({ label }) => (
+    <Highlighter
+      autoEscape
+      highlightStyle={{ background: colors.primaryLight }}
+      searchWords={[value]}
+      textToHighlight={label}
+    />
+  );
+
   const resultsShown = (focused && value.trim()) || mouseOver;
   return (
     <>
@@ -275,10 +285,16 @@ export default function Search(props) {
                       setValue('');
                     }}
                   >
-                    <Title>{res.title}</Title>
-                    <Author>{res.author}</Author>
+                    <Title>
+                      <HighlightLabel label={res.title} />
+                    </Title>
+                    <Author>
+                      <HighlightLabel label={res.author} />
+                    </Author>
                     <Lyrics>
-                      {res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}
+                      <HighlightLabel
+                        label={res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}
+                      />
                     </Lyrics>
                   </Suggestion>
                 ))}

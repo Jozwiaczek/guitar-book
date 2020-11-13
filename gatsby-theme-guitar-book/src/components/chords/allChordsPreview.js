@@ -6,7 +6,7 @@ import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
 
 import { size } from 'polished';
 
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { getChord } from './chords';
 
 const Container = styled.div({
@@ -50,7 +50,7 @@ const Content = styled.div({
   },
 });
 
-export function AllChordsPreview({ chords }) {
+export function AllChordsPreview({ allChords }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = expanded ? IconArrowUp : IconArrowDown;
 
@@ -65,7 +65,7 @@ export function AllChordsPreview({ chords }) {
         {expanded && (
           <Content>
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-              {chords.map((chord, index) => {
+              {allChords.map((chord, index) => {
                 return (
                   <div
                     key={index}
