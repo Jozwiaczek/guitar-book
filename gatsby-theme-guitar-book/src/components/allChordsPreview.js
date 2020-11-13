@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
 import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
