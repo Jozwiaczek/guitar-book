@@ -24,6 +24,9 @@
     "lint:fix": "eslint . --ext .js,.jsx --cache --fix"
   },
   "dependencies": {
+    "gatsby-image": "^2.5.0",
+    "gatsby-transformer-sharp": "^2.6.0",
+    "gatsby-plugin-sharp": "^2.8.0",
     "@apollo/space-kit": "^7.7.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",

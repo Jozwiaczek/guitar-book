@@ -158,6 +158,7 @@ export default function Search(props) {
   const resultContentful = useMemo(
     () =>
       data.allContentfulSong.edges.map(({ node }) => {
+        console.log(node.title);
         const authorName = node.author.name;
         return {
           title: node.title,

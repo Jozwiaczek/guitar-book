@@ -105,6 +105,9 @@ module.exports = ({
   ];
 
   const plugins = [
+    'gatsby-image',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     'gatsby-plugin-svgr',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
