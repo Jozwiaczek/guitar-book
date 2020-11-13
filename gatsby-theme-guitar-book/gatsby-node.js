@@ -212,18 +212,6 @@ exports.createPages = async (
                   }
                 }
               }
-              ... on ContentfulHomepage {
-                id
-                title
-                description
-                sys {
-                  contentType {
-                    sys {
-                      id
-                    }
-                  }
-                }
-              }
             }
           }
         }

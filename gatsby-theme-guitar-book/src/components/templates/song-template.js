@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -10,7 +10,8 @@ import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
-import { Verse } from '../shared/verse';
+import { Verse } from '../verse';
+import { AllChordsPreview } from '../chords/allChordsPreview';
 
 const CustomLinkContext = createContext();
 
@@ -45,14 +46,14 @@ export default function SongTemplate(props) {
   const { site, contentfulSong } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
-
+  const [allChords, setAllChords] = useState([]);
   const pages = sidebarContents
     .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
 
   const options = {
     renderText: (text) => {
-      return <Verse text={text} />;
+      return <Verse text={text} setAllChords={setAllChords} />;
     },
   };
 
@@ -91,6 +92,7 @@ export default function SongTemplate(props) {
             <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
+            {allChords.length && <AllChordsPreview allChords={allChords} />}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
