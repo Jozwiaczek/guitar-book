@@ -92,7 +92,7 @@ export default function Template(props) {
             <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>
-            {allChords.length > 0 && <AllChordsPreview allChords={allChords} />}
+            {allChords.length && <AllChordsPreview allChords={allChords} />}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
