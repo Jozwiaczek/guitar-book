@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChordPreview from '../chordPreview';
+import ChordPreview from './chords/chordPreview';
 
 export const Verse = ({ text, setAllChords }) => {
   const SPACE_CODE = ' ';

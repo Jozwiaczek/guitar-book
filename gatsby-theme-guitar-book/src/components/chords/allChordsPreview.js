@@ -6,7 +6,7 @@ import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
 
 import { size } from 'polished';
 
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { getChord } from './chords';
 
 const Container = styled.div({

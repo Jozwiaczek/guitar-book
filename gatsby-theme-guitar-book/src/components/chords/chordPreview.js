@@ -22,7 +22,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import { getChord } from './chords';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 
 const color = colors.background;
 
