@@ -63,7 +63,7 @@ const TooltipWrapper = styled.span`
 const ChordPreview = ({ children }) => {
   return (
     <TooltipWrapper>
-      <b>{children}</b>
+      {children}
       <TooltipBody>{getChord(children)}</TooltipBody>
     </TooltipWrapper>
   );
