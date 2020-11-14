@@ -87,6 +87,6 @@
     "gatsby-plugin-eslint": "^2.0.8"
   },
   "peerDependencies": {
-    "gatsby": "^2.6.0"
+    "gatsby": "^2.26.1"
   }
 }

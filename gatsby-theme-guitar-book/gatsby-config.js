@@ -128,6 +128,7 @@ module.exports = ({
         spaceId: contentfulSpaceId,
         accessToken: contentfulAPIKey,
         downloadLocal: true,
+        localeFilter: (locale) => locale.code === 'en-US',
       },
     },
     'gatsby-plugin-printer',

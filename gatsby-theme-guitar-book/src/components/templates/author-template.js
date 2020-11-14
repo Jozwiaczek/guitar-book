@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { createContext, useContext } from 'react';
 import { graphql, navigate } from 'gatsby';
 
+import Img from 'gatsby-image';
+
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
@@ -40,6 +42,7 @@ export default function AuthorTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulAuthor } = props.data;
   const { title, description } = site.siteMetadata;
+  const { avatar, name } = contentfulAuthor;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
@@ -66,6 +69,8 @@ export default function AuthorTemplate(props) {
           hash={hash}
           githubUrl={githubUrl}
         >
+          <h3>{name}</h3>
+          {avatar && <Img fluid={avatar.fluid} />}
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
@@ -87,8 +92,8 @@ AuthorTemplate.propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-export const SongTemplateQuery = graphql`
-  query SongTemplateQuery($id: String) {
+export const AuthorTemplateQuery = graphql`
+  query AuthorTemplateQuery($id: String) {
     site {
       pathPrefix
       siteMetadata {
@@ -97,9 +102,10 @@ export const SongTemplateQuery = graphql`
       }
     }
     contentfulAuthor(id: { eq: $id }) {
+      name
       avatar {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fluid(maxWidth: 500, quality: 100) {
+          ...GatsbyContentfulFluid
         }
       }
     }
