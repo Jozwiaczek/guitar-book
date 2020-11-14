@@ -14,7 +14,6 @@ module.exports = {
         subtitle: 'Polish Songs',
         contentfulAPIKey: process.env.CONTENTFUL_ACCESS_TOKEN,
         contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID,
-        contentfulHost: process.env.CONTENTFUL_HOST,
       },
     },
     {

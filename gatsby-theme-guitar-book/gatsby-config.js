@@ -8,7 +8,6 @@ module.exports = ({
   description,
   contentfulAPIKey,
   contentfulSpaceId,
-  contentfulHost,
   gaTrackingId,
   ignore,
   checkLinksOptions,
@@ -125,7 +124,6 @@ module.exports = ({
       options: {
         spaceId: contentfulSpaceId,
         accessToken: contentfulAPIKey,
-        host: contentfulHost,
         downloadLocal: true,
       },
     },
