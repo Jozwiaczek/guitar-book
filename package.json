@@ -13,7 +13,8 @@
     "publish": "yarn lerna publish -y prerelease --force-publish",
     "lint:fix": "lerna run lint -- --fix",
     "prettier": "prettier --write --config .prettierrc .",
-    "sort-package-json": "lerna exec npx sort-package-json"
+    "sort-package-json": "lerna exec npx sort-package-json",
+    "removeNodeModules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
   },
   "workspaces": [
     "apps/*",
