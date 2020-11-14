@@ -1,13 +1,13 @@
 /* global preval */
 import PropTypes from 'prop-types';
-import React  from 'react';
+import React from 'react';
 import TextFit from 'react-textfit';
 import { Global, css } from '@emotion/core';
 import { IconArrowRight } from '@apollo/space-kit/icons/IconArrowRight';
 
 import { smallCaps } from '../utils/typography';
 
-const { fonts, image, imageAboutUs } = preval`
+const { fonts, image } = preval`
   const fs = require('fs');
   const path = require('path');
 
@@ -27,18 +27,15 @@ const { fonts, image, imageAboutUs } = preval`
     .replace('WOFF2/TTF/SourceSansPro-Semibold.ttf.woff2', base64Semibold);
 
   const imagePath = path.resolve(__dirname, '../assets/social-bg.jpg');
-  const imagePathAboutUs = path.resolve(__dirname, '../assets/social-bg-about-us.jpg');
   const base64Image = fs.readFileSync(imagePath, 'base64');
-  const base64ImageAboutUs = fs.readFileSync(imagePathAboutUs, 'base64');
 
   module.exports = {
     fonts,
-    image: 'data:image/jpeg;base64,' + base64Image,
-    imageAboutUs: 'data:image/jpeg;base64,' + base64ImageAboutUs
+    image: 'data:image/jpeg;base64,' + base64Image
   };
 `;
 
-export default function SocialCard({ subtitle, category, title, aboutUs }) {
+export default function SocialCard({ subtitle, category, title }) {
   return (
     <div
       style={{
@@ -51,7 +48,7 @@ export default function SocialCard({ subtitle, category, title, aboutUs }) {
         padding: 80,
         fontFamily: "'Source Sans Pro'",
         color: 'black',
-        backgroundImage: `url(${aboutUs ? imageAboutUs : image})`,
+        backgroundImage: `url(${image})`,
       }}
     >
       <Global

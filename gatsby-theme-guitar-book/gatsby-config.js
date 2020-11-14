@@ -14,12 +14,6 @@ module.exports = ({
 }) => {
   const gatsbyRemarkPlugins = [
     {
-      resolve: 'gatsby-plugin-purgecss',
-      options: {
-        rejected: true,
-      },
-    },
-    {
       resolve: 'gatsby-remark-autolink-headers',
     },
     {
