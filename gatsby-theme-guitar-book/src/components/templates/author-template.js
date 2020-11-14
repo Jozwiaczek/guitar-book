@@ -72,7 +72,7 @@ export default function AuthorTemplate(props) {
               baseUrl,
             }}
           >
-            <div style={{ whiteSpace: 'break-spaces' }}></div>
+            <div style={{ whiteSpace: 'break-spaces' }} />
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
