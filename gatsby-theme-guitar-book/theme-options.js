@@ -24,7 +24,6 @@ module.exports = {
   gaTrackingId: 'UA-122299419-2',
   baseUrl: 'https://guitar-book.netlify.app/',
   logoLink: 'https://guitar-book.netlify.app//',
-  contentDir: 'content',
   twitterHandle: 'jozwiaczek',
   adSense: 'ca-pub-8136370322211479',
   youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',

@@ -11,10 +11,10 @@ const getSlug = (authorName, title) => {
 const getSlugPage = (title, isHomepage = false) =>
   isHomepage
     ? '/'
-    : title
+    : `/${title
         .toLowerCase()
         .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-');
+        .replace(/ +/g, '-')}`;
 
 exports.getVersionBasePath = getVersionBasePath;
 exports.HEADER_HEIGHT = 72;
