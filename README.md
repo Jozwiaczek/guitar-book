@@ -48,9 +48,7 @@ It also exports a series of [components](#components) that can be used within MD
 
 | Module         | Status                                                                                                                                                                    | Public URL                               |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| Polish Songs   | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys)          | https://guitar-book.netlify.app/         |
-| English Songs  | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys)  | https://guitar-book.netlify.app/english  |
-| Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties |
+| Example app    | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c123498-54db-40b0-91bf-2fc5141cfe17/deploy-status)](https://app.netlify.com/sites/guitar-book-pjatk/deploys)     | https://guitar-book-pjatk.netlify.app/   |
 
 <br/>
 <br/>
@@ -99,12 +97,10 @@ module.exports = {
         siteName: 'Guitar Book',
         pageTitle: 'Guitar Book',
         description: 'Track and play best guitar songs for camping',
-        githubRepo: 'jozwiaczek/guitar-book',
         menuTitle: 'Songs Types',
         gaTrackingId: 'UA-122299419-2',
         baseUrl: 'https://guitar-book.netlify.app/',
         logoLink: 'https://guitar-book.netlify.app//',
-        contentDir: 'content',
         twitterHandle: 'jozwiaczek',
         youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
         navConfig: {
@@ -121,14 +117,6 @@ module.exports = {
             description: 'Navigate to guitar book with shanties',
           },
         },
-        sidebarCategories: {
-          null: ['index'],
-          'George Ezra': ['blame-it-on-me', 'listening-to-the-men'],
-          'Other Guitar Books': [
-            '[Polish 🇵🇱](https://guitar-book.netlify.app)',
-            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
-          ],
-        },
       },
     },
   ],
@@ -144,84 +132,23 @@ module.exports = {
 | root              | string | Yes      | Must be `__dirname`                                                                                                                        |
 | siteName          | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site                                              |
 | description       | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                                                                 |
-| sidebarCategories | object | Yes      | An object mapping categories to page paths (see [`sidebarCategories` reference](#sidebarcategories))                                       |
 | subtitle          | string | No       | The page title that gets rendered above the sidebar navigation                                                                             |
 | pageTitle         | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.                                                |
 | baseDir           | string | No       | If your Gatsby site does not live in the root of your project directory/git repo, pass the subdirectory name here (`english`, for example) |
-| contentDir        | string | No       | The directory where songs content exists (`content` by default)                                                                            |
-| githubRepo        | string | No       | The owner and name of the content repository on GitHub                                                                                     |
 | gaTrackingId      | string | No       | Your site's Google Analytics tracking ID                                                                                                   |
 | adSense           | string | No       | Your site's Google AdSense tracking ID                                                                                                     |
 | baseUrl           | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)                                                      |
 | twitterHandle     | string | No       | Your Twitter handle, without the "@"                                                                                                       |
 | youtubeUrl        | string | No       | The URL of your YouTube channel                                                                                                            |
 | navConfig         | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))                                                 |
-| checkLinksOptions | object | No       | Options accepted by [`gastby-remark-check-links`](https://github.com/trevorblades/gatsby-remark-check-links#options)                       |
-| ignore            | array  | No       | Files to ignore using [anymatch](https://github.com/es128/anymatch)-compatible definition pattern                                          |
-
-### `sidebarCategories`
-
-The `sidebarCategories` option is an object keyed by category titles. Each entry in the object is an array of page paths. The path should resemble the location of a Markdown/MDX file in the git repository, relative to `contentDir`, and without the _.md_ extension. Sidebar navigation items that are **not** a member of a category live under the `null` key. To add an external link to your sidebar, your can provide a string formatted like a Markdown link.
-
-```
-sidebarCategories: {
-  null: ['index'],
-  'George Ezra': [
-    'blame-it-on-me',
-    'listening-to-the-men'
-  ],
-  'Other Guitar Books': [
-    '[Polish 🇵🇱](https://guitar-book.netlify.app)',
-    '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)'
-  ]
-}
-```
 
 ### `navConfig`
 
-The `navConfig` option should be an object keyed by link titles. The values should be objects with `description`, and `url` properties. Check out the [default theme options](./gatsby-theme-guitar-book/theme-options.js) for an example of the expected shape of this data.
+The `navConfig` option should be an object keyed by link titles. The values should be objects with `description`, and `url` properties.
 
 ## Adding songs
 
-This theme generates pages based on Markdown or MDX files in the [`contentDir`](#configuration) directory of a repo. Your Markdown/MDX files should contain some frontmatter defining their titles and descriptions.
-To add new song use [Verse component](#verse) with .mdx file.
-
-```mdx
----
-title: Hallelujah
-description: Jeff Buckley
-ytLink: https://www.youtube.com/watch?v=y8AWFf7EAc4
----
-
-import { Verse } from 'gatsby-theme-guitar-book';
-
-<Verse
-  text={`
-[Intro]
-C Am C Am
-\n
-[Verse 1]
-  C                 Am
-I heard there was a secret chord
-     C                   Am
-That David played and it pleased the lord
-    F                G               C        G
-But you don't really care for music, do you?
-        C                  F           G
-Well it goes like this the fourth, the fifth
-    Am                 F
-The minor fall and the major lift
-    G            E7             Am
-The baffled king composing hallelujah
-\n
-[Chorus]
-     F           Am          F           C    G   C
-Hallelujah, hallelujah, hallelujah, hallelu-u-u-u-jah ....
-`}
-/>
-```
-
-Page URLs will be derived from the file paths of your Markdown. You can nest Markdown files within directories to create pages with additional path segments. You can overwrite this default path by adding a `slug` field to your Markdown frontmatter header.
+# TODO
 
 ## Component shadowing
 
@@ -240,56 +167,6 @@ export default function SEO({ title, description, siteName }) {
   );
 }
 ```
-
-## Components
-
-This theme exports React components that you can use in MDX files throughout a documentation website.
-
-### `Verse`
-
-This component gives you ability to show the lyrics with mapped preview of chords.
-
-| Prop | Type   | Description                                                                                                                                    |
-| ---- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| text | string | New lines in lyrics must be split by `\n`, other way you will get error. All chords should be placed on top of song line to be properly mapped |
-
-```js
-import { Verse } from 'gatsby-theme-guitar-book';
-
-<Verse
-  text={`
-[Intro]
-C Am C Am
-\n
-[Verse 1]
-  C                 Am
-I heard there was a secret chord
-     C                   Am
-That David played and it pleased the lord
-    F                G               C        G
-But you don't really care for music, do you?
-        C                  F           G
-Well it goes like this the fourth, the fifth
-    Am                 F
-The minor fall and the major lift
-    G            E7             Am
-The baffled king composing hallelujah
-\n
-[Chorus]
-     F           Am          F           C    G   C
-Hallelujah, hallelujah, hallelujah, hallelu-u-u-u-jah ....
-`}
-/>;
-```
-
-### `ExpansionPanel`
-
-An expandable panel of content used to hide complex information or instructions that might be a tangent from the main topic of the content it lives within.
-
-| Prop     | Type   | Description                                                        |
-| -------- | ------ | ------------------------------------------------------------------ |
-| children | node   | The content of the panel, usually includes an `ExpansionPanelList` |
-| title    | string | The title of the panel, visible even when the panel is closed      |
 
 ## Deployment
 

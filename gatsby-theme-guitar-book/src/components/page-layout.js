@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 
 import { IconLayoutModule } from '@apollo/space-kit/icons/IconLayoutModule';
 
-import { graphql, navigate, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
 import { size } from 'polished';
 
@@ -19,10 +19,7 @@ import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-
-import { Select } from './select';
 import { SelectedLanguageContext } from './multi-code-block';
-import { getVersionBasePath } from '../utils';
 
 import Search from './search';
 import Header from './header';

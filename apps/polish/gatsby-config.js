@@ -1,19 +1,42 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-const themeOptions = require('gatsby-theme-guitar-book/theme-options');
 
 module.exports = {
   plugins: [
     {
       resolve: `gatsby-theme-guitar-book`,
       options: {
-        ...themeOptions,
         root: __dirname,
+        siteName: 'Guitar Book',
+        pageTitle: 'Guitar Book',
+        description: 'Track and play best guitar songs for camping',
+        menuTitle: 'Songs Types',
         baseDir: 'apps/polish',
         subtitle: 'Polish Songs',
+        baseUrl: 'https://guitar-book.netlify.app/',
+        logoLink: 'https://guitar-book.netlify.app/',
+        twitterHandle: 'jozwiaczek',
+        gaTrackingId: 'UA-122299419-2',
+        adSense: 'ca-pub-8136370322211479',
+        youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
         contentfulAPIKey: process.env.CONTENTFUL_ACCESS_TOKEN,
         contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID,
+        footerNavConfig: {},
+        navConfig: {
+          'Polish Songs 🇵🇱': {
+            url: 'https://guitar-book.netlify.app/',
+            description: 'Navigate to guitar book with polish songs',
+          },
+          'English Songs 🇺🇸': {
+            url: 'https://guitar-book.netlify.app/english',
+            description: 'Navigate to guitar book with english songs',
+          },
+          'Shanties Songs 🏴‍': {
+            url: 'https://guitar-book.netlify.app/shanties',
+            description: 'Navigate to guitar book with shanties',
+          },
+        },
       },
     },
     {

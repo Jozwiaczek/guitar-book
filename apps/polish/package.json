@@ -8,7 +8,10 @@
     "directory": "apps/polish"
   },
   "license": "MIT",
-  "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
+  "author": {
+    "name": "Jakub Jozwiak",
+    "email": "kubencki@gmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "build": "gatsby build",
