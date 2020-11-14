@@ -1,9 +1,8 @@
 const navConfig = {
   'Example Song Book': {
     url: 'https://guitar-book.netlify.app/english',
-    description:
-      'Navigate to guitar book with english songs'
-  }
+    description: 'Navigate to guitar book with english songs',
+  },
 };
 
 const footerNavConfig = {};
@@ -17,22 +16,20 @@ module.exports = {
         siteName: 'Guitar Book',
         description: 'Track and play best guitar songs for camping',
         pageTitle: 'Guitar Book',
-        subtitle: 'Template Songs',
+        subtitle: 'SongTemplate Songs',
         menuTitle: 'Songs Types',
         contentDir: 'content',
         sidebarCategories: {
           null: ['index'],
-          'Author X': [
-            'authorX/songX'
-          ],
+          'Author X': ['authorX/songX'],
           'Other Guitar Books': [
             '[🤷🏻‍ How to use guitar book?](https://github.com/Jozwiaczek/guitar-book)',
-            'test'
+            'test',
           ],
         },
         navConfig,
-        footerNavConfig
-      }
+        footerNavConfig,
+      },
     },
     {
       resolve: 'gatsby-plugin-eslint',
@@ -44,9 +41,9 @@ module.exports = {
         stages: ['develop'],
         options: {
           emitWarning: true,
-          failOnError: false
-        }
-      }
-    }
-  ]
+          failOnError: false,
+        },
+      },
+    },
+  ],
 };

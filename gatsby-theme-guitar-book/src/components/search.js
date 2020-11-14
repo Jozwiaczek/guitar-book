@@ -1,21 +1,27 @@
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
-import {graphql, useStaticQuery, navigate} from 'gatsby';
+import React, { useMemo, useRef, useState, useCallback } from 'react';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
-import {HEADER_HEIGHT} from '../utils';
-import {TextField} from '@apollo/space-kit/TextField';
-import {colors} from '../utils/colors';
+import Highlighter from 'react-highlight-words';
+
+import { TextField } from '@apollo/space-kit/TextField';
+
+import { css } from '@emotion/core';
+
+import { position, size, transparentize } from 'polished';
+
+import { HEADER_HEIGHT } from '../utils';
+import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-import {css} from '@emotion/core';
-import {position, size, transparentize} from 'polished';
+import { getSlug } from '../utils/getSlug';
 
 const borderRadius = 5;
 const border = `1px solid ${colors.text3}`;
 const verticalAlign = css({
   position: 'absolute',
   top: '50%',
-  transform: 'translateY(-50%)'
+  transform: 'translateY(-50%)',
 });
 
 const Hotkey = styled.div(verticalAlign, size(24), {
@@ -26,7 +32,7 @@ const Hotkey = styled.div(verticalAlign, size(24), {
   textAlign: 'center',
   lineHeight: 1.125,
   right: 10,
-  pointerEvents: 'none'
+  pointerEvents: 'none',
 });
 
 const boxShadowColor = transparentize(0.9, 'black');
@@ -39,8 +45,8 @@ const Container = styled.div({
   position: 'relative',
   zIndex: 1,
   [breakpoints.md]: {
-    marginRight: 0
-  }
+    marginRight: 0,
+  },
 });
 
 const SuggestionBox = styled.div({
@@ -55,7 +61,7 @@ const SuggestionBox = styled.div({
   boxShadow,
   maxHeight: `calc(100vh - ${HEADER_HEIGHT}px - 32px)`,
   padding: 0,
-  border
+  border,
 });
 
 const Suggestion = styled.div({
@@ -67,22 +73,22 @@ const Suggestion = styled.div({
 
   ':hover': {
     backgroundColor: transparentize(0.5, colors.divider),
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 });
 
 const Title = styled.div({
   marginBottom: 4,
   fontSize: 22,
   color: colors.text1,
-  textAlign: 'initial'
+  textAlign: 'initial',
 });
 
 const Author = styled.div({
   marginBottom: 0,
   fontSize: 18,
   fontWeight: 'normal',
-  color: 'inherit'
+  color: 'inherit',
 });
 
 const Lyrics = styled.div({});
@@ -90,23 +96,23 @@ const Lyrics = styled.div({});
 const NoResultsInfo = styled.p({
   padding: 32,
   marginBottom: 0,
-  textAlign: 'center'
+  textAlign: 'center',
 });
 
 const Overlay = styled.div(
   position('fixed', 0),
-  props =>
+  (props) =>
     !props.visible && {
       opacity: 0,
-      visibility: 'hidden'
+      visibility: 'hidden',
     },
   {
     backgroundColor: transparentize(0.5, colors.text2),
     transitionProperty: 'opacity, visibility',
     transitionDuration: '150ms',
     transitionTimingFunction: 'ease-in-out',
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 );
 
 export default function Search(props) {
@@ -119,16 +125,15 @@ export default function Search(props) {
 
   const data = useStaticQuery(graphql`
     query {
-      allFile {
+      allContentfulSong(filter: { node_locale: { eq: "en-US" } }) {
         edges {
           node {
-            childMdx {
-              frontmatter {
-                title
-                description
-              }
-              slug
-              rawBody
+            title
+            author {
+              name
+            }
+            lyrics {
+              json
             }
           }
         }
@@ -136,48 +141,72 @@ export default function Search(props) {
     }
   `);
 
-  const nodes = data.allFile.edges
-      .map(n => n.node.childMdx)
-      .filter(n => n && !!n.slug);
+  const resultContentful = useMemo(
+    () =>
+      data.allContentfulSong.edges.map(({ node }) => {
+        const authorName = node.author.name;
+        return {
+          title: node.title,
+          lyrics: node.lyrics.json.content.reduce((externalAcc, { content }) => {
+            const joinedValues = content.reduce(
+              (innerAcc, { value }) => `${innerAcc} ${value}`,
+              '',
+            );
+            return `${externalAcc} ${joinedValues}`;
+          }, ''),
+          slug: getSlug(authorName, node.title),
+          author: authorName,
+        };
+      }),
+    [],
+  );
 
-  const search = (searchText) => {
+  const search = useCallback((searchText) => {
     searchText = searchText.trim();
     if (!searchText) return [];
-    let searchRegExp = new RegExp(searchText, "i");
-    return nodes.map(n => {
-      n.lyrics = n.rawBody.substring(n.rawBody.indexOf('<Verse text={`') + 14, n.rawBody.lastIndexOf('`}/>'));
-      n.filter = {
-        title: n.frontmatter.title.search(searchRegExp),
-        author: n.frontmatter.description.search(searchRegExp),
-        lyrics: n.lyrics.search(searchRegExp)
-      };
+    const searchRegExp = new RegExp(searchText, 'i');
+    return resultContentful
+      .map((n) => {
+        n.filter = {
+          title: n.title.search(searchRegExp),
+          author: n.author.search(searchRegExp),
+          lyrics: n.lyrics.search(searchRegExp),
+        };
 
-      return n;
-    }).filter(({filter: {title, author, lyrics}}) => title !== -1 || author !== -1 || lyrics !== -1)
-        .sort(({filter: {title: titleA, author: authorA, lyrics: lyricsA}}, {filter: {title: titleB, author: authorB, lyrics: lyricsB}}) => {
-          if(titleA !== -1 && titleB !== -1) return titleA - titleB;
-          else if(titleA !== -1) return -1;
-          else if(titleB !== -1) return 1;
+        return n;
+      })
+      .filter(
+        ({ filter: { title, author, lyrics } }) => title !== -1 || author !== -1 || lyrics !== -1,
+      )
+      .sort(
+        (
+          { filter: { title: titleA, author: authorA, lyrics: lyricsA } },
+          { filter: { title: titleB, author: authorB, lyrics: lyricsB } },
+        ) => {
+          if (titleA !== -1 && titleB !== -1) return titleA - titleB;
+          if (titleA !== -1) return -1;
+          if (titleB !== -1) return 1;
 
-          if(authorA !== -1 && authorB !== -1) return authorA - authorB;
-          else if(authorA !== -1) return -1;
-          else if(authorB !== -1) return 1;
+          if (authorA !== -1 && authorB !== -1) return authorA - authorB;
+          if (authorA !== -1) return -1;
+          if (authorB !== -1) return 1;
 
-          if(lyricsA !== -1 && lyricsB !== -1) return lyricsA - lyricsB;
-          else if(lyricsA !== -1) return -1;
-          else if(lyricsB !== -1) return 1;
+          if (lyricsA !== -1 && lyricsB !== -1) return lyricsA - lyricsB;
+          if (lyricsA !== -1) return -1;
+          if (lyricsB !== -1) return 1;
           return 1;
-        }).slice(0, resultLimit);
-  };
+        },
+      )
+      .slice(0, resultLimit);
+  }, []);
 
   // focus the input when the slash key is pressed
   useKey(
-    event =>
-      event.keyCode === 191 && event.target.tagName.toUpperCase() !== 'INPUT',
-    event => {
+    (event) => event.keyCode === 191 && event.target.tagName.toUpperCase() !== 'INPUT',
+    (event) => {
       event.preventDefault();
       inputRef.current.focus();
-    }
+    },
   );
 
   function onChange(event) {
@@ -191,6 +220,15 @@ export default function Search(props) {
   function onBlur() {
     setFocused(false);
   }
+
+  const HighlightLabel = ({ label }) => (
+    <Highlighter
+      autoEscape
+      highlightStyle={{ background: colors.primaryLight }}
+      searchWords={[value]}
+      textToHighlight={label}
+    />
+  );
 
   const resultsShown = (focused && value.trim()) || mouseOver;
   return (
@@ -207,41 +245,51 @@ export default function Search(props) {
               autoComplete="off"
               style={{
                 fontSize: 16,
-                boxShadow: resultsShown ? boxShadow : 'none'
+                boxShadow: resultsShown ? boxShadow : 'none',
               }}
             />
           }
+          value={value}
+          placeholder={`Search ${props.siteName}`}
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          value={value}
-          placeholder={`Search ${props.siteName}`}
         />
         {!focused && !value && <Hotkey>/</Hotkey>}
-        {resultsShown &&
+        {resultsShown && (
           <SuggestionBox>
-            {result.length ?
+            {result.length ? (
               <>
-                {result.map((res,index) =>
+                {result.map((res, index) => (
                   <Suggestion
                     key={index}
                     onMouseEnter={() => setMouseOver(true)}
                     onMouseLeave={() => setMouseOver(false)}
-                    onClick={ () => {
-                      navigate(`/${res.slug}/`);
+                    onClick={() => {
+                      navigate(`${res.slug}`);
                       setMouseOver(false);
                       setValue('');
                     }}
                   >
-                    <Title>{res.frontmatter.title}</Title>
-                    <Author>{res.frontmatter.description}</Author>
-                    <Lyrics>{res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}</Lyrics>
-                  </Suggestion>)}
-              </>:
+                    <Title>
+                      <HighlightLabel label={res.title} />
+                    </Title>
+                    <Author>
+                      <HighlightLabel label={res.author} />
+                    </Author>
+                    <Lyrics>
+                      <HighlightLabel
+                        label={res.lyrics.substr(res.filter.lyrics < 0 ? 0 : res.filter.lyrics, 20)}
+                      />
+                    </Lyrics>
+                  </Suggestion>
+                ))}
+              </>
+            ) : (
               <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>
-            }
+            )}
           </SuggestionBox>
-        }
+        )}
       </Container>
     </>
   );

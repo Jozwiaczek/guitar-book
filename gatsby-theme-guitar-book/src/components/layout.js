@@ -1,8 +1,8 @@
 import '../styles.less';
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
-import {Helmet} from 'react-helmet';
-import {StaticQuery, graphql} from 'gatsby';
+import React, { Fragment } from 'react';
+import { Helmet } from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
 
 export default function Layout(props) {
   return (
@@ -17,15 +17,15 @@ export default function Layout(props) {
           }
         }
       `}
-      render={data => {
-        const {title, description} = data.site.siteMetadata;
+      render={(data) => {
+        const { title, description } = data.site.siteMetadata;
         return (
-          <Fragment>
+          <>
             <Helmet defaultTitle={title} titleTemplate={`%s - ${title}`}>
               <meta name="description" content={description} />
             </Helmet>
             {props.children}
-          </Fragment>
+          </>
         );
       }}
     />
@@ -33,5 +33,5 @@ export default function Layout(props) {
 }
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

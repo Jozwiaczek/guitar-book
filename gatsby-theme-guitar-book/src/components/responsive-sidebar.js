@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types';
 import useKey from 'react-use/lib/useKey';
-import {useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 
 export function useResponsiveSidebar() {
   const sidebarRef = useRef(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useKey(
-    event =>
-      sidebarOpen &&
-      (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27),
-    closeSidebar
+    (event) =>
+      sidebarOpen && (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27),
+    closeSidebar,
   );
 
   function openSidebar() {
@@ -33,7 +32,7 @@ export function useResponsiveSidebar() {
     closeSidebar,
     sidebarRef,
     handleWrapperClick,
-    handleSidebarNavLinkClick: sidebarOpen ? closeSidebar : null
+    handleSidebarNavLinkClick: sidebarOpen ? closeSidebar : null,
   };
 }
 
@@ -43,5 +42,5 @@ export default function ResponsiveSidebar(props) {
 }
 
 ResponsiveSidebar.propTypes = {
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
 };

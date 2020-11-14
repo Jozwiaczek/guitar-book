@@ -1,25 +1,30 @@
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
-import SectionNav from './section-nav';
+import React, { useRef, useState } from 'react';
+
 import styled from '@emotion/styled';
+
 import useMount from 'react-use/lib/useMount';
-import {HEADER_HEIGHT} from '../utils';
-import {IconGithub} from '@apollo/space-kit/icons/IconGithub';
+
+import { IconGithub } from '@apollo/space-kit/icons/IconGithub';
+
+import { withPrefix } from 'gatsby';
+
+import SectionNav from './section-nav';
+
+import { HEADER_HEIGHT } from '../utils';
+
 import PageNav from './page-nav';
-import {colors} from '../utils/colors';
+import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-
-
-import {withPrefix} from 'gatsby';
 
 const Wrapper = styled.div({
   display: 'flex',
-  alignItems: 'flex-start'
+  alignItems: 'flex-start',
 });
 
 const InnerWrapper = styled.div({
   flexGrow: 1,
-  width: 0
+  width: 0,
 });
 
 const BodyContent = styled.div({
@@ -29,37 +34,37 @@ const BodyContent = styled.div({
     color: colors.primary,
     textDecoration: 'none',
     ':hover': {
-      textDecoration: 'underline'
+      textDecoration: 'underline',
     },
     code: {
-      color: 'inherit'
-    }
+      color: 'inherit',
+    },
   },
   [['h1', 'h2', 'h3', 'h4', 'h5', 'h6']]: {
     code: {
-      whiteSpace: 'normal'
+      whiteSpace: 'normal',
     },
     a: {
       color: 'inherit',
       textDecoration: 'none',
       ':hover': {
-        color: colors.text2
-      }
-    }
+        color: colors.text2,
+      },
+    },
   },
   '*:not(style) +': {
     [['h2', 'h3', 'h4']]: {
-      marginTop: 56
-    }
+      marginTop: 56,
+    },
   },
   img: {
     display: 'block',
     maxWidth: '100%',
-    margin: '0 auto'
+    margin: '0 auto',
   },
   '.mermaid svg': {
-    maxWidth: '100%'
-  }
+    maxWidth: '100%',
+  },
 });
 
 const Aside = styled.aside({
@@ -74,26 +79,26 @@ const Aside = styled.aside({
   position: 'sticky',
   top: HEADER_HEIGHT,
   [breakpoints.lg]: {
-    display: 'none'
+    display: 'none',
   },
   [breakpoints.md]: {
-    display: 'block'
+    display: 'block',
   },
   [breakpoints.sm]: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 const AsideHeading = styled.h4({
-  fontWeight: 600
+  fontWeight: 600,
 });
 
 const AsideLinkWrapper = styled.h5({
   display: 'flex',
   marginBottom: 0,
   ':not(:last-child)': {
-    marginBottom: 16
-  }
+    marginBottom: 16,
+  },
 });
 
 const AsideLinkInner = styled.a({
@@ -102,14 +107,14 @@ const AsideLinkInner = styled.a({
   color: colors.text2,
   textDecoration: 'none',
   ':hover': {
-    color: colors.text3
+    color: colors.text3,
   },
   svg: {
     width: 20,
     height: 20,
     marginRight: 6,
-    fill: 'currentColor'
-  }
+    fill: 'currentColor',
+  },
 });
 
 function AsideLink(props) {
@@ -125,15 +130,15 @@ const EditLink = styled.div({
   marginTop: 48,
   justifyContent: 'flex-end',
   [breakpoints.lg]: {
-    display: 'flex'
+    display: 'flex',
   },
   [breakpoints.md]: {
-    display: 'none'
+    display: 'none',
   },
   [breakpoints.sm]: {
     display: 'flex',
-    marginTop: 24
-  }
+    marginTop: 24,
+  },
 });
 
 export default function PageContent(props) {
@@ -158,7 +163,7 @@ export default function PageContent(props) {
 
     let toLoad = 0;
     const images = contentRef.current.querySelectorAll('img');
-    images.forEach(image => {
+    images.forEach((image) => {
       if (!image.complete) {
         image.addEventListener('load', handleImageLoad);
         toLoad++;
@@ -169,15 +174,12 @@ export default function PageContent(props) {
   });
 
   function handleImageLoad() {
-    setImagesLoaded(prevImagesLoaded => prevImagesLoaded + 1);
+    setImagesLoaded((prevImagesLoaded) => prevImagesLoaded + 1);
   }
 
-  const pageIndex = props.pages.findIndex(page => {
+  const pageIndex = props.pages.findIndex((page) => {
     const prefixedPath = withPrefix(page.path);
-    return (
-      prefixedPath === props.pathname ||
-      prefixedPath.replace(/\/$/, '') === props.pathname
-    );
+    return prefixedPath === props.pathname || prefixedPath.replace(/\/$/, '') === props.pathname;
   });
 
   const editLink = props.githubUrl && (
@@ -193,14 +195,11 @@ export default function PageContent(props) {
           {props.children}
         </BodyContent>
         <EditLink>{editLink}</EditLink>
-        <PageNav
-          prevPage={props.pages[pageIndex - 1]}
-          nextPage={props.pages[pageIndex + 1]}
-        />
+        <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
       </InnerWrapper>
       <Aside>
         <AsideHeading>{props.title}</AsideHeading>
-        {props.headings.length > 0 && (
+        {props.headings?.length > 0 && (
           <SectionNav
             headings={props.headings}
             contentRef={contentRef}
@@ -220,5 +219,5 @@ PageContent.propTypes = {
   pages: PropTypes.array.isRequired,
   hash: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  headings: PropTypes.array.isRequired
+  headings: PropTypes.array.isRequired,
 };

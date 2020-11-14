@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {IconArrowDown} from '@apollo/space-kit/icons/IconArrowDown';
-import {IconArrowUp} from '@apollo/space-kit/icons/IconArrowUp';
-import {colors} from '../utils/colors';
-import {size} from 'polished';
+import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
+import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
+
+import { size } from 'polished';
+
+import { colors } from '../utils/colors';
 
 const Container = styled.div({
   marginBottom: '1.45rem',
-  borderLeft: `2px solid ${colors.primary}`
+  borderLeft: `2px solid ${colors.primary}`,
 });
 
 const iconSize = 14;
@@ -28,29 +30,29 @@ const StyledButton = styled.button({
   outline: 'none',
   cursor: 'pointer',
   ':hover': {
-    color: '#311c87'
+    color: '#311c87',
   },
   ':active': {
-    color: '#311c87'
+    color: '#311c87',
   },
   svg: {
     ...size(iconSize),
-    marginRight: iconMargin
-  }
+    marginRight: iconMargin,
+  },
 });
 
 const Content = styled.div({
   padding: `8px ${iconMargin}px`,
   color: colors.text1,
   p: {
-    fontSize: '1rem'
-  }
+    fontSize: '1rem',
+  },
 });
 
 export function VideoBox({ videoUrl }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = expanded ? IconArrowUp : IconArrowDown;
-  const ytLink = videoUrl.replace("watch?v=", "embed/");
+  const ytLink = videoUrl.replace('watch?v=', 'embed/');
 
   return (
     <Container>
@@ -58,21 +60,21 @@ export function VideoBox({ videoUrl }) {
         <Icon />
         Music video
       </StyledButton>
-      {expanded &&
+      {expanded && (
         <Content>
           <iframe
+            allowFullScreen
+            title="Music Video"
             src={ytLink}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             frameBorder="0"
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            allowFullScreen
           />
-        </Content>}
+        </Content>
+      )}
     </Container>
   );
 }
 
 VideoBox.propTypes = {
-  videoUrl: PropTypes.string.isRequired
+  videoUrl: PropTypes.string.isRequired,
 };

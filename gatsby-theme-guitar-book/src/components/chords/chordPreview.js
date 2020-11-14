@@ -19,9 +19,10 @@
 // export default ChordPreview;
 
 import React from 'react';
-import styled from "@emotion/styled";
-import {getChord} from "./chords";
-import {colors} from "../utils/colors";
+import styled from '@emotion/styled';
+
+import { getChord } from './chords';
+import { colors } from '../../utils/colors';
 
 const color = colors.background;
 
@@ -35,8 +36,6 @@ const TooltipBody = styled.span`
   padding: 19px 16px 12px;
   background: ${color};
   border-radius: 4px;
-  font-size: 13px;
-  line-height: 18px;
   z-index: 10;
 
   &::before {
@@ -62,13 +61,10 @@ const TooltipWrapper = styled.span`
 `;
 
 const ChordPreview = ({ children }) => {
-
   return (
     <TooltipWrapper>
-      <b>{children}</b>
-      <TooltipBody>
-        {getChord(children)}
-      </TooltipBody>
+      {children}
+      <TooltipBody>{getChord(children)}</TooltipBody>
     </TooltipWrapper>
   );
 };
