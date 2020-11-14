@@ -1,12 +1,13 @@
 /* global preval */
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
+import React from 'react';
 import TextFit from 'react-textfit';
-import {Global, css} from '@emotion/core';
-import {IconArrowRight} from '@apollo/space-kit/icons/IconArrowRight';
-import {smallCaps} from '../utils/typography';
+import { Global, css } from '@emotion/core';
+import { IconArrowRight } from '@apollo/space-kit/icons/IconArrowRight';
 
-const {fonts, image} = preval`
+import { smallCaps } from '../utils/typography';
+
+const { fonts, image } = preval`
   const fs = require('fs');
   const path = require('path');
 
@@ -34,7 +35,7 @@ const {fonts, image} = preval`
   };
 `;
 
-export default function SocialCard(props) {
+export default function SocialCard({ subtitle, category, title }) {
   return (
     <div
       style={{
@@ -47,7 +48,7 @@ export default function SocialCard(props) {
         padding: 80,
         fontFamily: "'Source Sans Pro'",
         color: 'black',
-        backgroundImage: `url(${image})`
+        backgroundImage: `url(${image})`,
       }}
     >
       <Global
@@ -65,23 +66,23 @@ export default function SocialCard(props) {
           fontWeight: 600,
           marginBottom: 16,
           color: 'black',
-          ...smallCaps
+          ...smallCaps,
         }}
       >
-        {props.subtitle}
-        {props.category && (
-          <Fragment>
+        {subtitle}
+        {category && (
+          <>
             {' '}
             <IconArrowRight
               className="arrow-icon"
               style={{
                 width: '0.5em',
                 height: '0.5em',
-                verticalAlign: '0.05em'
+                verticalAlign: '0.05em',
               }}
             />{' '}
-            {props.category}
-          </Fragment>
+            {category}
+          </>
         )}
       </div>
       <TextFit
@@ -92,10 +93,10 @@ export default function SocialCard(props) {
           height: 250,
           marginBottom: 'auto',
           lineHeight: 1.2,
-          colors: 'black'
+          colors: 'black',
         }}
       >
-        {props.title.replace(/\s+(\S*)$/, '\xA0$1')}
+        {title.replace(/\s+(\S*)$/, '\xA0$1')}
       </TextFit>
       <div>
         <svg viewBox="0 0 440.7 178.23" style={{ height: 105 }}>
@@ -118,5 +119,5 @@ export default function SocialCard(props) {
 SocialCard.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  category: PropTypes.string
+  category: PropTypes.string,
 };

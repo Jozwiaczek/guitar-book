@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {IconFilter} from '@apollo/space-kit/icons/IconFilter';
-import {IconHide} from '@apollo/space-kit/icons/IconHide';
-import {IconView} from '@apollo/space-kit/icons/IconView';
-import {IconOutlink} from '@apollo/space-kit/icons/IconOutlink';
-import {colors} from '@apollo/space-kit/colors';
-import {Popover} from "@apollo/space-kit/Popover";
-import {ListHeading} from "@apollo/space-kit/ListHeading";
-import {ListItem} from "@apollo/space-kit/ListItem";
-import breakpoints from "../utils/breakpoints";
-import AutoScroll from "./auto-scroll";
+import { IconFilter } from '@apollo/space-kit/icons/IconFilter';
+import { IconHide } from '@apollo/space-kit/icons/IconHide';
+import { IconView } from '@apollo/space-kit/icons/IconView';
+import { IconOutlink } from '@apollo/space-kit/icons/IconOutlink';
+import { colors } from '@apollo/space-kit/colors';
+import { Popover } from '@apollo/space-kit/Popover';
+import { ListHeading } from '@apollo/space-kit/ListHeading';
+import { ListItem } from '@apollo/space-kit/ListItem';
+
+import breakpoints from '../utils/breakpoints';
+import AutoScroll from './auto-scroll';
 
 const StyledLink = styled.a({
   display: 'flex',
@@ -19,47 +20,47 @@ const StyledLink = styled.a({
   lineHeight: 2,
   textDecoration: 'none',
   ':hover': {
-    color: colors.indigo.darker
-  }
+    color: colors.indigo.darker,
+  },
 });
 
 const StyledIconToolbox = styled(IconFilter)({
   height: '1.25em',
-  marginLeft: '0.7em'
+  marginLeft: '0.7em',
 });
 
 const StyledIconOutlink = styled(IconOutlink)({
   height: '0.75em',
-  marginLeft: '0.5em'
+  marginLeft: '0.5em',
 });
 
 const StyledIconShow = styled(IconView)({
   height: '1em',
-  marginLeft: '0.5em'
+  marginLeft: '0.5em',
 });
 
 const StyledIconHide = styled(IconHide)({
   height: '1em',
-  marginLeft: '0.5em'
+  marginLeft: '0.5em',
 });
 
 const DesktopText = styled.span({
   [breakpoints.md]: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 const DesktopLink = styled.a({
   [breakpoints.md]: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 const MobileLink = styled.a({
   display: 'none',
   [breakpoints.md]: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });
 
 const LaunchTunerButton = () => {
@@ -81,7 +82,10 @@ const LaunchTunerButton = () => {
         {content}
       </DesktopLink>
       <MobileLink
-        onClick={ () => window.location="https://apps.apple.com/pl/app/guitartuna-guitar-bass-tuner/id527588389" }
+        onClick={() =>
+          (window.location =
+            'https://apps.apple.com/pl/app/guitartuna-guitar-bass-tuner/id527588389')
+        }
       >
         {content}
       </MobileLink>
@@ -96,27 +100,29 @@ export default function Toolbox({ pathname }) {
     <div>
       <Popover
         placement="bottom"
-        popperOptions={{ strategy: "absolute" }}
-        fallbackPlacements={["top"]}
+        popperOptions={{ strategy: 'absolute' }}
+        fallbackPlacements={['top']}
         iconSize="small"
         content={
           <>
             <ListHeading>Toolbox</ListHeading>
-            {pathname !== '/' &&
-              <ListItem onClick={() => setAutoScrollOpen(prev => !prev)}>
-                {isAutoScrollShown ?
+            {pathname !== '/' && (
+              <ListItem onClick={() => setAutoScrollOpen((prev) => !prev)}>
+                {isAutoScrollShown ? (
                   <>
                     Hide Auto Scroll
-                    <StyledIconHide/>
-                  </> :
+                    <StyledIconHide />
+                  </>
+                ) : (
                   <>
                     Show Auto Scroll
-                    <StyledIconShow/>
-                  </>}
+                    <StyledIconShow />
+                  </>
+                )}
               </ListItem>
-            }
+            )}
             <ListItem>
-              <LaunchTunerButton/>
+              <LaunchTunerButton />
             </ListItem>
           </>
         }
@@ -127,7 +133,7 @@ export default function Toolbox({ pathname }) {
           </StyledLink>
         }
       />
-      {pathname !== '/' && isAutoScrollShown && <AutoScroll/>}
+      {pathname !== '/' && isAutoScrollShown && <AutoScroll />}
     </div>
   );
 }

@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Slugger from 'github-slugger';
 import striptags from 'striptags';
 import styled from '@emotion/styled';
 import useWindowScroll from 'react-use/lib/useWindowScroll';
 import useWindowSize from 'react-use/lib/useWindowSize';
-import {colors} from '../utils/colors';
-import {trackCustomEvent} from 'gatsby-plugin-google-analytics';
+
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+
+import { colors } from '../utils/colors';
 
 const StyledList = styled.ul({
   marginLeft: 0,
   marginBottom: 48,
-  overflow: 'auto'
+  overflow: 'auto',
 });
 
-const StyledListItem = styled.li(props => ({
+const StyledListItem = styled.li((props) => ({
   listStyle: 'none',
   fontSize: '1rem',
   lineHeight: 'inherit',
@@ -23,30 +25,30 @@ const StyledListItem = styled.li(props => ({
     color: 'inherit',
     textDecoration: 'none',
     ':hover': {
-      opacity: colors.hoverOpacity
-    }
-  }
+      opacity: colors.hoverOpacity,
+    },
+  },
 }));
 
 function handleHeadingClick(event) {
   trackCustomEvent({
     category: 'Section Nav',
     action: 'Heading click',
-    label: event.target.innerText
+    label: event.target.innerText,
   });
 }
 
 export default function SectionNav(props) {
-  const {y} = useWindowScroll();
-  const {width, height} = useWindowSize();
+  const { y } = useWindowScroll();
+  const { width, height } = useWindowSize();
   const [offsets, setOffsets] = useState([]);
 
-  const {contentRef, imagesLoaded} = props;
+  const { contentRef, imagesLoaded } = props;
   useEffect(() => {
     const headings = contentRef.current.querySelectorAll('h1, h2');
     setOffsets(
       Array.from(headings)
-        .map(heading => {
+        .map((heading) => {
           const anchor = heading.querySelector('a');
           if (!anchor) {
             return null;
@@ -54,10 +56,10 @@ export default function SectionNav(props) {
 
           return {
             id: heading.id,
-            offset: heading.offsetTop + anchor.offsetTop
+            offset: heading.offsetTop + anchor.offsetTop,
           };
         })
-        .filter(Boolean)
+        .filter(Boolean),
     );
   }, [width, height, contentRef, imagesLoaded]);
 
@@ -65,7 +67,7 @@ export default function SectionNav(props) {
   const windowOffset = height / 2;
   const scrollTop = y + windowOffset;
   for (let i = offsets.length - 1; i >= 0; i--) {
-    const {id, offset} = offsets[i];
+    const { id, offset } = offsets[i];
     if (scrollTop >= offset) {
       activeHeading = id;
       break;
@@ -75,7 +77,7 @@ export default function SectionNav(props) {
   const slugger = new Slugger();
   return (
     <StyledList>
-      {props.headings.map(({value}) => {
+      {props.headings.map(({ value }) => {
         const text = striptags(value);
         const slug = slugger.slug(text);
         return (
@@ -93,5 +95,5 @@ export default function SectionNav(props) {
 SectionNav.propTypes = {
   headings: PropTypes.array.isRequired,
   imagesLoaded: PropTypes.bool.isRequired,
-  contentRef: PropTypes.object.isRequired
+  contentRef: PropTypes.object.isRequired,
 };

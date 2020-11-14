@@ -1,19 +1,16 @@
-const path = require('path');
 const mapKeys = require('lodash/mapKeys');
-const {colors} = require('./src/utils/colors');
+
+const { colors } = require('./src/utils/colors');
 
 module.exports = ({
-  root,
   siteName,
   pageTitle,
   description,
-  githubRepo,
-  baseDir = '',
-  contentDir = 'content',
-  versions = {},
+  contentfulAPIKey,
+  contentfulSpaceId,
   gaTrackingId,
   ignore,
-  checkLinksOptions
+  checkLinksOptions,
 }) => {
   const gatsbyRemarkPlugins = [
     {
@@ -22,8 +19,8 @@ module.exports = ({
     {
       resolve: 'gatsby-remark-copy-linked-files',
       options: {
-        ignoreFileExtensions: []
-      }
+        ignoreFileExtensions: [],
+      },
     },
     {
       resolve: 'gatsby-remark-mermaid',
@@ -82,22 +79,22 @@ module.exports = ({
               stroke: black;
               fill: white;
             }
-          `
-        }
-      }
+          `,
+        },
+      },
     },
     'gatsby-remark-code-titles',
     {
       resolve: 'gatsby-remark-prismjs',
       options: {
-        showLineNumbers: true
-      }
+        showLineNumbers: true,
+      },
     },
     'gatsby-remark-rewrite-relative-links',
     {
       resolve: 'gatsby-remark-check-links',
-      options: checkLinksOptions
-    }
+      options: checkLinksOptions,
+    },
   ];
 
   const plugins = [
@@ -107,46 +104,24 @@ module.exports = ({
     {
       resolve: 'gatsby-plugin-less',
       options: {
-        modifyVars: mapKeys(colors, (value, key) => `color-${key}`)
-      }
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: path.join(root, contentDir),
-        name: 'docs',
-        ignore,
-      }
+        modifyVars: mapKeys(colors, (value, key) => `color-${key}`),
+      },
     },
     {
       resolve: 'gatsby-transformer-remark',
       options: {
-        plugins: gatsbyRemarkPlugins
-      }
+        plugins: gatsbyRemarkPlugins,
+      },
     },
     {
-      resolve: 'gatsby-plugin-mdx',
+      resolve: `gatsby-source-contentful`,
       options: {
-        gatsbyRemarkPlugins,
-        remarkPlugins: [
-          [{wrapperComponent: 'MultiCodeBlock'}]
-        ]
-      }
+        spaceId: contentfulSpaceId,
+        accessToken: contentfulAPIKey,
+        downloadLocal: true,
+      },
     },
     'gatsby-plugin-printer',
-    ...Object.entries(versions).map(([name, branch]) => ({
-      resolve: 'gatsby-source-git',
-      options: {
-        name,
-        branch,
-        remote: `https://github.com/${githubRepo}`,
-        patterns: [
-          path.join(baseDir, contentDir, '**'),
-          path.join(baseDir, 'gatsby-config.js'),
-          path.join(baseDir, '_config.yml')
-        ]
-      }
-    })),
     {
       resolve: 'gatsby-plugin-eslint',
       options: {
@@ -155,9 +130,9 @@ module.exports = ({
         stages: ['develop'],
         options: {
           emitWarning: true,
-          failOnError: false
-        }
-      }
+          failOnError: false,
+        },
+      },
     },
     {
       resolve: `gatsby-plugin-manifest`,
@@ -169,18 +144,18 @@ module.exports = ({
         background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
-        icon: require.resolve('./src/assets/icon.png')
-      }
+        icon: require.resolve('./src/assets/icon.png'),
+      },
     },
-    `gatsby-plugin-offline`
+    `gatsby-plugin-offline`,
   ];
 
   if (gaTrackingId) {
     plugins.push({
       resolve: 'gatsby-plugin-google-analytics',
       options: {
-        trackingId: gaTrackingId
-      }
+        trackingId: gaTrackingId,
+      },
     });
   }
 
@@ -188,8 +163,8 @@ module.exports = ({
     siteMetadata: {
       title: pageTitle || siteName,
       siteName,
-      description
+      description,
     },
-    plugins
+    plugins,
   };
 };

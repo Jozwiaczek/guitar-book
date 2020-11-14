@@ -1,9 +1,0 @@
-#
-# https://docs.netlify.com/configure-builds/file-based-configuration
-#
-
-[build]
-    base = "apps/english/"
-    publish = "public/"
-    command = "yarn build"
-    ignore = "git diff --quiet master ."

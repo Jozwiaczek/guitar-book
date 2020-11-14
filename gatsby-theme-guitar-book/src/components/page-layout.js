@@ -1,48 +1,54 @@
 import '../prism.less';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-import DocsetSwitcher from './docset-switcher';
-import Header from './header';
 import PropTypes from 'prop-types';
-import React, {createContext, useMemo, useRef, useState} from 'react';
-import Search from './search';
+import React, { createContext, useMemo, useRef, useState } from 'react';
+
 import styled from '@emotion/styled';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import {Button} from '@apollo/space-kit/Button';
-import {colors} from '../utils/colors';
+import { Button } from '@apollo/space-kit/Button';
+
+import { Helmet } from 'react-helmet';
+
+import { IconLayoutModule } from '@apollo/space-kit/icons/IconLayoutModule';
+
+import { graphql, useStaticQuery } from 'gatsby';
+
+import { size } from 'polished';
+
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
+
+import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-import {Helmet} from 'react-helmet';
-import {IconLayoutModule} from '@apollo/space-kit/icons/IconLayoutModule';
-import {graphql, navigate, useStaticQuery} from 'gatsby';
-import {Select} from './select';
-import {SelectedLanguageContext} from './multi-code-block';
-import {getVersionBasePath} from '../utils';
-import {size} from 'polished';
-import {trackCustomEvent} from 'gatsby-plugin-google-analytics';
-import {useResponsiveSidebar} from "./responsive-sidebar";
-import Layout from "./layout";
-import FlexWrapper from "./flex-wrapper";
-import Sidebar from "./sidebar";
-import SidebarNav from "./sidebar-nav";
-import MenuButton from "./menu-button";
-import Toolbox from "./toolbox";
+import { SelectedLanguageContext } from './multi-code-block';
+
+import Search from './search';
+import Header from './header';
+import DocsetSwitcher from './docset-switcher';
+import { useResponsiveSidebar } from './responsive-sidebar';
+import Layout from './layout';
+import FlexWrapper from './flex-wrapper';
+import Sidebar from './sidebar';
+import SidebarNav from './sidebar-nav';
+import MenuButton from './menu-button';
+import Toolbox from './toolbox';
 
 const Main = styled.main({
-  flexGrow: 1
+  flexGrow: 1,
 });
 
 const ButtonWrapper = styled.div({
-  flexGrow: 1
+  flexGrow: 1,
 });
 
 const StyledButton = styled(Button)({
   width: '100%',
   ':not(:hover)': {
-    backgroundColor: colors.background
-  }
+    backgroundColor: colors.background,
+  },
 });
 
 const StyledIcon = styled(IconLayoutModule)(size(16), {
-  marginLeft: 'auto'
+  marginLeft: 'auto',
 });
 
 const MobileNav = styled.div({
@@ -50,20 +56,16 @@ const MobileNav = styled.div({
   [breakpoints.md]: {
     display: 'flex',
     alignItems: 'center',
-    color: colors.text1
-  }
+    color: colors.text1,
+  },
 });
 
 const HeaderInner = styled.span({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: 32
+  marginBottom: 32,
 });
-
-function getVersionLabel(version) {
-  return `v${version}`;
-}
 
 const GA_EVENT_CATEGORY_SIDEBAR = 'Sidebar';
 
@@ -71,7 +73,7 @@ function handleToggleAll(expanded) {
   trackCustomEvent({
     category: GA_EVENT_CATEGORY_SIDEBAR,
     action: 'Toggle all',
-    label: expanded ? 'expand' : 'collapse'
+    label: expanded ? 'expand' : 'collapse',
   });
 }
 
@@ -80,7 +82,7 @@ function handleToggleCategory(label, expanded) {
     category: GA_EVENT_CATEGORY_SIDEBAR,
     action: 'Toggle category',
     label,
-    value: Number(expanded)
+    value: Number(expanded),
   });
 }
 
@@ -97,7 +99,7 @@ export default function PageLayout(props) {
           }
         }
       }
-    `
+    `,
   );
 
   const {
@@ -105,7 +107,7 @@ export default function PageLayout(props) {
     openSidebar,
     sidebarOpen,
     handleWrapperClick,
-    handleSidebarNavLinkClick
+    handleSidebarNavLinkClick,
   } = useResponsiveSidebar();
 
   const buttonRef = useRef(null);
@@ -120,48 +122,35 @@ export default function PageLayout(props) {
     setMenuOpen(false);
   }
 
-  const {pathname} = props.location;
-  const {siteName, title} = data.site.siteMetadata;
-  const {
-    subtitle,
-    sidebarContents,
-    versions,
-    versionDifference,
-    versionBasePath,
-    defaultVersion
-  } = props.pageContext;
+  const pathname = decodeURI(props.location.pathname);
+  const { siteName, title } = data.site.siteMetadata;
+  const { subtitle, sidebarContents } = props.pageContext;
+
   const {
     twitterHandle,
     youtubeUrl,
     navConfig = {},
     footerNavConfig,
     logoLink,
-    menuTitle
+    menuTitle,
   } = props.pluginOptions;
 
   const navItems = useMemo(
     () =>
       Object.entries(navConfig).map(([title, navItem]) => ({
         ...navItem,
-        title
+        title,
       })),
-    [navConfig]
+    [navConfig],
   );
 
   const hasNavItems = navItems.length > 0;
-  const sidebarTitle = (
-    <span className="title-sidebar">{subtitle || siteName}</span>
-  );
+  const sidebarTitle = <span className="title-sidebar">{subtitle || siteName}</span>;
 
   return (
     <Layout>
-      <Helmet
-        titleTemplate={['%s', subtitle, title].filter(Boolean).join(' - ')}
-      >
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
+      <Helmet titleTemplate={['%s', subtitle, title].filter(Boolean).join(' - ')}>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Helmet>
       <FlexWrapper onClick={handleWrapperClick}>
         <Sidebar
@@ -179,8 +168,8 @@ export default function PageLayout(props) {
                   feel="flat"
                   color={colors.primary}
                   size="small"
+                  style={{ display: 'flex' }}
                   onClick={openMenu}
-                  style={{display: 'flex'}}
                 >
                   {sidebarTitle}
                   <StyledIcon />
@@ -188,26 +177,6 @@ export default function PageLayout(props) {
               </ButtonWrapper>
             ) : (
               sidebarTitle
-            )}
-            {versions && versions.length > 0 && (
-              <Select
-                feel="flat"
-                size="small"
-                value={versionDifference ? versionBasePath : '/'}
-                onChange={navigate}
-                style={{marginLeft: 8}}
-                options={versions.reduce(
-                  (acc, version) => ({
-                    ...acc,
-                    [getVersionBasePath(version)]: getVersionLabel(version)
-                  }),
-                  {
-                    '/': defaultVersion
-                      ? getVersionLabel(defaultVersion)
-                      : 'Latest'
-                  }
-                )}
-              />
             )}
           </HeaderInner>
           {sidebarContents && (
@@ -229,9 +198,7 @@ export default function PageLayout(props) {
             <Toolbox pathname={pathname} />
           </Header>
           <SelectedLanguageContext.Provider value={selectedLanguageState}>
-            <NavItemsContext.Provider value={navItems}>
-              {props.children}
-            </NavItemsContext.Provider>
+            <NavItemsContext.Provider value={navItems}>{props.children}</NavItemsContext.Provider>
           </SelectedLanguageContext.Provider>
         </Main>
       </FlexWrapper>
@@ -255,5 +222,5 @@ PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
-  pluginOptions: PropTypes.object.isRequired
+  pluginOptions: PropTypes.object.isRequired,
 };

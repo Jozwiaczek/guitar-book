@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
-import {HEADER_HEIGHT} from '../utils';
+
+import { HEADER_HEIGHT } from '../utils';
 import breakpoints from '../utils/breakpoints';
 
 const Wrapper = styled.header({
   position: 'sticky',
   top: 0,
   left: 0,
-  zIndex: 1
+  zIndex: 1,
 });
 
 const InnerWrapper = styled.div({
@@ -18,8 +19,8 @@ const InnerWrapper = styled.div({
   padding: '0 56px',
   backgroundColor: 'white',
   [breakpoints.md]: {
-    padding: '0 24px'
-  }
+    padding: '0 24px',
+  },
 });
 
 export default function Header(props) {
@@ -31,5 +32,5 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

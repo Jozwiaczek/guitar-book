@@ -1,7 +1,0 @@
-# ENGLISH
-/english https://guitar-book-english.netlify.app/english 200!
-/english/* https://guitar-book-english.netlify.app/english/:splat 200!
-
-# SHANTIES
-/shanties https://guitar-book-shanties.netlify.app/shanties 200!
-/shanties/* https://guitar-book-shanties.netlify.app/shanties/:splat 200!

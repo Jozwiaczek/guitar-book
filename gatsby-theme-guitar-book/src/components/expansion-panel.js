@@ -1,22 +1,24 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {IconArrowDown} from '@apollo/space-kit/icons/IconArrowDown';
-import {IconArrowUp} from '@apollo/space-kit/icons/IconArrowUp';
-import {IconCheck} from '@apollo/space-kit/icons/IconCheck';
-import {colors} from '../utils/colors';
-import {size, transparentize} from 'polished';
+import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
+import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
+import { IconCheck } from '@apollo/space-kit/icons/IconCheck';
+
+import { size, transparentize } from 'polished';
+
+import { colors } from '../utils/colors';
 
 const Container = styled.div({
   marginBottom: '1.45rem',
-  borderLeft: `2px solid ${colors.primary}`
+  borderLeft: `2px solid ${colors.primary}`,
 });
 
 const InnerContainer = styled.div({
   border: `1px solid ${colors.text4}`,
   borderLeft: 0,
   borderTopRightRadius: 4,
-  borderBottomRightRadius: 4
+  borderBottomRightRadius: 4,
 });
 
 const iconSize = 14;
@@ -36,23 +38,23 @@ const StyledButton = styled.button({
   outline: 'none',
   cursor: 'pointer',
   ':hover': {
-    backgroundColor: transparentize(0.95, 'black')
+    backgroundColor: transparentize(0.95, 'black'),
   },
   ':active': {
-    backgroundColor: transparentize(0.9, 'black')
+    backgroundColor: transparentize(0.9, 'black'),
   },
   svg: {
     ...size(iconSize),
-    marginRight: iconMargin
-  }
+    marginRight: iconMargin,
+  },
 });
 
 const Content = styled.div({
   padding: `8px ${horizontalPadding + iconSize + iconMargin}px`,
   color: colors.text1,
   p: {
-    fontSize: '1rem'
-  }
+    fontSize: '1rem',
+  },
 });
 
 const lineItemNumberSize = 24;
@@ -70,13 +72,13 @@ const ListItemNumber = styled.div(size(lineItemNumberSize), {
   position: 'absolute',
   top: 0,
   left: lineItemNumberSize / -2,
-  svg: size(iconSize)
+  svg: size(iconSize),
 });
 
 export const ExpansionPanelList = styled.ul({
   marginLeft: lineItemNumberOffset,
   borderLeft: `1px solid ${colors.primary}`,
-  listStyle: 'none'
+  listStyle: 'none',
 });
 
 const StyledListItem = styled.li({
@@ -86,22 +88,20 @@ const StyledListItem = styled.li({
   lineHeight: 1.5,
   position: 'relative',
   ':first-of-type h4': {
-    marginTop: 0
+    marginTop: 0,
   },
   ':not(:last-child)': {
-    marginBottom: 28
+    marginBottom: 28,
   },
   h4: {
-    lineHeight: 1.3
-  }
+    lineHeight: 1.3,
+  },
 });
 
 export function ExpansionPanelListItem(props) {
   return (
     <StyledListItem>
-      <ListItemNumber>
-        {props.number === 'check' ? <IconCheck /> : props.number}
-      </ListItemNumber>
+      <ListItemNumber>{props.number === 'check' ? <IconCheck /> : props.number}</ListItemNumber>
       {props.children}
     </StyledListItem>
   );
@@ -109,7 +109,7 @@ export function ExpansionPanelListItem(props) {
 
 ExpansionPanelListItem.propTypes = {
   number: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export function ExpansionPanel(props) {
@@ -130,5 +130,5 @@ export function ExpansionPanel(props) {
 
 ExpansionPanel.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
