@@ -1,8 +1,13 @@
 {
-  "name": "template-guitar-book",
+  "name": "exmaple-guitar-book",
   "version": "1.0.1-alpha.11",
   "private": true,
-  "license": "0BSD",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/guitar.git",
+    "directory": "apps/example"
+  },
+  "license": "MIT",
   "author": {
     "name": "Jakub Jozwiak",
     "email": "kubencki@gmail.com"
@@ -11,15 +16,17 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "gatsby develop --host 0.0.0.0 --port 9000 --open",
+    "develop": "gatsby develop --host 0.0.0.0 --port 8000 --open",
+    "develop:clean":"yarn clean && yarn develop",
     "lint": "eslint . --ext .js,.jsx --cache",
-    "serve": "yarn build && gatsby serve --host 0.0.0.0 --port 9001 --open"
+    "serve": "yarn build && gatsby serve --host 0.0.0.0 --port 8001 --open"
   },
   "dependencies": {
     "gatsby": "^2.24.26",
     "gatsby-theme-guitar-book": "^1.0.1-alpha.11",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

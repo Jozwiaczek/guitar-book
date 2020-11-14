@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import styled from "@emotion/styled";
+import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
 import { Button } from '@apollo/space-kit/Button';
+
+import { IconRun } from '@apollo/space-kit/icons/IconRun';
+import { IconRemove } from '@apollo/space-kit/icons/IconRemove';
+
 import { colors } from '../utils/colors';
-import {IconRun} from '@apollo/space-kit/icons/IconRun';
-import {IconRemove} from '@apollo/space-kit/icons/IconRemove';
 
 const Container = styled.div({
   position: 'fixed',
@@ -12,22 +14,22 @@ const Container = styled.div({
   width: '100vw',
   display: 'flex',
   justifyContent: 'flex-end',
-  paddingRight: '3vw'
+  paddingRight: '3vw',
 });
 
 const Panel = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end'
+  alignItems: 'flex-end',
 });
 
 const StyledIconRun = styled(IconRun)({
   height: '0.75em',
-  marginLeft: '0.5em'
+  marginLeft: '0.5em',
 });
 
 const StyledIconRemove = styled(IconRemove)({
-  height: '1em'
+  height: '1em',
 });
 
 const AutoScroll = () => {
@@ -43,7 +45,7 @@ const AutoScroll = () => {
         const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0) + YMove;
         window.scroll({
           top,
-          behavior: "smooth"
+          behavior: 'smooth',
         });
 
         if (doc.scrollTop + window.innerHeight >= doc.scrollHeight) {
@@ -57,18 +59,18 @@ const AutoScroll = () => {
   }, [isRun, moveTime]);
 
   const handleStopStart = () => {
-    setIsRun(prevState => !prevState);
+    setIsRun((prevState) => !prevState);
   };
 
   const speedUp = () => {
     if (moveTime >= 10) {
-      setMoveTime(prevState => prevState - 20);
+      setMoveTime((prevState) => prevState - 20);
     }
   };
 
   const slowDown = () => {
     if (moveTime <= 190) {
-      setMoveTime(prevState => prevState + 20);
+      setMoveTime((prevState) => prevState + 20);
     }
   };
 
@@ -76,44 +78,36 @@ const AutoScroll = () => {
     minWidth: 10,
     width: 50,
     padding: 0,
-    marginBottom: 10
+    marginBottom: 10,
   };
 
   return (
     <Container>
       <Panel>
-        {isRun &&
-        <>
-          <Button
-            size="large"
-            color={'#2d1f66'}
-            onClick={slowDown}
-            style={enabledBtnStyle}
-          >
-            -
-          </Button>
-          <Button
-            size="large"
-            color={'#311c87'}
-            onClick={speedUp}
-            style={enabledBtnStyle}
-          >
-            +
-          </Button>
-        </>}
+        {isRun && (
+          <>
+            <Button size="large" color="#2d1f66" style={enabledBtnStyle} onClick={slowDown}>
+              -
+            </Button>
+            <Button size="large" color="#311c87" style={enabledBtnStyle} onClick={speedUp}>
+              +
+            </Button>
+          </>
+        )}
         <Button
           size="large"
           color={isRun ? '#7156d9' : colors.primary}
-          onClick={handleStopStart}
           style={isRun ? enabledBtnStyle : { width: 135 }}
+          onClick={handleStopStart}
         >
-          {isRun ?
+          {isRun ? (
             <StyledIconRemove />
-            :
+          ) : (
             <>
               Auto Scroll
               <StyledIconRun />
-            </>}
+            </>
+          )}
         </Button>
       </Panel>
     </Container>
