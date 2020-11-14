@@ -1,5 +1,9 @@
-export const getSlug = (authorName, title) => {
-  const slugAuthor = authorName.toLowerCase().replace(/ /g, '-');
-  const slugTitle = title.toLowerCase().replace(/ /g, '-');
-  return `/${slugAuthor}/${slugTitle}`;
+export const getSlug = (...nodes) => {
+  nodes = nodes.map((n) =>
+    n
+      .toLowerCase()
+      .replace(/[^\w ]+/g, '')
+      .replace(/ +/g, '-'),
+  );
+  return `/${nodes.join('/')}`;
 };

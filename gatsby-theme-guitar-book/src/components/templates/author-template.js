@@ -9,6 +9,8 @@ import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
+import { getSlug } from '../../utils/getSlug';
+import ListView from '../list-view';
 
 const CustomLinkContext = createContext();
 
@@ -42,7 +44,7 @@ export default function AuthorTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulAuthor } = props.data;
   const { title, description } = site.siteMetadata;
-  const { avatar, name } = contentfulAuthor;
+  const { avatar, name, song: songs } = contentfulAuthor;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
@@ -52,25 +54,25 @@ export default function AuthorTemplate(props) {
   return (
     <>
       <SEO
-        title={contentfulAuthor.name}
-        description={contentfulAuthor.name || description}
+        title={name}
+        description={name || description}
         siteName={title}
         baseUrl={baseUrl}
         twitterHandle={twitterHandle}
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader title={contentfulAuthor.name} description={contentfulAuthor.name} />
+        <PageHeader title={name} description="Author" />
         <hr />
-        <PageContent
-          title={contentfulAuthor.name}
-          pathname={pathname}
-          pages={pages}
-          hash={hash}
-          githubUrl={githubUrl}
-        >
-          <h3>{name}</h3>
-          {avatar && <Img fluid={avatar.fluid} />}
+        <PageContent pathname={pathname} pages={pages} hash={hash} githubUrl={githubUrl}>
+          <div style={{ width: '100%' }} />
+          {avatar && <Img fluid={avatar.fluid} style={{ maxWidth: '600px' }} />}
+          {songs && (
+            <ListView
+              title="Song list"
+              items={songs.map(({ title }) => ({ title, path: getSlug(name, title) }))}
+            />
+          )}
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
@@ -104,9 +106,12 @@ export const AuthorTemplateQuery = graphql`
     contentfulAuthor(id: { eq: $id }) {
       name
       avatar {
-        fluid(maxWidth: 500, quality: 100) {
+        fluid(maxHeight: 250, quality: 100) {
           ...GatsbyContentfulFluid
         }
+      }
+      song {
+        title
       }
     }
   }

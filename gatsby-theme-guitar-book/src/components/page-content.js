@@ -197,17 +197,19 @@ export default function PageContent(props) {
         <EditLink>{editLink}</EditLink>
         <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
       </InnerWrapper>
-      <Aside>
-        <AsideHeading>{props.title}</AsideHeading>
-        {props.headings?.length > 0 && (
-          <SectionNav
-            headings={props.headings}
-            contentRef={contentRef}
-            imagesLoaded={imagesLoaded === imagesToLoad}
-          />
-        )}
-        {editLink}
-      </Aside>
+      {props.title && (
+        <Aside>
+          <AsideHeading>{props.title}</AsideHeading>
+          {props.headings?.length > 0 && (
+            <SectionNav
+              headings={props.headings}
+              contentRef={contentRef}
+              imagesLoaded={imagesLoaded === imagesToLoad}
+            />
+          )}
+          {editLink}
+        </Aside>
+      )}
     </Wrapper>
   );
 }
