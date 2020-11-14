@@ -1,18 +1,11 @@
-const path = require('path');
-
 const mapKeys = require('lodash/mapKeys');
 
 const { colors } = require('./src/utils/colors');
 
 module.exports = ({
-  root,
   siteName,
   pageTitle,
   description,
-  githubRepo,
-  baseDir = '',
-  contentDir = 'content',
-  versions = {},
   contentfulAPIKey,
   contentfulSpaceId,
   gaTrackingId,
@@ -20,6 +13,12 @@ module.exports = ({
   checkLinksOptions,
 }) => {
   const gatsbyRemarkPlugins = [
+    {
+      resolve: 'gatsby-plugin-purgecss',
+      options: {
+        rejected: true,
+      },
+    },
     {
       resolve: 'gatsby-remark-autolink-headers',
     },
@@ -118,24 +117,9 @@ module.exports = ({
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: path.join(root, contentDir),
-        name: 'docs',
-        ignore,
-      },
-    },
-    {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: gatsbyRemarkPlugins,
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-mdx',
-      options: {
-        gatsbyRemarkPlugins,
-        remarkPlugins: [[{ wrapperComponent: 'MultiCodeBlock' }]],
       },
     },
     {
@@ -147,19 +131,6 @@ module.exports = ({
       },
     },
     'gatsby-plugin-printer',
-    ...Object.entries(versions).map(([name, branch]) => ({
-      resolve: 'gatsby-source-git',
-      options: {
-        name,
-        branch,
-        remote: `https://github.com/${githubRepo}`,
-        patterns: [
-          path.join(baseDir, contentDir, '**'),
-          path.join(baseDir, 'gatsby-config.js'),
-          path.join(baseDir, '_config.yml'),
-        ],
-      },
-    })),
     {
       resolve: 'gatsby-plugin-eslint',
       options: {

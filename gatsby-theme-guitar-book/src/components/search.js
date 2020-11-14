@@ -125,20 +125,6 @@ export default function Search(props) {
 
   const data = useStaticQuery(graphql`
     query {
-      allFile {
-        edges {
-          node {
-            childMdx {
-              frontmatter {
-                title
-                description
-              }
-              slug
-              rawBody
-            }
-          }
-        }
-      }
       allContentfulSong(filter: { node_locale: { eq: "en-US" } }) {
         edges {
           node {

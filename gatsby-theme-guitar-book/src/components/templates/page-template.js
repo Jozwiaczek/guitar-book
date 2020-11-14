@@ -38,9 +38,9 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
-export default function HomepageTemplate(props) {
+export default function PageTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulHomepage } = props.data;
+  const { site, contentfulPage } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
@@ -51,17 +51,17 @@ export default function HomepageTemplate(props) {
   return (
     <>
       <SEO
-        title={contentfulHomepage.title}
-        description={contentfulHomepage.description || description}
+        title={contentfulPage.title}
+        description={contentfulPage.description || description}
         siteName={title}
         baseUrl={baseUrl}
         twitterHandle={twitterHandle}
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader title={contentfulHomepage.title} description={contentfulHomepage.description} />
+        <PageHeader title={contentfulPage.title} description={contentfulPage.description} />
         <PageContent
-          title={contentfulHomepage.title}
+          title={contentfulPage.title}
           pathname={pathname}
           pages={pages}
           hash={hash}
@@ -74,7 +74,7 @@ export default function HomepageTemplate(props) {
             }}
           >
             <div style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(contentfulHomepage.welcomeSection.json)}
+              {documentToReactComponents(contentfulPage.body.json)}
             </div>
           </CustomLinkContext.Provider>
         </PageContent>
@@ -84,14 +84,14 @@ export default function HomepageTemplate(props) {
   );
 }
 
-HomepageTemplate.propTypes = {
+PageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   pageContext: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
 };
 
-export const HomepageTemplateQuery = graphql`
-  query HomepageTemplateQuery($id: String) {
+export const PageTemplateQuery = graphql`
+  query PageTemplateQuery($id: String) {
     site {
       pathPrefix
       siteMetadata {
@@ -99,8 +99,8 @@ export const HomepageTemplateQuery = graphql`
         description
       }
     }
-    contentfulHomepage(id: { eq: $id }) {
-      welcomeSection {
+    contentfulPage(id: { eq: $id }) {
+      body {
         json
       }
       title

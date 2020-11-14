@@ -1,13 +1,13 @@
 /* global preval */
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React  from 'react';
 import TextFit from 'react-textfit';
 import { Global, css } from '@emotion/core';
 import { IconArrowRight } from '@apollo/space-kit/icons/IconArrowRight';
 
 import { smallCaps } from '../utils/typography';
 
-const { fonts, image } = preval`
+const { fonts, image, imageAboutUs } = preval`
   const fs = require('fs');
   const path = require('path');
 
@@ -27,15 +27,18 @@ const { fonts, image } = preval`
     .replace('WOFF2/TTF/SourceSansPro-Semibold.ttf.woff2', base64Semibold);
 
   const imagePath = path.resolve(__dirname, '../assets/social-bg.jpg');
+  const imagePathAboutUs = path.resolve(__dirname, '../assets/social-bg-about-us.jpg');
   const base64Image = fs.readFileSync(imagePath, 'base64');
+  const base64ImageAboutUs = fs.readFileSync(imagePathAboutUs, 'base64');
 
   module.exports = {
     fonts,
-    image: 'data:image/jpeg;base64,' + base64Image
+    image: 'data:image/jpeg;base64,' + base64Image,
+    imageAboutUs: 'data:image/jpeg;base64,' + base64ImageAboutUs
   };
 `;
 
-export default function SocialCard(props) {
+export default function SocialCard({ subtitle, category, title, aboutUs }) {
   return (
     <div
       style={{
@@ -48,7 +51,7 @@ export default function SocialCard(props) {
         padding: 80,
         fontFamily: "'Source Sans Pro'",
         color: 'black',
-        backgroundImage: `url(${image})`,
+        backgroundImage: `url(${aboutUs ? imageAboutUs : image})`,
       }}
     >
       <Global
@@ -69,8 +72,8 @@ export default function SocialCard(props) {
           ...smallCaps,
         }}
       >
-        {props.subtitle}
-        {props.category && (
+        {subtitle}
+        {category && (
           <>
             {' '}
             <IconArrowRight
@@ -81,7 +84,7 @@ export default function SocialCard(props) {
                 verticalAlign: '0.05em',
               }}
             />{' '}
-            {props.category}
+            {category}
           </>
         )}
       </div>
@@ -96,7 +99,7 @@ export default function SocialCard(props) {
           colors: 'black',
         }}
       >
-        {props.title.replace(/\s+(\S*)$/, '\xA0$1')}
+        {title.replace(/\s+(\S*)$/, '\xA0$1')}
       </TextFit>
       <div>
         <svg viewBox="0 0 440.7 178.23" style={{ height: 105 }}>

@@ -14,6 +14,7 @@
     "build": "gatsby build",
     "clean": "gatsby clean",
     "develop": "gatsby develop --host 0.0.0.0 --port 8000 --open",
+    "develop:clean":"yarn clean && yarn develop",
     "lint": "eslint . --ext .js,.jsx --cache",
     "serve": "yarn build && gatsby serve --host 0.0.0.0 --port 8001 --open"
   },
