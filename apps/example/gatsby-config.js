@@ -12,8 +12,8 @@ module.exports = {
         pageTitle: 'Guitar Book',
         description: 'Track and play best guitar songs for camping',
         menuTitle: 'Songs Types',
-        baseDir: 'apps/polish',
-        subtitle: 'Polish Songs',
+        baseDir: 'apps/example',
+        subtitle: 'Songs',
         baseUrl: 'https://guitar-book.netlify.app/',
         logoLink: 'https://guitar-book.netlify.app/',
         twitterHandle: 'jozwiaczek',
@@ -26,7 +26,7 @@ module.exports = {
         navConfig: {
           'Polish Songs 🇵🇱': {
             url: 'https://guitar-book.netlify.app/',
-            description: 'Navigate to guitar book with polish songs',
+            description: 'Navigate to guitar book with example songs',
           },
           'English Songs 🇺🇸': {
             url: 'https://guitar-book.netlify.app/english',

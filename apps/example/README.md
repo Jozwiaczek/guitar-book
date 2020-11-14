@@ -4,4 +4,4 @@
   </a>
 </p>
 
-# Guitar Book Polish
+# Guitar Book Example

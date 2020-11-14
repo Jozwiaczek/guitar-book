@@ -87,7 +87,7 @@ module.exports = {
         navConfig: {
           'Polish Songs 🇵🇱': {
             url: 'https://guitar-book.netlify.app/',
-            description: 'Navigate to guitar book with polish songs',
+            description: 'Navigate to guitar book with example songs',
           },
           'English Songs 🇺🇸': {
             url: 'https://guitar-book.netlify.app/english',
