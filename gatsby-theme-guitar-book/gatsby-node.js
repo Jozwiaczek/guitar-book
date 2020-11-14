@@ -59,6 +59,7 @@ async function onCreateNode(
         title,
         subtitle,
         category,
+        aboutUs: slug.includes('o-nas'),
       },
       component: require.resolve('./src/components/social-card.js'),
     });
