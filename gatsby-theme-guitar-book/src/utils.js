@@ -8,6 +8,15 @@ const getSlug = (authorName, title) => {
   return `/${slugAuthor}/${slugTitle}`;
 };
 
+const getSlugPage = (title, isHomepage = false) =>
+  isHomepage
+    ? '/'
+    : `/${title
+        .toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')}`;
+
 exports.getVersionBasePath = getVersionBasePath;
 exports.HEADER_HEIGHT = 72;
 exports.getSlug = getSlug;
+exports.getSlugPage = getSlugPage;

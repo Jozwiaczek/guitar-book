@@ -1,10 +1,8 @@
 const path = require('path');
 
-const { createFilePath } = require('gatsby-source-filesystem');
-
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug } = require('./src/utils');
+const { getSlug, getSlugPage } = require('./src/utils');
 
 function getConfigPaths(baseDir) {
   return [
@@ -14,7 +12,7 @@ function getConfigPaths(baseDir) {
 
 async function onCreateNode(
   { node, actions, getNode, loadNodeContent },
-  { baseDir = '', siteName, subtitle, sidebarCategories },
+  { baseDir = '', siteName },
 ) {
   const configPaths = getConfigPaths(baseDir);
   if (configPaths.includes(node.relativePath)) {
@@ -26,41 +24,42 @@ async function onCreateNode(
     });
   }
 
-  if (['MarkdownRemark', 'Mdx'].includes(node.internal.type)) {
-    const parent = getNode(node.parent);
-    let slug = createFilePath({
-      node,
-      getNode,
+  const slug = node.path;
+
+  if (
+    ['SitePage'].includes(node.internal.type) &&
+    !['/dev-404-page/', '/404/', '/404.html', '/offline-plugin-app-shell-fallback/'].includes(slug)
+  ) {
+    const outputDir = 'social-cards';
+    const sidebar = node.context.sidebarContents;
+
+    let title = siteName;
+    let subtitle = '';
+    let category = '';
+    sidebar.forEach((sidebarItem) => {
+      const tmp = sidebarItem.pages.find((page) => page.path === slug);
+      if (tmp) {
+        title = tmp.title;
+        subtitle = sidebarItem.title;
+        category = tmp.author;
+      }
     });
 
-    if (node.frontmatter.slug) {
-      slug = node.frontmatter.slug; // eslint-disable-line prefer-destructuring
-    }
+    const fileName =
+      slug
+        .replace(/^\/|\/$/g, '')
+        .replace('/', '-')
+        .trim() || 'index';
 
-    let category;
-    const fileName = parent.name;
-    const outputDir = 'social-cards';
-
-    for (const key in sidebarCategories) {
-      if (key !== 'null') {
-        const categories = sidebarCategories[key];
-        const trimmedSlug = slug.replace(/^\/|\/$/g, '');
-        if (categories.includes(trimmedSlug)) {
-          category = key;
-          break;
-        }
-      }
-    }
-
-    const { title, sidebar_title, graphManagerUrl } = node.frontmatter;
     createPrinterNode({
       id: `${node.id} >>> Printer`,
       fileName,
       outputDir,
       data: {
         title,
-        subtitle: subtitle || siteName,
+        subtitle,
         category,
+        aboutUs: slug.includes('o-nas'),
       },
       component: require.resolve('./src/components/social-card.js'),
     });
@@ -76,30 +75,18 @@ async function onCreateNode(
       name: 'slug',
       value: slug,
     });
-
-    actions.createNodeField({
-      node,
-      name: 'sidebarTitle',
-      value: sidebar_title || '',
-    });
-
-    actions.createNodeField({
-      node,
-      name: 'graphManagerUrl',
-      value: graphManagerUrl || '',
-    });
   }
 }
 
 exports.onCreateNode = onCreateNode;
 
-function getSidebarContents(edges) {
+const getSidebarContents = (edges) => {
   const { items } = edges[0].node;
 
   return items.reduce((sidebar, props) => {
     const type = props.sys.contentType.sys.id;
 
-    // Collapse sections
+    // Collapse songs sections
     if (type === 'sidebarSongs') {
       const songSidebarName = props.name;
       const pages = props.songs.map(({ title, author }) => {
@@ -114,9 +101,10 @@ function getSidebarContents(edges) {
       return sidebar;
     }
 
-    // Root homepage item
-    if (type === 'homepage') {
-      const { title, description } = props;
+    // Root page item
+    if (type === 'page') {
+      const { title, description, isHomepage } = props;
+      const path = getSlugPage(title, isHomepage);
       const isAlready = !!sidebar.find((item) => {
         return !item.title;
       });
@@ -124,7 +112,7 @@ function getSidebarContents(edges) {
       if (isAlready) {
         return sidebar.map((item) => {
           if (!item.title) {
-            item.pages.push({ title, author: description, path: '/' });
+            item.pages.push({ title, author: description, path });
           }
           return item;
         });
@@ -132,47 +120,15 @@ function getSidebarContents(edges) {
 
       sidebar.push({
         title: '',
-        pages: [{ title, author: description, path: '/' }],
+        pages: [{ title, author: description, path }],
       });
 
-      return sidebar;
-    }
-
-    // Root links
-    if (type === 'anchor') {
-      const { title, link } = props;
-
-      const isAlready = !!sidebar.find((item) => !item.title);
-
-      if (isAlready) {
-        return sidebar.map((item) => {
-          if (!item.title) {
-            item.pages.push({
-              anchor: true,
-              title,
-              path: link,
-            });
-          }
-          return item;
-        });
-      }
-
-      sidebar.push({
-        title: '',
-        pages: [
-          {
-            anchor: true,
-            title,
-            path: link,
-          },
-        ],
-      });
       return sidebar;
     }
     console.error('Unsupported sidebar link');
     return sidebar;
   }, []);
-}
+};
 
 exports.createPages = async (
   { actions, graphql },
@@ -201,9 +157,11 @@ exports.createPages = async (
                   }
                 }
               }
-              ... on ContentfulAnchor {
-                link
+              ... on ContentfulPage {
+                id
                 title
+                isHomepage
+                description
                 sys {
                   contentType {
                     sys {
@@ -220,7 +178,7 @@ exports.createPages = async (
   `);
 
   const songTemplate = require.resolve('./src/components/templates/song-template');
-  const homepageTemplate = require.resolve('./src/components/templates/homepage-template');
+  const pageTemplate = require.resolve('./src/components/templates/page-template');
 
   data.allContentfulSidebar.edges[0].node.items.forEach((props) => {
     const type = props.sys.contentType.sys.id;
@@ -244,11 +202,11 @@ exports.createPages = async (
         });
         break;
       }
-      case 'homepage': {
-        const { id } = props;
+      case 'page': {
+        const { id, title, isHomepage } = props;
         actions.createPage({
-          path: '/',
-          component: homepageTemplate,
+          path: getSlugPage(title, isHomepage),
+          component: pageTemplate,
           context: {
             id,
             subtitle,
@@ -258,10 +216,6 @@ exports.createPages = async (
             baseUrl,
           },
         });
-        break;
-      }
-      case 'anchor': {
-        console.count('Sidebar anchors:');
         break;
       }
       default:

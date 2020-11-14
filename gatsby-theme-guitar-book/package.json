@@ -24,6 +24,7 @@
     "lint:fix": "eslint . --ext .js,.jsx --cache --fix"
   },
   "dependencies": {
+    "gatsby-plugin-purgecss": "^5.0.0",
     "@apollo/space-kit": "^7.7.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
