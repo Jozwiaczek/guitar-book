@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="packages/gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
+    <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
   </a>
   <hr/>
 </div>
@@ -10,23 +10,15 @@
 ![npm](https://img.shields.io/npm/v/gatsby-theme-guitar-book)
 
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files.
-It also exports a series of [components](#components) that can be used within MDX pages.
 
 - [Features](#features)
 - [Published Demo Guitar Books](#published-demo-guitar-books)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Options](#options)
-  - [`sidebarCategories`](#sidebarcategories)
   - [`navConfig`](#navconfig)
-- [Adding songs](#addings-songs)
 - [Component shadowing](#component-shadowing)
-- [Components](#components)
-  - [`Verse`](#verse)
-  - [`ExpansionPanel`](#expansionpanel)
 - [Deployment](#deployment)
-- [Examples](#examples)
-- [SongTemplate](#template)
 
 ## Features
 
@@ -53,13 +45,13 @@ It also exports a series of [components](#components) that can be used within MD
 <br/>
 <br/>
 <div align="center">
-    <img alt="desktop preview" src="packages/gatsby-theme-guitar-book/src/assets/screenshots/desktop_preview.png" height="500" />
+    <img alt="desktop preview" src="gatsby-theme-guitar-book/src/assets/screenshots/desktop_preview.png" height="500" />
 </div>
 <br/>
 <div align="center">
-  <img alt="mobile preview" src="packages/gatsby-theme-guitar-book/src/assets/screenshots/mobile_preview.png" height="250" />
+  <img alt="mobile preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_preview.png" height="250" />
   &emsp;&emsp;&emsp;
-  <img alt="mobile icon preview" src="packages/gatsby-theme-guitar-book/src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
+  <img alt="mobile icon preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
 </div>
 <br/>
 <br/>
@@ -92,7 +84,7 @@ module.exports = {
       options: {
         ...themeOptions,
         root: __dirname,
-        baseDir: 'packages/app',
+        baseDir: 'apps/english',
         subtitle: 'English Songs',
         siteName: 'Guitar Book',
         pageTitle: 'Guitar Book',
