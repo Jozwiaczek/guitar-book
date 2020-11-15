@@ -138,10 +138,6 @@ module.exports = {
 
 The `navConfig` option should be an object keyed by link titles. The values should be objects with `description`, and `url` properties.
 
-## Adding songs
-
-# TODO
-
 ## Component shadowing
 
 You can customize a website using this theme further by taking advantage of component shadowing.
