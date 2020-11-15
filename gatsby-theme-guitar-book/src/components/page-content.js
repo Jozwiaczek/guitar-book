@@ -146,6 +146,10 @@ export default function PageContent(props) {
   const [imagesToLoad, setImagesToLoad] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(0);
 
+  function handleImageLoad() {
+    setImagesLoaded((prevImagesLoaded) => prevImagesLoaded + 1);
+  }
+
   useMount(() => {
     if (props.hash) {
       // turn numbers at the beginning of the hash to unicode
@@ -173,20 +177,11 @@ export default function PageContent(props) {
     setImagesToLoad(toLoad);
   });
 
-  function handleImageLoad() {
-    setImagesLoaded((prevImagesLoaded) => prevImagesLoaded + 1);
-  }
-
   const pageIndex = props.pages.findIndex((page) => {
+    console.log('L:181 | page: ', page);
     const prefixedPath = withPrefix(page.path);
     return prefixedPath === props.pathname || prefixedPath.replace(/\/$/, '') === props.pathname;
   });
-
-  const editLink = props.githubUrl && (
-    <AsideLink href={props.githubUrl}>
-      <IconGithub /> Edit on GitHub
-    </AsideLink>
-  );
 
   return (
     <Wrapper>
@@ -194,7 +189,6 @@ export default function PageContent(props) {
         <BodyContent ref={contentRef} className="content-wrapper">
           {props.children}
         </BodyContent>
-        <EditLink>{editLink}</EditLink>
         <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
       </InnerWrapper>
       <Aside>
@@ -206,7 +200,6 @@ export default function PageContent(props) {
             imagesLoaded={imagesLoaded === imagesToLoad}
           />
         )}
-        {editLink}
       </Aside>
     </Wrapper>
   );

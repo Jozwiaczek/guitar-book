@@ -98,6 +98,14 @@ module.exports = ({
   ];
 
   const plugins = [
+    {
+      resolve: 'gatsby-plugin-typescript',
+      options: {
+        isTSX: true,
+        jsxPragma: 'jsx', // defaults to "React"
+        allExtensions: true, // defaults to false
+      },
+    },
     'gatsby-plugin-svgr',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
@@ -114,7 +122,7 @@ module.exports = ({
       },
     },
     {
-      resolve: `gatsby-source-contentful`,
+      resolve: 'gatsby-source-contentful',
       options: {
         spaceId: contentfulSpaceId,
         accessToken: contentfulAPIKey,
@@ -135,19 +143,19 @@ module.exports = ({
       },
     },
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        name: `Guitar Book`,
-        short_name: `Guitar Book`,
-        description: `Track and play best guitar songs for camping`,
-        start_url: `/`,
-        background_color: `#ede9fb`,
-        theme_color: `#3f20ba`,
-        display: `standalone`,
+        name: 'Guitar Book',
+        short_name: 'Guitar Book',
+        description: 'Track and play best guitar songs for camping',
+        start_url: '/',
+        background_color: '#ede9fb',
+        theme_color: '#3f20ba',
+        display: 'standalone',
         icon: require.resolve('./src/assets/icon.png'),
       },
     },
-    `gatsby-plugin-offline`,
+    'gatsby-plugin-offline',
   ];
 
   if (gaTrackingId) {

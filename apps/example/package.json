@@ -22,7 +22,7 @@
     "serve": "yarn build && gatsby serve --host 0.0.0.0 --port 8001 --open"
   },
   "dependencies": {
-    "gatsby": "^2.24.26",
+    "gatsby": "^2.26.1",
     "gatsby-theme-guitar-book": "^1.0.1-alpha.11",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

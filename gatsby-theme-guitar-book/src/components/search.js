@@ -286,7 +286,11 @@ export default function Search(props) {
                 ))}
               </>
             ) : (
-              <NoResultsInfo>No results found for query &quot;{value}&quot;</NoResultsInfo>
+              <NoResultsInfo>
+                No results found for query &quot;
+                {value}
+                &quot;
+              </NoResultsInfo>
             )}
           </SuggestionBox>
         )}

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { createContext, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import { graphql, navigate } from 'gatsby';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -12,10 +12,11 @@ import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
 import { Verse } from '../verse';
 import { AllChordsPreview } from '../chords/allChordsPreview';
+import TestTs from './TestTs';
 
-const CustomLinkContext = createContext();
+const CustomLinkContext = createContext({});
 
-function CustomLink(props) {
+const CustomLink = (props) => {
   const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
 
   const linkProps = { ...props };
@@ -35,7 +36,7 @@ function CustomLink(props) {
   }
 
   return <a {...linkProps} />;
-}
+};
 
 CustomLink.propTypes = {
   href: PropTypes.string,
@@ -47,9 +48,7 @@ export default function SongTemplate(props) {
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
   const [allChords, setAllChords] = useState([]);
-  const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
-    .filter((page) => !page.anchor);
+  const pages = sidebarContents.reduce((acc, { items }) => acc.concat(items), []);
 
   const options = {
     renderText: (text) => {
@@ -89,6 +88,7 @@ export default function SongTemplate(props) {
               baseUrl,
             }}
           >
+            <TestTs title="hello ts" />
             <div style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulSong.lyrics.json, options)}
             </div>

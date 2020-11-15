@@ -21,9 +21,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx --cache",
-    "lint:fix": "eslint . --ext .js,.jsx --cache --fix"
+    "lint:fix": "eslint . --ext .js,.jsx --cache --fix",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "gatsby-plugin-typescript": "^2.6.0",
+    "typescript": "^4.0.5",
     "@apollo/space-kit": "^7.7.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
@@ -73,12 +76,21 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.6.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "2.1.1",
     "eslint-loader": "^4.0.2",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
     "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-prettier": "^3.1.4",
     "gatsby-plugin-eslint": "^2.0.8"
   },
   "peerDependencies": {
-    "gatsby": "^2.6.0"
+    "gatsby": "^2.26.1"
   }
 }

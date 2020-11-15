@@ -1,5 +1,11 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "airbnb-typescript",
+    "prettier",
+    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "jest": true,
     "mocha": true
@@ -33,6 +39,13 @@
         "noSortAlphabetically": true
       }
     ],
+    "@typescript-eslint/dot-notation": 0,
+    "react/display-name": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-implied-eval": 0,
+    "@typescript-eslint/no-throw-literal": 0,
+    "mport/no-unresolved": 0,
     "react/no-danger": 0,
     "no-console": 0,
     "no-shadow": 0,
