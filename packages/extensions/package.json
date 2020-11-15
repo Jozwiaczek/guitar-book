@@ -1,0 +1,52 @@
+{
+  "name": "extensions",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "contentful-extension-scripts start",
+    "build": "contentful-extension-scripts build",
+    "lint": "eslint ./ --ext .js,.jsx",
+    "test": "contentful-extension-scripts test --env=jsdom --watch",
+    "test:coverage": "contentful-extension-scripts test --env=jsdom --coverage",
+    "deploy": "yarn build && contentful extension update --force",
+    "configure": "contentful space use && contentful space environment use",
+    "login": "contentful login",
+    "logout": "contentful logout",
+    "help": "contentful-extension-scripts help",
+    "lint:fix": "eslint  --ext .js,.jsx --cache --fix"
+  },
+  "devDependencies": {
+    "@babel/core": "7.10.0",
+    "@babel/plugin-transform-runtime": "7.10.0",
+    "@babel/preset-env": "7.10.0",
+    "@babel/preset-react": "7.10.0",
+    "@types/react-router-dom": "^5.1.6",
+    "@testing-library/react": "8.0.4",
+    "cssnano": "4.1.10",
+    "contentful-cli": "0.33.2",
+    "@types/jest": "24.0.15",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@types/webpack-env": "1.13.9"
+  },
+  "dependencies": {
+    "@contentful/contentful-extension-scripts": "^0.20.3",
+    "@contentful/forma-36-fcss": "^0.0.35",
+    "@contentful/forma-36-react-components": "3.11.3",
+    "@contentful/forma-36-tokens": "^0.5.2",
+    "contentful-ui-extensions-sdk": "3.13.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.2.0",
+    "wikijs": "^6.0.1"
+  },
+  "browserslist": [
+    "last 5 Chrome version",
+    "> 1%",
+    "not ie <= 11"
+  ],
+  "workspaces": {
+    "nohoist": ["@contentful/contentful-extension-scripts", "@contentful/contentful-extension-scripts/**"]
+  }
+}
