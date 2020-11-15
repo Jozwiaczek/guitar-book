@@ -2,7 +2,7 @@ const path = require('path');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug, getSlugPage } = require('./src/utils');
+const { getSlug } = require('./src/utils');
 
 function getConfigPaths(baseDir) {
   return [
@@ -103,7 +103,7 @@ const getSidebarContents = (edges) => {
     // Root page item
     if (type === 'page') {
       const { title, description, isHomepage } = props;
-      const path = getSlugPage(title, isHomepage);
+      const path = isHomepage ? '/' : getSlug(title);
       const isAlready = !!sidebar.find((item) => {
         return !item.title;
       });
@@ -135,7 +135,7 @@ exports.createPages = async (
 ) => {
   const { data } = await graphql(`
     {
-      allContentfulSidebar(filter: { node_locale: { eq: "en-US" } }) {
+      allContentfulSidebar {
         edges {
           node {
             items {
@@ -186,11 +186,31 @@ exports.createPages = async (
           }
         }
       }
+      allContentfulSong {
+        edges {
+          node {
+            id
+            title
+            author {
+              name
+            }
+          }
+        }
+      }
       allContentfulAuthor {
         edges {
           node {
             id
             name
+          }
+        }
+      }
+      allContentfulPage {
+        edges {
+          node {
+            id
+            isHomepage
+            title
           }
         }
       }
@@ -203,6 +223,7 @@ exports.createPages = async (
 
   const sidebarContents = getSidebarContents(data.allContentfulSidebar.edges); // add order field in all sidebar items
 
+  // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
     const { id, name } = node;
     actions.createPage({
@@ -219,46 +240,37 @@ exports.createPages = async (
     });
   });
 
-  data.allContentfulSidebar.edges[0].node.items.forEach((props) => {
-    const type = props.sys.contentType.sys.id;
+  // Song page
+  data.allContentfulSong.edges.forEach(({ node }) => {
+    const { id, title, author } = node;
+    actions.createPage({
+      path: getSlug(author.name, title),
+      component: songTemplate,
+      context: {
+        id,
+        subtitle,
+        sidebarContents,
+        twitterHandle,
+        adSense,
+        baseUrl,
+      },
+    });
+  });
 
-    switch (type) {
-      case 'sidebarSongs': {
-        props.songs.forEach(({ id, title, author }) => {
-          actions.createPage({
-            path: getSlug(author.name, title),
-            component: songTemplate,
-            context: {
-              id,
-              subtitle,
-              sidebarContents,
-              twitterHandle,
-              adSense,
-              baseUrl,
-            },
-          });
-        });
-        break;
-      }
-      case 'page': {
-        const { id, title, isHomepage } = props;
-        actions.createPage({
-          path: getSlugPage(title, isHomepage),
-          component: pageTemplate,
-          context: {
-            id,
-            subtitle,
-            sidebarContents,
-            twitterHandle,
-            adSense,
-            baseUrl,
-          },
-        });
-        break;
-      }
-      default:
-        console.error('Unsupported page');
-        break;
-    }
+  // Static page
+  data.allContentfulPage.edges.forEach(({ node }) => {
+    const { id, title, isHomepage } = node;
+    actions.createPage({
+      path: isHomepage ? '/' : getSlug(title),
+      component: pageTemplate,
+      context: {
+        id,
+        subtitle,
+        sidebarContents,
+        twitterHandle,
+        adSense,
+        baseUrl,
+      },
+    });
   });
 };

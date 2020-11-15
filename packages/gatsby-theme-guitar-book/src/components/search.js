@@ -125,7 +125,7 @@ export default function Search(props) {
 
   const data = useStaticQuery(graphql`
     query {
-      allContentfulSong(filter: { node_locale: { eq: "en-US" } }) {
+      allContentfulSong {
         edges {
           node {
             title

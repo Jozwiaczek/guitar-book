@@ -5,22 +5,15 @@ function getVersionBasePath(version) {
 const getSlug = (...nodes) => {
   nodes = nodes.map((n) =>
     n
+      .replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '') // Removing emoji
       .toLowerCase()
       .replace(/[^\w ]+/g, '')
+      .replace(/ +$/g, '')
       .replace(/ +/g, '-'),
   );
   return `/${nodes.join('/')}`;
 };
 
-const getSlugPage = (title, isHomepage = false) =>
-  isHomepage
-    ? '/'
-    : `/${title
-        .toLowerCase()
-        .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-')}`;
-
 exports.getVersionBasePath = getVersionBasePath;
 exports.HEADER_HEIGHT = 72;
 exports.getSlug = getSlug;
-exports.getSlugPage = getSlugPage;
