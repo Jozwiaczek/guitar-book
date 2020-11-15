@@ -98,6 +98,9 @@ module.exports = ({
   ];
 
   const plugins = [
+    'gatsby-image',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     'gatsby-plugin-svgr',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
@@ -119,6 +122,7 @@ module.exports = ({
         spaceId: contentfulSpaceId,
         accessToken: contentfulAPIKey,
         downloadLocal: true,
+        localeFilter: (locale) => locale.code === 'en-US',
       },
     },
     'gatsby-plugin-printer',

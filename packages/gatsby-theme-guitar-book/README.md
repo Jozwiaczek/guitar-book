@@ -1,24 +1,23 @@
-<div align="center">
-  <a href="https://guitar-book.netlify.app">
-    <img alt="Guitar Book" src="gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
-  </a>
-  <hr/>
-</div>
-
-![GitHub last commit](https://img.shields.io/github/last-commit/Jozwiaczek/guitar-book)
-![GitHub issues](https://img.shields.io/github/issues/Jozwiaczek/guitar-book)
-![npm](https://img.shields.io/npm/v/gatsby-theme-guitar-book)
+# Gatsby Theme Guitar Book
 
 This is an entirely configuration-based Gatsby theme that generates a guitar book website based on a series of Markdown or MDX files.
+It also exports a series of [components](#components) that can be used within MDX pages.
 
 - [Features](#features)
 - [Published Demo Guitar Books](#published-demo-guitar-books)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Options](#options)
+  - [`sidebarCategories`](#sidebarcategories)
   - [`navConfig`](#navconfig)
+- [Adding songs](#addings-songs)
 - [Component shadowing](#component-shadowing)
+- [Components](#components)
+  - [`Verse`](#verse)
+  - [`ExpansionPanel`](#expansionpanel)
 - [Deployment](#deployment)
+- [Examples](#examples)
+- [SongTemplate](#template)
 
 ## Features
 
@@ -38,23 +37,11 @@ This is an entirely configuration-based Gatsby theme that generates a guitar boo
 
 ## Published Demo Guitar Books
 
-| Module      | Status                                                                                                                                                                 | Public URL                             |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| Example app | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c123498-54db-40b0-91bf-2fc5141cfe17/deploy-status)](https://app.netlify.com/sites/guitar-book-pjatk/deploys) | https://guitar-book-pjatk.netlify.app/ |
-
-<br/>
-<br/>
-<div align="center">
-    <img alt="desktop preview" src="gatsby-theme-guitar-book/src/assets/screenshots/desktop_preview.png" height="500" />
-</div>
-<br/>
-<div align="center">
-  <img alt="mobile preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_preview.png" height="250" />
-  &emsp;&emsp;&emsp;
-  <img alt="mobile icon preview" src="gatsby-theme-guitar-book/src/assets/screenshots/mobile_icon_preview.jpg" height="200" />
-</div>
-<br/>
-<br/>
+| Module         | Status                                                                                                                                                                    | Public URL                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Polish Songs   | [![Netlify Status](https://api.netlify.com/api/v1/badges/6b10ea9b-3c17-4f4d-b83f-ab785fabb281/deploy-status)](https://app.netlify.com/sites/guitar-book/deploys)          | https://guitar-book.netlify.app/         |
+| English Songs  | [![Netlify Status](https://api.netlify.com/api/v1/badges/e739a182-2d8f-4875-8d1b-c3303122b3a1/deploy-status)](https://app.netlify.com/sites/guitar-book-english/deploys)  | https://guitar-book.netlify.app/english  |
+| Shanties Songs | [![Netlify Status](https://api.netlify.com/api/v1/badges/1c311bcc-0193-4bc6-b624-23635c1754bc/deploy-status)](https://app.netlify.com/sites/guitar-book-shanties/deploys) | https://guitar-book.netlify.app/shanties |
 
 ## Installation
 
@@ -89,10 +76,12 @@ module.exports = {
         siteName: 'Guitar Book',
         pageTitle: 'Guitar Book',
         description: 'Track and play best guitar songs for camping',
+        githubRepo: 'jozwiaczek/guitar-book',
         menuTitle: 'Songs Types',
         gaTrackingId: 'UA-122299419-2',
         baseUrl: 'https://guitar-book.netlify.app/',
         logoLink: 'https://guitar-book.netlify.app//',
+        contentDir: 'content',
         twitterHandle: 'jozwiaczek',
         youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
         navConfig: {
@@ -109,13 +98,19 @@ module.exports = {
             description: 'Navigate to guitar book with shanties',
           },
         },
+        sidebarCategories: {
+          null: ['index'],
+          'George Ezra': ['blame-it-on-me', 'listening-to-the-men'],
+          'Other Guitar Books': [
+            '[Polish 🇵🇱](https://guitar-book.netlify.app)',
+            '[Shanties 🏴‍](https://guitar-book.netlify.app/shanties)',
+          ],
+        },
       },
     },
   ],
 };
 ```
-
-> **Important note:** Remember that guitar book must always have at least one .md **and** mdx file to build successfully.
 
 ## Options
 
@@ -136,11 +131,9 @@ module.exports = {
 
 ### `navConfig`
 
-The `navConfig` option should be an object keyed by link titles. The values should be objects with `description`, and `url` properties.
+The `navConfig` option should be an object keyed by link titles. The values should be objects with `description`, and `url` properties. Check out the [default theme options](./gatsby-theme-guitar-book/theme-options.js) for an example of the expected shape of this data.
 
-## Adding songs
-
-# TODO
+Page URLs will be derived from the file paths of your Markdown. You can nest Markdown files within directories to create pages with additional path segments. You can overwrite this default path by adding a `slug` field to your Markdown frontmatter header.
 
 ## Component shadowing
 
@@ -163,3 +156,15 @@ export default function SEO({ title, description, siteName }) {
 ## Deployment
 
 All apps sites will eventually be deployed into a subdirectory, as configured by the `pathPrefix` option&mdash;/shanties, for example.
+
+## Examples
+
+In `apps` directory you will find my 3 connected guitar-books (english, polish, shanties).
+
+## SongTemplate
+
+If you want to start with your own guitar check `template` directory with [tutorial how to start](apps/template/README.md).
+
+> **Important note:** Guitar book always must have at least one .md **and** mdx file to build successfully.
+
+> **Important note:** To build successfully project with gatsby-theme-guitar-book plugin you must init git in project and publish it with some provider (it can be private repo and no matter which provider).

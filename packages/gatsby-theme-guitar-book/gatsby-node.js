@@ -139,6 +139,19 @@ exports.createPages = async (
         edges {
           node {
             items {
+              ... on ContentfulPage {
+                id
+                title
+                isHomepage
+                description
+                sys {
+                  contentType {
+                    sys {
+                      id
+                    }
+                  }
+                }
+              }
               ... on ContentfulSidebarSongs {
                 name
                 songs {
@@ -173,15 +186,41 @@ exports.createPages = async (
           }
         }
       }
+      allContentfulAuthor {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
     }
   `);
 
   const songTemplate = require.resolve('./src/components/templates/song-template');
   const pageTemplate = require.resolve('./src/components/templates/page-template');
+  const authorTemplate = require.resolve('./src/components/templates/author-template');
+
+  const sidebarContents = getSidebarContents(data.allContentfulSidebar.edges); // add order field in all sidebar items
+
+  data.allContentfulAuthor.edges.forEach(({ node }) => {
+    const { id, name } = node;
+    actions.createPage({
+      path: getSlug(name),
+      component: authorTemplate,
+      context: {
+        id,
+        name,
+        sidebarContents,
+        twitterHandle,
+        adSense,
+        baseUrl,
+      },
+    });
+  });
 
   data.allContentfulSidebar.edges[0].node.items.forEach((props) => {
     const type = props.sys.contentType.sys.id;
-    const sidebarContents = getSidebarContents(data.allContentfulSidebar.edges); // add order field in all sidebar items
 
     switch (type) {
       case 'sidebarSongs': {

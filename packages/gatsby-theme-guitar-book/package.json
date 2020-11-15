@@ -13,18 +13,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jozwiaczek/guitar-book.git",
-    "directory": "gatsby-theme-guitar-book"
+    "url": "https://github.com/Jozwiaczek/guitar-book",
+    "directory": "packages/gatsbt-theme-guitar-book"
   },
   "license": "MIT",
   "author": "Jakub Jozwiak <kubencki@gmail.com> (@Jozwiaczek)",
-  "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --cache",
-    "lint:fix": "eslint . --ext .js,.jsx --cache --fix"
+    "lint": "eslint  --ext .js,.jsx --cache",
+    "lint:fix": "eslint  --ext .js,.jsx --cache --fix"
   },
   "dependencies": {
     "@apollo/space-kit": "^7.7.0",
+    "@contentful/rich-text-react-renderer": "^14.1.1",
+    "@contentful/rich-text-types": "^14.1.1",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
     "@mdx-js/mdx": "^1.1.0",
@@ -32,6 +33,7 @@
     "@svgr/webpack": "^4.2.0",
     "@tombatossals/chords-db": "^0.5.1",
     "@tombatossals/react-chords": "^0.2.10",
+    "gatsby-image": "^2.5.0",
     "gatsby-plugin-emotion": "^4.0.3",
     "gatsby-plugin-google-analytics": "^2.2.5",
     "gatsby-plugin-less": "^3.0.1",
@@ -39,6 +41,7 @@
     "gatsby-plugin-offline": "^3.2.22",
     "gatsby-plugin-printer": "1.0.x",
     "gatsby-plugin-react-helmet": "^3.0.2",
+    "gatsby-plugin-sharp": "^2.8.0",
     "gatsby-plugin-svgr": "^2.0.1",
     "gatsby-remark-autolink-headers": "^2.0.16",
     "gatsby-remark-check-links": "^2.1.0",
@@ -49,6 +52,7 @@
     "gatsby-remark-rewrite-relative-links": "^1.0.8",
     "gatsby-source-contentful": "^3.0.6",
     "gatsby-transformer-remark": "^2.6.30",
+    "gatsby-transformer-sharp": "^2.6.0",
     "js-yaml": "^3.13.1",
     "less": "^3.10.1",
     "lodash": "^4.17.14",
@@ -56,6 +60,7 @@
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
     "react-helmet": "^5.2.0",
+    "react-highlight-words": "^0.16.0",
     "react-open-app": "^1.0.2",
     "react-textfit": "^1.1.0",
     "react-use": "^9.11.0",
@@ -65,20 +70,12 @@
     "remark-react": "^5.0.1",
     "remark-typescript": "^0.3.0",
     "source-sans-pro": "^3.6.0",
-    "striptags": "^3.1.1",
-    "@contentful/rich-text-react-renderer": "^14.1.1",
-    "@contentful/rich-text-types": "^14.1.1",
-    "react-highlight-words": "^0.16.0"
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.6.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-react": "^7.20.5",
     "gatsby-plugin-eslint": "^2.0.8"
   },
   "peerDependencies": {
-    "gatsby": "^2.6.0"
+    "gatsby": "^2.26.1"
   }
 }

@@ -12,6 +12,8 @@ import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
 import { Verse } from '../verse';
 import { AllChordsPreview } from '../chords/allChordsPreview';
+import Link from '../link';
+import { getSlug } from '../../utils/getSlug';
 
 const CustomLinkContext = createContext();
 
@@ -68,7 +70,12 @@ export default function SongTemplate(props) {
         adSense={adSense}
       />
       <ContentWrapper>
-        <PageHeader title={contentfulSong.title} description={contentfulSong.author?.name} />
+        <PageHeader
+          title={contentfulSong.title}
+          description={
+            <Link to={getSlug(contentfulSong.author.name)}>{contentfulSong.author.name}</Link>
+          }
+        />
         <hr />
         {contentfulSong.videoLink && (
           <>
