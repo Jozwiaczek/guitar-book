@@ -4,6 +4,10 @@ import { graphql, navigate } from 'gatsby';
 
 import Img from 'gatsby-image';
 
+import styled from '@emotion/styled';
+
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
@@ -11,6 +15,7 @@ import Footer from '../footer';
 import PageContent from '../page-content';
 import { getSlug } from '../../utils/getSlug';
 import ListView from '../list-view';
+import SeeMore from '../see-more';
 
 const CustomLinkContext = createContext();
 
@@ -40,11 +45,25 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+`;
+
+const DescriptionWrapper = styled.div`
+  text-align: justify;
+  text-justify: auto;
+`;
+
 export default function AuthorTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulAuthor } = props.data;
   const { title, description } = site.siteMetadata;
-  const { avatar, name, song: songs } = contentfulAuthor;
+  const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
@@ -65,8 +84,26 @@ export default function AuthorTemplate(props) {
         <PageHeader title={name} description="Author" />
         <hr />
         <PageContent pathname={pathname} pages={pages} hash={hash} githubUrl={githubUrl}>
-          <div style={{ width: '100%' }} />
-          {avatar && <Img fluid={avatar.fluid} style={{ maxWidth: '600px' }} />}
+          <Container>
+            {avatar && (
+              <Img
+                fluid={avatar.fluid}
+                style={{
+                  height: 'auto',
+                  maxHeight: '400px',
+                  width: '100%',
+                }}
+                imgStyle={{
+                  objectFit: 'contain',
+                }}
+              />
+            )}
+            {authorDescription && (
+              <DescriptionWrapper>
+                <SeeMore text={authorDescription.description} limit={1000} />
+              </DescriptionWrapper>
+            )}
+          </Container>
           {songs && (
             <ListView
               title="Song list"
@@ -105,8 +142,11 @@ export const AuthorTemplateQuery = graphql`
     }
     contentfulAuthor(id: { eq: $id }) {
       name
+      description {
+        description
+      }
       avatar {
-        fluid(maxHeight: 250, quality: 100) {
+        fluid(maxHeight: 600, quality: 100) {
           ...GatsbyContentfulFluid
         }
       }
