@@ -42,7 +42,7 @@ export default function PageTemplate(props) {
   const { hash, pathname } = props.location;
   const { site, contentfulPage } = props.data;
   const { title, description } = site.siteMetadata;
-  const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
+  const { sidebarContents, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
     .reduce((acc, { pages }) => acc.concat(pages), [])
@@ -60,13 +60,7 @@ export default function PageTemplate(props) {
       />
       <ContentWrapper>
         <PageHeader title={contentfulPage.title} description={contentfulPage.description} />
-        <PageContent
-          title={contentfulPage.title}
-          pathname={pathname}
-          pages={pages}
-          hash={hash}
-          githubUrl={githubUrl}
-        >
+        <PageContent title={contentfulPage.title} pathname={pathname} pages={pages} hash={hash}>
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
