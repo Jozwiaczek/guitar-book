@@ -6,8 +6,6 @@ import Img from 'gatsby-image';
 
 import styled from '@emotion/styled';
 
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
