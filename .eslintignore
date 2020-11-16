@@ -1,1 +1,4 @@
-packages/gatsby-theme-guitar-book/node_modules
+/node_modules
+.cache
+build
+/public
