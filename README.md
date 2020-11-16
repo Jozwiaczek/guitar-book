@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://guitar-book.netlify.app">
+  <a href="https://guitar-book-pjatk.netlify.app">
     <img alt="Guitar Book" src="packages/gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
   </a>
   <hr/>
