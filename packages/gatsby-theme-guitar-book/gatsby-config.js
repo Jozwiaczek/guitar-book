@@ -148,7 +148,7 @@ module.exports = ({
         background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
-        icon: require.resolve('./src/assets/icon.png'),
+        icon: require.resolve('./src/assets/logo.png'),
       },
     },
     `gatsby-plugin-offline`,

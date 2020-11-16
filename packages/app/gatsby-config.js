@@ -8,12 +8,13 @@ module.exports = {
       resolve: `gatsby-theme-guitar-book`,
       options: {
         root: __dirname,
+        contentfulAPIKey: process.env.CONTENTFUL_ACCESS_TOKEN,
+        contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID,
         siteName: 'Guitar Book',
-        pageTitle: 'Guitar Book',
+        pageTitle: 'Guitar Book - page',
         description: 'Track and play best guitar songs for camping',
         menuTitle: 'Songs Types',
-        baseDir: 'apps/example',
-        subtitle: 'Songs',
+        subtitle: 'Menu',
         baseUrl:
           process.env.NODE_ENV === 'development'
             ? 'http://localhost:8000/'
@@ -22,25 +23,20 @@ module.exports = {
           process.env.NODE_ENV === 'development'
             ? 'http://localhost:8000/'
             : 'https://guitar-book-pjatk.netlify.app/',
-        twitterHandle: 'jozwiaczek',
         gaTrackingId: 'UA-122299419-2',
         adSense: 'ca-pub-8136370322211479',
+        contactMail: 'kubencki@gmail.com',
+        twitterUrl: 'https://twitter.com/jozwiaczek',
+        instagramUrl: 'https://www.instagram.com/j_jozwiaczek/',
+        soundcloudUrl: 'https://soundcloud.com/jakub-j-wiak-69817773',
+        spotifyUrl: 'https://open.spotify.com/user/11102108168',
         youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
-        contentfulAPIKey: process.env.CONTENTFUL_ACCESS_TOKEN,
-        contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID,
-        footerNavConfig: {},
-        navConfig: {
-          'Polish Songs 🇵🇱': {
-            url: 'https://guitar-book.netlify.app/',
-            description: 'Navigate to guitar book with example songs',
-          },
-          'English Songs 🇺🇸': {
-            url: 'https://guitar-book.netlify.app/english',
-            description: 'Navigate to guitar book with english songs',
-          },
-          'Shanties Songs 🏴‍': {
-            url: 'https://guitar-book.netlify.app/shanties',
-            description: 'Navigate to guitar book with shanties',
+        footerNavConfig: {
+          'Get your own Guitar Book': {
+            href:
+              'https://www.gatsbyjs.com/plugins/gatsby-theme-guitar-book/?=gatsby-theme-guitar/',
+            target: '_blank',
+            rel: 'noopener noreferrer',
           },
         },
       },

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ReactComponent as MobileLogoIcon } from '../assets/mobile-logo.svg';
+import { ReactComponent as MobileLogoIcon } from '../assets/icons/mobile-logo.svg';
 
 export const MobileLogo = () => {
   return (

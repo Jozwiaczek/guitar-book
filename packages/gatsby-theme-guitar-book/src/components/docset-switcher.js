@@ -8,6 +8,13 @@ import { IconYoutube } from '@apollo/space-kit/icons/IconYoutube';
 
 import { size, transparentize } from 'polished';
 
+import { Link } from 'gatsby';
+
+import { ReactComponent as SpotifyLogoIcon } from '../assets/icons/spotify.svg';
+import { ReactComponent as InstagramLogoIcon } from '../assets/icons/instagram.svg';
+import { ReactComponent as SoundcloudLogoIcon } from '../assets/icons/soundcloud.svg';
+import { ReactComponent as MailIcon } from '../assets/icons/mail.svg';
+
 import { boxShadow } from './search';
 import { colors } from '../utils/colors';
 import { smallCaps } from '../utils/typography';
@@ -62,16 +69,12 @@ const StyledNav = styled.nav({
   margin: 12,
 });
 
-const NavItem = styled.div({
+const NavItem = styled(Link)({
   display: 'block',
   width: '50%',
   [breakpoints.md]: {
     width: '100%',
   },
-});
-
-const NavItemInner = styled.a({
-  display: 'block',
   height: '100%',
   padding: 12,
   borderRadius: 4,
@@ -183,7 +186,14 @@ export default function DocsetSwitcher(props) {
     }
   }
 
-  const hasSocialUrls = Boolean(props.twitterUrl || props.youtubeUrl);
+  const hasSocialUrls = Boolean(
+    props.twitterUrl ||
+      props.youtubeUrl ||
+      props.contactMail ||
+      props.instagramUrl ||
+      props.soundcloudUrl ||
+      props.spotifyUrl,
+  );
   return (
     <Wrapper
       style={{
@@ -202,14 +212,50 @@ export default function DocsetSwitcher(props) {
       >
         <MenuTitle>{props.siteName}</MenuTitle>
         <StyledNav>
-          {props.navItems.map((navItem) => (
-            <NavItem key={navItem.url}>
-              <NavItemInner href={navItem.url}>
-                <NavItemTitle>{navItem.title}</NavItemTitle>
-                <NavItemDescription>{navItem.description}</NavItemDescription>
-              </NavItemInner>
-            </NavItem>
-          ))}
+          <NavItem to="/favourites">
+            <NavItemTitle>
+              Favourites{' '}
+              <span role="img" aria-label="favourites">
+                ⭐️
+              </span>
+            </NavItemTitle>
+            <NavItemDescription>Check all songs marks as favourites.</NavItemDescription>
+          </NavItem>
+          <NavItem to="/newest">
+            <NavItemTitle>
+              20 newest songs{' '}
+              <span role="img" aria-label="new songs">
+                🆕
+              </span>
+            </NavItemTitle>
+            <NavItemDescription>Checkout last added 20 songs.</NavItemDescription>
+          </NavItem>
+          <NavItem to="/songs">
+            <NavItemTitle>
+              All songs{' '}
+              <span role="img" aria-label="songs">
+                🎶
+              </span>
+            </NavItemTitle>
+            <NavItemDescription>Navigate to the list of all songs.</NavItemDescription>
+          </NavItem>
+          <NavItem to="/authors">
+            <NavItemTitle>
+              All authors{' '}
+              <span role="img" aria-label="author">
+                👨🏻‍🎤
+              </span>
+            </NavItemTitle>
+            <NavItemDescription>Navigate to the list of all authors.</NavItemDescription>
+          </NavItem>
+          <NavItem to="">
+            <NavItemTitle>Random song</NavItemTitle>
+            <NavItemDescription>Pick and play random song.</NavItemDescription>
+          </NavItem>
+          <NavItem to="">
+            <NavItemTitle>Random author</NavItemTitle>
+            <NavItemDescription>Pick and check random author page.</NavItemDescription>
+          </NavItem>
         </StyledNav>
         {(props.footerNavConfig || hasSocialUrls) && (
           <FooterNav>
@@ -222,6 +268,25 @@ export default function DocsetSwitcher(props) {
                 ))}
               {hasSocialUrls && (
                 <SocialLinks>
+                  {props.contactMail && (
+                    <SocialLink
+                      href={`mailto:${props.contactMail}`}
+                      title="Contact mail"
+                      target="_blank"
+                    >
+                      <MailIcon />
+                    </SocialLink>
+                  )}
+                  {props.instagramUrl && (
+                    <SocialLink href={props.instagramUrl} title="Instagram" target="_blank">
+                      <InstagramLogoIcon />
+                    </SocialLink>
+                  )}
+                  {props.soundcloudUrl && (
+                    <SocialLink href={props.soundcloudUrl} title="Soundcloud" target="_blank">
+                      <SoundcloudLogoIcon />
+                    </SocialLink>
+                  )}
                   {props.twitterUrl && (
                     <SocialLink href={props.twitterUrl} title="Twitter" target="_blank">
                       <IconTwitter />
@@ -230,6 +295,11 @@ export default function DocsetSwitcher(props) {
                   {props.youtubeUrl && (
                     <SocialLink href={props.youtubeUrl} title="YouTube" target="_blank">
                       <IconYoutube />
+                    </SocialLink>
+                  )}
+                  {props.spotifyUrl && (
+                    <SocialLink href={props.spotifyUrl} title="Spotify" target="_blank">
+                      <SpotifyLogoIcon />
                     </SocialLink>
                   )}
                 </SocialLinks>
