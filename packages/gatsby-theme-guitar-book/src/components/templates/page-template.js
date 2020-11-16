@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext } from 'react';
 import { graphql, navigate } from 'gatsby';
+import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+import { BLOCKS } from '@contentful/rich-text-types';
+
+import striptags from 'striptags';
+
+import styled from '@emotion/styled';
 
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
@@ -38,15 +45,47 @@ CustomLink.propTypes = {
   href: PropTypes.string,
 };
 
+const Wrapper = styled.div`
+  h1 {
+    margin-top: -285px;
+    padding-top: 285px;
+    display: inline-block;
+  }
+  h2 {
+    margin-top: -229px;
+    padding-top: 285px;
+    display: inline-block;
+  }
+`;
+
 export default function PageTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulPage } = props.data;
+  const { site, contentfulPage, sitePage } = props.data;
   const { title, description } = site.siteMetadata;
   const { sidebarContents, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
     .reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
+
+  const headings = contentfulPage.body.json.content.map(({ nodeType, content }) => {
+    if (['heading-1', 'heading-2'].includes(nodeType)) {
+      return content[0].value;
+    }
+  });
+
+  const getAnchorSlug = (value) => {
+    const text = striptags(value);
+    const slugger = new Slugger();
+    return slugger.slug(text);
+  };
+
+  const options = {
+    renderNode: {
+      [BLOCKS.HEADING_1]: (node, children) => <h1 id={getAnchorSlug(children[0])}>{children}</h1>,
+      [BLOCKS.HEADING_2]: (node, children) => <h2 id={getAnchorSlug(children[0])}>{children}</h2>,
+    },
+  };
 
   return (
     <>
@@ -57,19 +96,26 @@ export default function PageTemplate(props) {
         baseUrl={baseUrl}
         twitterHandle={twitterHandle}
         adSense={adSense}
+        image={sitePage.fields.image}
       />
       <ContentWrapper>
         <PageHeader title={contentfulPage.title} description={contentfulPage.description} />
-        <PageContent title={contentfulPage.title} pathname={pathname} pages={pages} hash={hash}>
+        <PageContent
+          title={contentfulPage.title}
+          pathname={pathname}
+          pages={pages}
+          hash={hash}
+          headings={headings}
+        >
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
               baseUrl,
             }}
           >
-            <div style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(contentfulPage.body.json)}
-            </div>
+            <Wrapper style={{ whiteSpace: 'break-spaces' }}>
+              {documentToReactComponents(contentfulPage.body.json, options)}
+            </Wrapper>
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
@@ -91,6 +137,11 @@ export const PageTemplateQuery = graphql`
       siteMetadata {
         title
         description
+      }
+    }
+    sitePage(fields: { id: { eq: $id } }) {
+      fields {
+        image
       }
     }
     contentfulPage(id: { eq: $id }) {

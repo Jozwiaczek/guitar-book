@@ -77,7 +77,7 @@ export default function SectionNav(props) {
   const slugger = new Slugger();
   return (
     <StyledList>
-      {props.headings.map(({ value }) => {
+      {props.headings.map((value) => {
         const text = striptags(value);
         const slug = slugger.slug(text);
         return (
