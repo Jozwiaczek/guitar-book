@@ -3,6 +3,7 @@
 #
 
 [build]
-    base = "packages/extensions/"
+    base = "packages/contentful-extensions/"
     publish = "build/"
     command = "yarn build"
+    ignore = "git diff --quiet master ."
