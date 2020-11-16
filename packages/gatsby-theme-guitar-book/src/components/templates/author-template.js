@@ -59,7 +59,7 @@ const DescriptionWrapper = styled.div`
 
 export default function AuthorTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulAuthor } = props.data;
+  const { site, contentfulAuthor, sitePage } = props.data;
   const { title, description } = site.siteMetadata;
   const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
@@ -77,44 +77,44 @@ export default function AuthorTemplate(props) {
         baseUrl={baseUrl}
         twitterHandle={twitterHandle}
         adSense={adSense}
+        image={sitePage.fields.image}
       />
       <ContentWrapper>
         <PageHeader title={name} description="Author" />
         <hr />
         <PageContent pathname={pathname} pages={pages} hash={hash} githubUrl={githubUrl}>
-          <Container>
-            {avatar && (
-              <Img
-                fluid={avatar.fluid}
-                style={{
-                  height: 'auto',
-                  maxHeight: '400px',
-                  width: '100%',
-                }}
-                imgStyle={{
-                  objectFit: 'contain',
-                }}
-              />
-            )}
-            {authorDescription && (
-              <DescriptionWrapper>
-                <SeeMore text={authorDescription.description} limit={1000} />
-              </DescriptionWrapper>
-            )}
-          </Container>
-          {songs && (
-            <ListView
-              title="Song list"
-              items={songs.map(({ title }) => ({ title, path: getSlug(name, title) }))}
-            />
-          )}
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
               baseUrl,
             }}
           >
-            <div style={{ whiteSpace: 'break-spaces' }} />
+            <Container>
+              {avatar && (
+                <Img
+                  fluid={avatar.fluid}
+                  style={{
+                    height: 'auto',
+                    maxHeight: '400px',
+                    width: '100%',
+                  }}
+                  imgStyle={{
+                    objectFit: 'contain',
+                  }}
+                />
+              )}
+              {authorDescription && (
+                <DescriptionWrapper>
+                  <SeeMore text={authorDescription.description} limit={1000} />
+                </DescriptionWrapper>
+              )}
+            </Container>
+            {songs && (
+              <ListView
+                title="Song list"
+                items={songs.map(({ title }) => ({ title, path: getSlug(name, title) }))}
+              />
+            )}
           </CustomLinkContext.Provider>
         </PageContent>
         <Footer />
@@ -136,6 +136,11 @@ export const AuthorTemplateQuery = graphql`
       siteMetadata {
         title
         description
+      }
+    }
+    sitePage(fields: { id: { eq: $id } }) {
+      fields {
+        image
       }
     }
     contentfulAuthor(id: { eq: $id }) {

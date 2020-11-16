@@ -53,7 +53,7 @@ const BodyContent = styled.div({
     },
   },
   '*:not(style) +': {
-    [['h2', 'h3', 'h4']]: {
+    [['h3', 'h4']]: {
       marginTop: 56,
     },
   },
@@ -197,19 +197,17 @@ export default function PageContent(props) {
         <EditLink>{editLink}</EditLink>
         <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
       </InnerWrapper>
-      {props.title && (
-        <Aside>
-          <AsideHeading>{props.title}</AsideHeading>
-          {props.headings?.length > 0 && (
-            <SectionNav
-              headings={props.headings}
-              contentRef={contentRef}
-              imagesLoaded={imagesLoaded === imagesToLoad}
-            />
-          )}
-          {editLink}
-        </Aside>
-      )}
+      <Aside>
+        {props.title && <AsideHeading>{props.title}</AsideHeading>}
+        {props.headings?.length && (
+          <SectionNav
+            headings={props.headings}
+            contentRef={contentRef}
+            imagesLoaded={imagesLoaded === imagesToLoad}
+          />
+        )}
+        {editLink}
+      </Aside>
     </Wrapper>
   );
 }
