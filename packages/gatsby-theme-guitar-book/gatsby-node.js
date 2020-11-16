@@ -31,19 +31,6 @@ async function onCreateNode(
     !['/dev-404-page/', '/404/', '/404.html', '/offline-plugin-app-shell-fallback/'].includes(slug)
   ) {
     const outputDir = 'social-cards';
-    const sidebar = node.context.sidebarContents;
-
-    let title = siteName;
-    let subtitle = '';
-    let category = '';
-    sidebar.forEach((sidebarItem) => {
-      const tmp = sidebarItem.pages.find((page) => page.path === slug);
-      if (tmp) {
-        title = tmp.title;
-        subtitle = sidebarItem.title;
-        category = tmp.author;
-      }
-    });
 
     const fileName =
       slug
@@ -56,9 +43,9 @@ async function onCreateNode(
       fileName,
       outputDir,
       data: {
-        title,
-        subtitle,
-        category,
+        title: siteName,
+        subtitle: node.context.title,
+        category: node.context.author && node.context.author.name,
       },
       component: require.resolve('./src/components/social-card.js'),
     });
@@ -74,6 +61,12 @@ async function onCreateNode(
       name: 'slug',
       value: slug,
     });
+
+    actions.createNodeField({
+      node,
+      name: 'id',
+      value: node.context.id,
+    });
   }
 }
 
@@ -88,9 +81,10 @@ const getSidebarContents = (edges) => {
     // Collapse songs sections
     if (type === 'sidebarSongs') {
       const songSidebarName = props.name;
-      const pages = props.songs.map(({ title, author }) => {
+      const pages = props.songs.map(({ id, title, author }) => {
         const authorName = author.name;
         return {
+          id,
           title,
           author: authorName,
           path: getSlug(authorName, title),
@@ -102,7 +96,7 @@ const getSidebarContents = (edges) => {
 
     // Root page item
     if (type === 'page') {
-      const { title, description, isHomepage } = props;
+      const { id, title, description, isHomepage } = props;
       const path = isHomepage ? '/' : getSlug(title);
       const isAlready = !!sidebar.find((item) => {
         return !item.title;
@@ -111,7 +105,7 @@ const getSidebarContents = (edges) => {
       if (isAlready) {
         return sidebar.map((item) => {
           if (!item.title) {
-            item.pages.push({ title, author: description, path });
+            item.pages.push({ id, title, author: description, path });
           }
           return item;
         });
@@ -119,7 +113,7 @@ const getSidebarContents = (edges) => {
 
       sidebar.push({
         title: '',
-        pages: [{ title, author: description, path }],
+        pages: [{ id, title, author: description, path }],
       });
 
       return sidebar;
@@ -231,7 +225,8 @@ exports.createPages = async (
       component: authorTemplate,
       context: {
         id,
-        name,
+        title: name,
+        subtitle,
         sidebarContents,
         twitterHandle,
         adSense,
@@ -248,6 +243,8 @@ exports.createPages = async (
       component: songTemplate,
       context: {
         id,
+        author,
+        title,
         subtitle,
         sidebarContents,
         twitterHandle,
@@ -265,6 +262,7 @@ exports.createPages = async (
       component: pageTemplate,
       context: {
         id,
+        title,
         subtitle,
         sidebarContents,
         twitterHandle,
