@@ -14,8 +14,14 @@ module.exports = {
         menuTitle: 'Songs Types',
         baseDir: 'apps/example',
         subtitle: 'Songs',
-        baseUrl: 'https://guitar-book.netlify.app/',
-        logoLink: 'https://guitar-book.netlify.app/',
+        baseUrl:
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:8000/'
+            : 'https://guitar-book-pjatk.netlify.app/',
+        logoLink:
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:8000/'
+            : 'https://guitar-book-pjatk.netlify.app/',
         twitterHandle: 'jozwiaczek',
         gaTrackingId: 'UA-122299419-2',
         adSense: 'ca-pub-8136370322211479',
