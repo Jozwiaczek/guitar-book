@@ -21,7 +21,7 @@
   "scripts": {
     "build": "contentful-extension-scripts build",
     "configure": "contentful space use && contentful space environment use",
-    "deploy": "yarn build && contentful extension update --force",
+    "deploy:contentful": "yarn build && contentful extension update --force",
     "lint": "eslint ./ --ext .js,.jsx",
     "lint:fix": "eslint  --ext .js,.jsx --cache --fix",
     "login": "contentful login",
