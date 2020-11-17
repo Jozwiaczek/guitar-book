@@ -6,7 +6,7 @@ import useWindowSize from 'react-use/lib/useWindowSize';
 import { IconTwitter } from '@apollo/space-kit/icons/IconTwitter';
 import { IconYoutube } from '@apollo/space-kit/icons/IconYoutube';
 
-import { size, transparentize } from 'polished';
+import { transparentize } from 'polished';
 
 import { graphql, Link, useStaticQuery } from 'gatsby';
 
@@ -139,20 +139,21 @@ const SocialLinks = styled.div({
   },
 });
 
-const SocialLink = styled.a({
-  color: colors.text2,
-  ':hover': {
-    color: colors.text3,
-  },
-  ':not(:last-child)': {
-    marginRight: 24,
-  },
-  svg: {
-    ...size(24),
-    display: 'block',
-    fill: 'currentColor',
-  },
-});
+const SocialLink = styled.a`
+  color: ${colors.text2};
+  :hover {
+    color: ${({ activeColor }) => activeColor || colors.primary};
+  }
+  :not(:last-child) {
+    margin-right: 24px;
+  }
+  svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    fill: currentColor;
+  }
+`;
 
 export default function Menu({
   siteName,
@@ -307,32 +308,62 @@ export default function Menu({
               {hasSocialUrls && (
                 <SocialLinks>
                   {contactMail && (
-                    <SocialLink href={`mailto:${contactMail}`} title="Contact mail" target="_blank">
+                    <SocialLink
+                      href={`mailto:${contactMail}`}
+                      title="Contact mail"
+                      target="_blank"
+                      activeColor="#4285F4"
+                    >
                       <MailIcon />
                     </SocialLink>
                   )}
                   {instagramUrl && (
-                    <SocialLink href={instagramUrl} title="Instagram" target="_blank">
+                    <SocialLink
+                      href={instagramUrl}
+                      title="Instagram"
+                      target="_blank"
+                      activeColor="#8a3ab9"
+                    >
                       <InstagramLogoIcon />
                     </SocialLink>
                   )}
                   {soundcloudUrl && (
-                    <SocialLink href={soundcloudUrl} title="Soundcloud" target="_blank">
+                    <SocialLink
+                      href={soundcloudUrl}
+                      title="Soundcloud"
+                      target="_blank"
+                      activeColor="#FF9533"
+                    >
                       <SoundcloudLogoIcon />
                     </SocialLink>
                   )}
                   {twitterUrl && (
-                    <SocialLink href={twitterUrl} title="Twitter" target="_blank">
+                    <SocialLink
+                      href={twitterUrl}
+                      title="Twitter"
+                      target="_blank"
+                      activeColor="#1DA1F2"
+                    >
                       <IconTwitter />
                     </SocialLink>
                   )}
                   {youtubeUrl && (
-                    <SocialLink href={youtubeUrl} title="YouTube" target="_blank">
+                    <SocialLink
+                      href={youtubeUrl}
+                      title="YouTube"
+                      target="_blank"
+                      activeColor="#FF0000"
+                    >
                       <IconYoutube />
                     </SocialLink>
                   )}
                   {spotifyUrl && (
-                    <SocialLink href={spotifyUrl} title="Spotify" target="_blank">
+                    <SocialLink
+                      href={spotifyUrl}
+                      title="Spotify"
+                      target="_blank"
+                      activeColor="#1DB954"
+                    >
                       <SpotifyLogoIcon />
                     </SocialLink>
                   )}

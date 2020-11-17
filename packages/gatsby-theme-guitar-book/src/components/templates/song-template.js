@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext, useState } from 'react';
-import { graphql, navigate } from 'gatsby';
+import { graphql, Link as GLink, navigate } from 'gatsby';
 import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -11,6 +11,8 @@ import striptags from 'striptags';
 
 import { BLOCKS } from '@contentful/rich-text-types';
 
+import { Tooltip } from '@apollo/space-kit/Tooltip';
+
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
@@ -19,8 +21,8 @@ import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
 import { Verse } from '../chords/verse';
 import { AllChordsPreview } from '../chords/allChordsPreview';
-import Link from '../link';
 import { getSlug } from '../../utils';
+import { colors } from '../../utils/colors';
 
 const CustomLinkContext = createContext();
 
@@ -60,6 +62,19 @@ const Wrapper = styled.div`
     margin-top: -229px;
     padding-top: 285px;
     display: inline-block;
+  }
+`;
+
+const StyledHeader = styled(GLink)`
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: ${colors.primary};
+  &:hover {
+    opacity: ${colors.hoverOpacity};
+    text-decoration: none;
+  }
+  &:active {
+    color: ${colors.text3};
   }
 `;
 
@@ -110,7 +125,11 @@ export default function SongTemplate(props) {
           title={contentfulSong.title}
           favourite={!!contentfulSong.favourite}
           description={
-            <Link to={getSlug(contentfulSong.author.name)}>{contentfulSong.author.name}</Link>
+            <Tooltip content="Show author">
+              <StyledHeader to={getSlug(contentfulSong.author.name)}>
+                {contentfulSong.author.name}
+              </StyledHeader>
+            </Tooltip>
           }
         />
         <hr />
