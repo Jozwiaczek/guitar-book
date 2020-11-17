@@ -4,6 +4,7 @@ import { graphql, navigate } from 'gatsby';
 import Img from 'gatsby-image';
 
 import styled from '@emotion/styled';
+import { colors as apolloColors } from '@apollo/space-kit/colors';
 
 import PageHeader from '../components/page-header';
 
@@ -46,14 +47,20 @@ const ListItem = styled.li`
   height: 300px;
   padding: 1rem;
   text-align: center;
+  border: 0 solid ${apolloColors.silver.darker};
+  transition: all 150ms ease-in-out;
   font-size: ${({ bigFont }) => (bigFont ? '2.6' : '1.4')}rem;
   ${breakpoints.sm} {
     width: 250px;
   }
   &:hover {
     cursor: pointer;
-    opacity: 0.65;
     text-decoration: none;
+    border-color: ${colors.primary};
+    color: ${colors.primary};
+    padding: 0.95rem;
+    border-width: 0.15rem;
+    transform: scale(1.05);
   }
 `;
 

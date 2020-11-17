@@ -50,6 +50,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5rem;
+  margin-bottom: 1rem;
 `;
 
 const DescriptionWrapper = styled.div`
