@@ -262,7 +262,7 @@ export default function Menu({
           </NavItem>
           <NavItem to="/recently-added-songs">
             <NavItemTitle>
-              20 newest songs{' '}
+              Recently added songs{' '}
               <span role="img" aria-label="new songs">
                 🆕
               </span>
@@ -288,11 +288,21 @@ export default function Menu({
             <NavItemDescription>Navigate to the list of all authors.</NavItemDescription>
           </NavItem>
           <NavItem to={randomSongSlug}>
-            <NavItemTitle>Random song</NavItemTitle>
+            <NavItemTitle>
+              Random song{' '}
+              <span role="img" aria-label="random">
+                🔮
+              </span>
+            </NavItemTitle>
             <NavItemDescription>Pick and play random song.</NavItemDescription>
           </NavItem>
           <NavItem to={randomAuthorSlug}>
-            <NavItemTitle>Random author</NavItemTitle>
+            <NavItemTitle>
+              Random author{' '}
+              <span role="img" aria-label="random">
+                🔮
+              </span>
+            </NavItemTitle>
             <NavItemDescription>Pick and check random author page.</NavItemDescription>
           </NavItem>
         </StyledNav>

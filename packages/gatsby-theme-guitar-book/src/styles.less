@@ -12,22 +12,37 @@ body {
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+  background-color: #fff;
+  background-image: -webkit-gradient(
+    linear,
+    20% 0%,
+    80% 100%,
+    from(#fff),
+    to(#fff),
+    color-stop(0.6, #3011b8)
+  );
+}
+
 ::-webkit-scrollbar {
-  width: 7.5px;
+  width: 2px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FFF;
+  background: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #FFF;
-  background-image: -webkit-gradient(linear,
-  15% 0%,
-  85% 100%,
-  from(#FFF),
-  to(#FFF),
-  color-stop(.6, #3f20ba))
+  background-color: #fff;
+  background-image: -webkit-gradient(
+    linear,
+    15% 0%,
+    85% 100%,
+    from(#fff),
+    to(#fff),
+    color-stop(0.6, #3f20ba)
+  );
 }
 
 @default-margin: 1.45rem;

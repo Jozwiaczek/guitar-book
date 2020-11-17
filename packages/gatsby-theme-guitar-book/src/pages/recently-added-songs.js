@@ -12,7 +12,7 @@ const RecentlyAddedSongs = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
     <ContentWrapper>
-      <PageHeader title="Recently added songs" />
+      <PageHeader title="Recently added songs 🆕" description="Discover last 20 songs." />
       <hr />
       <ListView
         items={nodes.map(({ title, author }, index) => ({

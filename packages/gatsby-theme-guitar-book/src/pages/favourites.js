@@ -12,7 +12,10 @@ const Favourites = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
     <ContentWrapper>
-      <PageHeader title="All songs" />
+      <PageHeader
+        title="Favourites songs ⭐️"
+        description="Discover all songs marked by author of this Guitar Book as favourite."
+      />
       <hr />
       <ListView
         items={nodes.map(({ title, author }, index) => ({
