@@ -62,9 +62,7 @@ export default function AuthorTemplate(props) {
   const { site, contentfulAuthor, sitePage } = props.data;
   const { title, description } = site.siteMetadata;
   const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
-  const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
-
-  const pages = sidebarContents.reduce((acc, { pages }) => acc.concat(pages), []);
+  const { githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   return (
     <>
@@ -80,7 +78,7 @@ export default function AuthorTemplate(props) {
       <ContentWrapper>
         <PageHeader title={name} description="Author" />
         <hr />
-        <PageContent pathname={pathname} pages={pages} hash={hash} githubUrl={githubUrl}>
+        <PageContent pathname={pathname} hash={hash} githubUrl={githubUrl}>
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,

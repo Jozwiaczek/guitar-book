@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
+import { colors as apolloColors } from '@apollo/space-kit/colors';
 
 import { navigate } from 'gatsby';
 
@@ -13,38 +14,27 @@ const List = styled.ul`
   margin-bottom: 32px;
 `;
 
-const hexToRgbA = (hex, opacity) => {
-  let c;
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split('');
-    if (c.length === 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    c = `0x${c.join('')}`;
-    // eslint-disable-next-line no-bitwise
-    return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity})`;
-  }
-  return hex;
-};
-
 const ListItem = styled.li`
   text-decoration: none;
-  margin-bottom: 0.3rem;
-  background: ${({ opacityItem }) => hexToRgbA(colors.primaryLight, opacityItem)};
-  border-radius: 0 0.5rem 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid ${apolloColors.silver.darker};
   box-shadow: ${boxShadow};
-  margin-top: 1rem;
   min-height: 3rem;
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 2rem;
   font-size: 1.1rem;
   color: #12151a;
+  transition: all 150ms ease-in-out;
   &:active {
     color: ${colors.primary};
   }
   &:hover {
     cursor: pointer;
-    opacity: ${colors.hoverOpacity};
     text-decoration: none;
+    border-color: ${colors.primary};
+    color: ${colors.primary};
+    padding: 0.95rem 2rem;
+    border-width: 0.15rem;
+    transform: scale(1.05);
   }
 `;
 

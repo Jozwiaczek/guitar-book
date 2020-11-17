@@ -53,114 +53,12 @@ async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteN
 
 exports.onCreateNode = onCreateNode;
 
-const getSidebarContents = (edges) => {
-  const { items } = edges[0].node;
-
-  return items.reduce((sidebar, props) => {
-    const type = props.sys.contentType.sys.id;
-
-    // Collapse songs sections
-    if (type === 'sidebarSongs') {
-      const songSidebarName = props.name;
-      const pages = props.songs.map(({ id, title, author }) => {
-        const authorName = author.name;
-        return {
-          id,
-          title,
-          author: authorName,
-          path: getSlug(authorName, title),
-        };
-      });
-      sidebar.push({ title: songSidebarName, pages });
-      return sidebar;
-    }
-
-    // Root page item
-    if (type === 'page') {
-      const { id, title, description, isHomepage } = props;
-      const path = isHomepage ? '/' : getSlug(title);
-      const isAlready = !!sidebar.find((item) => {
-        return !item.title;
-      });
-
-      if (isAlready) {
-        return sidebar.map((item) => {
-          if (!item.title) {
-            item.pages.push({ id, title, author: description, path });
-          }
-          return item;
-        });
-      }
-
-      sidebar.push({
-        title: '',
-        pages: [{ id, title, author: description, path }],
-      });
-
-      return sidebar;
-    }
-    console.error('Unsupported sidebar link');
-    return sidebar;
-  }, []);
-};
-
 exports.createPages = async (
   { actions, graphql },
   { subtitle, twitterHandle, adSense, baseUrl },
 ) => {
   const { data } = await graphql(`
     {
-      allContentfulSidebar {
-        edges {
-          node {
-            items {
-              ... on ContentfulPage {
-                id
-                title
-                isHomepage
-                description
-                sys {
-                  contentType {
-                    sys {
-                      id
-                    }
-                  }
-                }
-              }
-              ... on ContentfulSidebarSongs {
-                name
-                songs {
-                  id
-                  title
-                  author {
-                    name
-                  }
-                }
-                sys {
-                  contentType {
-                    sys {
-                      id
-                    }
-                  }
-                }
-              }
-              ... on ContentfulPage {
-                id
-                title
-                isHomepage
-                description
-                sys {
-                  contentType {
-                    sys {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
       allContentfulSong {
         edges {
           node {
@@ -196,8 +94,6 @@ exports.createPages = async (
   const pageTemplate = require.resolve('./src/components/templates/page-template');
   const authorTemplate = require.resolve('./src/components/templates/author-template');
 
-  const sidebarContents = getSidebarContents(data.allContentfulSidebar.edges); // add order field in all sidebar items
-
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
     const { id, name } = node;
@@ -208,7 +104,6 @@ exports.createPages = async (
         id,
         title: name,
         subtitle,
-        sidebarContents,
         twitterHandle,
         adSense,
         baseUrl,
@@ -227,7 +122,6 @@ exports.createPages = async (
         author,
         title,
         subtitle,
-        sidebarContents,
         twitterHandle,
         adSense,
         baseUrl,
@@ -245,7 +139,6 @@ exports.createPages = async (
         id,
         title,
         subtitle,
-        sidebarContents,
         twitterHandle,
         adSense,
         baseUrl,
