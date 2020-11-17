@@ -90,8 +90,6 @@ exports.createPages = async (
     }
   `);
 
-  // add order field in all sidebar items
-
   const songTemplate = require.resolve('./src/components/templates/song-template');
   const pageTemplate = require.resolve('./src/components/templates/page-template');
   const authorTemplate = require.resolve('./src/components/templates/author-template');
