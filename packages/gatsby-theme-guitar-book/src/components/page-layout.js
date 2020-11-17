@@ -1,7 +1,7 @@
 import '../prism.less';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, cloneElement } from 'react';
 
 import styled from '@emotion/styled';
 import { Button } from '@apollo/space-kit/Button';
@@ -29,6 +29,7 @@ import Sidebar from './sidebar';
 import SidebarNav from './sidebar-nav';
 import MenuButton from './menu-button';
 import Toolbox from './toolbox';
+import { getSidebarContent } from '../utils/sidebar';
 
 const Main = styled.main({
   flexGrow: 1,
@@ -94,6 +95,57 @@ export default function PageLayout(props) {
             siteName
           }
         }
+        allContentfulSidebar {
+          edges {
+            node {
+              items {
+                ... on ContentfulPage {
+                  id
+                  title
+                  isHomepage
+                  description
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulSidebarSongs {
+                  name
+                  songs {
+                    id
+                    title
+                    author {
+                      name
+                    }
+                  }
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulPage {
+                  id
+                  title
+                  isHomepage
+                  description
+                  sys {
+                    contentType {
+                      sys {
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     `,
   );
@@ -119,11 +171,13 @@ export default function PageLayout(props) {
 
   const pathname = decodeURI(props.location.pathname);
   const { siteName, title } = data.site.siteMetadata;
-  const { subtitle, sidebarContents } = props.pageContext;
+  const { subtitle } = props.pageContext;
 
   const { logoLink, menuTitle } = props.pluginOptions;
 
   const sidebarTitle = <span className="title-sidebar">{subtitle || siteName}</span>;
+
+  const sidebarContents = getSidebarContent(data.allContentfulSidebar.edges);
 
   return (
     <Layout>
@@ -171,7 +225,7 @@ export default function PageLayout(props) {
             <Search siteName={siteName} />
             <Toolbox pathname={pathname} />
           </Header>
-          {props.children}
+          {cloneElement(props.children, { ...props.children.props, dupa: '123' })}
         </Main>
       </FlexWrapper>
       <Menu

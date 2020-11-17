@@ -65,7 +65,7 @@ export default function PageTemplate(props) {
   const { sidebarContents, twitterHandle, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
+    ?.reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
 
   const headings = contentfulPage.body.json.content.map(({ nodeType, content }) => {

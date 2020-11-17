@@ -177,7 +177,7 @@ export default function PageContent(props) {
     setImagesLoaded((prevImagesLoaded) => prevImagesLoaded + 1);
   }
 
-  const pageIndex = props.pages.findIndex((page) => {
+  const pageIndex = props.pages?.findIndex((page) => {
     const prefixedPath = withPrefix(page.path);
     return prefixedPath === props.pathname || prefixedPath.replace(/\/$/, '') === props.pathname;
   });
@@ -195,7 +195,9 @@ export default function PageContent(props) {
           {props.children}
         </BodyContent>
         <EditLink>{editLink}</EditLink>
-        <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
+        {props.pages && (
+          <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
+        )}
       </InnerWrapper>
       {(props.title || props.headings?.length) && (
         <Aside>

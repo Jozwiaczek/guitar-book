@@ -70,9 +70,8 @@ export default function SongTemplate(props) {
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
   const [allChords, setAllChords] = useState([]);
   const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
+    ?.reduce((acc, { pages }) => acc.concat(pages), [])
     .filter((page) => !page.anchor);
-
   const options = {
     renderNode: {
       [BLOCKS.HEADING_1]: (node, children) => <h1 id={getAnchorSlug(children[0])}>{children}</h1>,
