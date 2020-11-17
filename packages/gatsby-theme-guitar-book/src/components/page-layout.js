@@ -1,10 +1,9 @@
 import '../prism.less';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import PropTypes from 'prop-types';
-import React, { createContext, useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import styled from '@emotion/styled';
-import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { Button } from '@apollo/space-kit/Button';
 
 import { Helmet } from 'react-helmet';
@@ -19,11 +18,10 @@ import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-import { SelectedLanguageContext } from './multi-code-block';
 
 import Search from './search';
 import Header from './header';
-import DocsetSwitcher from './docset-switcher';
+import Menu from './menu';
 import { useResponsiveSidebar } from './responsive-sidebar';
 import Layout from './layout';
 import FlexWrapper from './flex-wrapper';
@@ -86,8 +84,6 @@ function handleToggleCategory(label, expanded) {
   });
 }
 
-export const NavItemsContext = createContext();
-
 export default function PageLayout(props) {
   const data = useStaticQuery(
     graphql`
@@ -112,7 +108,6 @@ export default function PageLayout(props) {
 
   const buttonRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const selectedLanguageState = useLocalStorage('docs-lang');
 
   function openMenu() {
     setMenuOpen(true);
@@ -126,25 +121,8 @@ export default function PageLayout(props) {
   const { siteName, title } = data.site.siteMetadata;
   const { subtitle, sidebarContents } = props.pageContext;
 
-  const {
-    twitterHandle,
-    youtubeUrl,
-    navConfig = {},
-    footerNavConfig,
-    logoLink,
-    menuTitle,
-  } = props.pluginOptions;
+  const { logoLink, menuTitle } = props.pluginOptions;
 
-  const navItems = useMemo(
-    () =>
-      Object.entries(navConfig).map(([title, navItem]) => ({
-        ...navItem,
-        title,
-      })),
-    [navConfig],
-  );
-
-  const hasNavItems = navItems.length > 0;
   const sidebarTitle = <span className="title-sidebar">{subtitle || siteName}</span>;
 
   return (
@@ -162,22 +140,18 @@ export default function PageLayout(props) {
           logoLink={logoLink}
         >
           <HeaderInner>
-            {hasNavItems ? (
-              <ButtonWrapper ref={buttonRef}>
-                <StyledButton
-                  feel="flat"
-                  color={colors.primary}
-                  size="small"
-                  style={{ display: 'flex' }}
-                  onClick={openMenu}
-                >
-                  {sidebarTitle}
-                  <StyledIcon />
-                </StyledButton>
-              </ButtonWrapper>
-            ) : (
-              sidebarTitle
-            )}
+            <ButtonWrapper ref={buttonRef}>
+              <StyledButton
+                feel="flat"
+                color={colors.primary}
+                size="small"
+                style={{ display: 'flex' }}
+                onClick={openMenu}
+              >
+                {sidebarTitle}
+                <StyledIcon />
+              </StyledButton>
+            </ButtonWrapper>
           </HeaderInner>
           {sidebarContents && (
             <SidebarNav
@@ -197,23 +171,16 @@ export default function PageLayout(props) {
             <Search siteName={siteName} />
             <Toolbox pathname={pathname} />
           </Header>
-          <SelectedLanguageContext.Provider value={selectedLanguageState}>
-            <NavItemsContext.Provider value={navItems}>{props.children}</NavItemsContext.Provider>
-          </SelectedLanguageContext.Provider>
+          {props.children}
         </Main>
       </FlexWrapper>
-      {hasNavItems && (
-        <DocsetSwitcher
-          siteName={menuTitle || siteName}
-          twitterUrl={twitterHandle && `https://twitter.com/${twitterHandle}`}
-          youtubeUrl={youtubeUrl}
-          navItems={navItems}
-          footerNavConfig={footerNavConfig}
-          open={menuOpen}
-          buttonRef={buttonRef}
-          onClose={closeMenu}
-        />
-      )}
+      <Menu
+        siteName={menuTitle || siteName}
+        open={menuOpen}
+        buttonRef={buttonRef}
+        onClose={closeMenu}
+        {...props.pluginOptions}
+      />
     </Layout>
   );
 }

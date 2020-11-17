@@ -4,26 +4,7 @@ const { createPrinterNode } = require('gatsby-plugin-printer');
 
 const { getSlug } = require('./src/utils');
 
-function getConfigPaths(baseDir) {
-  return [
-    path.join(baseDir, 'gatsby-config.js'), // new gatsby config
-  ];
-}
-
-async function onCreateNode(
-  { node, actions, getNode, loadNodeContent },
-  { baseDir = '', siteName },
-) {
-  const configPaths = getConfigPaths(baseDir);
-  if (configPaths.includes(node.relativePath)) {
-    const value = await loadNodeContent(node);
-    actions.createNodeField({
-      name: 'raw',
-      node,
-      value,
-    });
-  }
-
+async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteName }) {
   const slug = node.path;
 
   if (

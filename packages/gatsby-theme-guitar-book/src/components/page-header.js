@@ -14,16 +14,34 @@ const Subheading = styled.h3({
   color: colors.text2,
 });
 
-export default function PageHeader(props) {
+const HeaderWrapper = styled.div`
+  display: flex;
+`;
+
+const Icon = styled.span`
+  margin-left: 20px;
+  font-size: 30px;
+`;
+
+export default function PageHeader({ favourite, title, description }) {
   return (
     <div className="header-wrapper">
-      <Heading>{props.title}</Heading>
-      {props.description && <Subheading>{props.description}</Subheading>}
+      <HeaderWrapper>
+        <Heading>{title}</Heading>
+        {favourite && (
+          // eslint-disable-next-line jsx-a11y/accessible-emoji
+          <Icon role="img" aria-label="favourite">
+            ⭐️
+          </Icon>
+        )}
+      </HeaderWrapper>
+      {description && <Subheading>{description}</Subheading>}
     </div>
   );
 }
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
+  favourite: PropTypes.bool,
   description: PropTypes.string,
 };

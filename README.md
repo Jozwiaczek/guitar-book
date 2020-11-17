@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://guitar-book-pjatk.netlify.app">
-    <img alt="Guitar Book" src="packages/gatsby-theme-guitar-book/src/assets/GuitarBookIcon.svg" width="300" />
+    <img alt="Guitar Book" src="packages/gatsby-theme-guitar-book/src/assets/icons/guitar-book.svg" width="300" />
   </a>
   <hr/>
 </div>
@@ -84,7 +84,6 @@ module.exports = {
       options: {
         ...themeOptions,
         root: __dirname,
-        baseDir: 'apps/english',
         subtitle: 'English Songs',
         siteName: 'Guitar Book',
         pageTitle: 'Guitar Book',
@@ -119,20 +118,19 @@ module.exports = {
 
 ## Options
 
-| Option name   | Type   | Required | Description                                                                                                                                |
-| ------------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| root          | string | Yes      | Must be `__dirname`                                                                                                                        |
-| siteName      | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site                                              |
-| description   | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                                                                 |
-| subtitle      | string | No       | The page title that gets rendered above the sidebar navigation                                                                             |
-| pageTitle     | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.                                                |
-| baseDir       | string | No       | If your Gatsby site does not live in the root of your project directory/git repo, pass the subdirectory name here (`english`, for example) |
-| gaTrackingId  | string | No       | Your site's Google Analytics tracking ID                                                                                                   |
-| adSense       | string | No       | Your site's Google AdSense tracking ID                                                                                                     |
-| baseUrl       | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)                                                      |
-| twitterHandle | string | No       | Your Twitter handle, without the "@"                                                                                                       |
-| youtubeUrl    | string | No       | The URL of your YouTube channel                                                                                                            |
-| navConfig     | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))                                                 |
+| Option name   | Type   | Required | Description                                                                                   |
+| ------------- | ------ | -------- | --------------------------------------------------------------------------------------------- |
+| root          | string | Yes      | Must be `__dirname`                                                                           |
+| siteName      | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site |
+| description   | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                    |
+| subtitle      | string | No       | The page title that gets rendered above the sidebar navigation                                |
+| pageTitle     | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.   |
+| gaTrackingId  | string | No       | Your site's Google Analytics tracking ID                                                      |
+| adSense       | string | No       | Your site's Google AdSense tracking ID                                                        |
+| baseUrl       | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)         |
+| twitterHandle | string | No       | Your Twitter handle, without the "@"                                                          |
+| youtubeUrl    | string | No       | The URL of your YouTube channel                                                               |
+| navConfig     | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))    |
 
 ### `navConfig`
 

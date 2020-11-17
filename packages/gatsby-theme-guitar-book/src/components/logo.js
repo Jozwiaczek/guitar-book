@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { ReactComponent as GuitarBookIcon } from '../assets/GuitarBookIcon.svg';
+import { ReactComponent as GuitarBookIcon } from '../assets/icons/guitar-book.svg';
 
 const Wrapper = styled.div({
   display: 'flex',
