@@ -6,12 +6,8 @@ import { getSlug } from '../utils/getSlug';
 import ContentWrapper from '../components/content-wrapper';
 import ListView from '../components/list-view';
 
-const { getSidebarContent } = require('../utils/sidebar');
-
 const RecentlyAddedSongs = ({ data }) => {
   const { nodes } = data.allContentfulSong;
-  const sidebarContents = getSidebarContent(data.allContentfulSidebar.edges);
-  console.log(sidebarContents);
   return (
     <ContentWrapper>
       <PageHeader title="Recently added songs" />
