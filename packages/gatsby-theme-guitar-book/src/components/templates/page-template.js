@@ -64,9 +64,7 @@ export default function PageTemplate(props) {
   const { title, description } = site.siteMetadata;
   const { sidebarContents, twitterHandle, adSense, baseUrl } = props.pageContext;
 
-  const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
-    .filter((page) => !page.anchor);
+  const pages = sidebarContents.reduce((acc, { pages }) => acc.concat(pages), []);
 
   const headings = contentfulPage.body.json.content.map(({ nodeType, content }) => {
     if (['heading-1', 'heading-2'].includes(nodeType)) {

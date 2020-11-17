@@ -19,7 +19,7 @@ import { boxShadow } from './search';
 import { colors } from '../utils/colors';
 import { smallCaps } from '../utils/typography';
 import breakpoints from '../utils/breakpoints';
-import { getSlug } from '../utils/getSlug';
+import { getSlug } from '../utils';
 
 const Wrapper = styled.div({
   width: '100%',

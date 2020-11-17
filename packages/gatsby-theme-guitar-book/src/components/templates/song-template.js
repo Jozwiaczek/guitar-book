@@ -17,10 +17,10 @@ import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
-import { Verse } from '../verse';
+import { Verse } from '../chords/verse';
 import { AllChordsPreview } from '../chords/allChordsPreview';
 import Link from '../link';
-import { getSlug } from '../../utils/getSlug';
+import { getSlug } from '../../utils';
 
 const CustomLinkContext = createContext();
 
@@ -69,9 +69,7 @@ export default function SongTemplate(props) {
   const { title, description } = site.siteMetadata;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
   const [allChords, setAllChords] = useState([]);
-  const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
-    .filter((page) => !page.anchor);
+  const pages = sidebarContents.reduce((acc, { pages }) => acc.concat(pages), []);
 
   const options = {
     renderNode: {

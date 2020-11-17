@@ -11,9 +11,9 @@ import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
-import { getSlug } from '../../utils/getSlug';
 import ListView from '../list-view';
 import SeeMore from '../see-more';
+import { getSlug } from '../../utils';
 
 const CustomLinkContext = createContext();
 
@@ -64,9 +64,7 @@ export default function AuthorTemplate(props) {
   const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
   const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
 
-  const pages = sidebarContents
-    .reduce((acc, { pages }) => acc.concat(pages), [])
-    .filter((page) => !page.anchor);
+  const pages = sidebarContents.reduce((acc, { pages }) => acc.concat(pages), []);
 
   return (
     <>
