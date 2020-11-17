@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { Tooltip } from '@apollo/space-kit/Tooltip';
+
 import { colors } from '../utils/colors';
 
 const Heading = styled.h1({
@@ -29,10 +31,12 @@ export default function PageHeader({ favourite, title, description }) {
       <HeaderWrapper>
         <Heading>{title}</Heading>
         {favourite && (
-          // eslint-disable-next-line jsx-a11y/accessible-emoji
-          <Icon role="img" aria-label="favourite">
-            ⭐️
-          </Icon>
+          <Tooltip content="Favourite song">
+            {/* eslint-disable-next-line jsx-a11y/accessible-emoji */}
+            <Icon role="img" aria-label="favourite">
+              ⭐️
+            </Icon>
+          </Tooltip>
         )}
       </HeaderWrapper>
       {description && <Subheading>{description}</Subheading>}
