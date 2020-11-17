@@ -1,23 +1,3 @@
-// import React from 'react';
-// import {getChord} from "./chords";
-// import {Tooltip} from "@apollo/space-kit/Tooltip";
-//
-// const ChordPreview = ({ children }) => {
-//
-//   return (
-//     <span>
-//       <Tooltip
-//         content={getChord(children)}
-//         interactive
-//       >
-//         <b>{children}</b>
-//       </Tooltip>
-//     </span>
-//   );
-// };
-//
-// export default ChordPreview;
-
 import React from 'react';
 import styled from '@emotion/styled';
 
