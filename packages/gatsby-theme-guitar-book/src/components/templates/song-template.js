@@ -110,6 +110,7 @@ export default function SongTemplate(props) {
       <ContentWrapper>
         <PageHeader
           title={contentfulSong.title}
+          favourite={!!contentfulSong.favourite}
           description={
             <Link to={getSlug(contentfulSong.author.name)}>{contentfulSong.author.name}</Link>
           }
@@ -170,6 +171,7 @@ export const SongTemplateQuery = graphql`
       lyrics {
         json
       }
+      favourite
       title
       videoLink
       author {

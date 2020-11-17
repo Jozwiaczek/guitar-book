@@ -8,7 +8,7 @@ import { IconYoutube } from '@apollo/space-kit/icons/IconYoutube';
 
 import { size, transparentize } from 'polished';
 
-import { Link } from 'gatsby';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 
 import { ReactComponent as SpotifyLogoIcon } from '../assets/icons/spotify.svg';
 import { ReactComponent as InstagramLogoIcon } from '../assets/icons/instagram.svg';
@@ -19,6 +19,7 @@ import { boxShadow } from './search';
 import { colors } from '../utils/colors';
 import { smallCaps } from '../utils/typography';
 import breakpoints from '../utils/breakpoints';
+import { getSlug } from '../utils/getSlug';
 
 const Wrapper = styled.div({
   width: '100%',
@@ -36,7 +37,7 @@ const Wrapper = styled.div({
 });
 
 const transitionDuration = 150; // in ms
-const Menu = styled.div({
+const StyledMenu = styled.div({
   width: 700,
   marginBottom: 24,
   borderRadius: 4,
@@ -69,7 +70,7 @@ const StyledNav = styled.nav({
   margin: 12,
 });
 
-const NavItem = styled(Link)({
+const StyledNavItem = styled(Link)({
   display: 'block',
   width: '50%',
   [breakpoints.md]: {
@@ -153,21 +154,63 @@ const SocialLink = styled.a({
   },
 });
 
-export default function DocsetSwitcher(props) {
+export default function Menu({
+  siteName,
+  onClose,
+  open,
+  buttonRef,
+  twitterUrl,
+  youtubeUrl,
+  contactMail,
+  instagramUrl,
+  soundcloudUrl,
+  spotifyUrl,
+  footerNavConfig,
+}) {
   const menuRef = useRef(null);
   const { width } = useWindowSize();
-  useKey('Escape', props.onClose);
+  useKey('Escape', onClose);
+
+  const { allContentfulSong, allContentfulAuthor } = useStaticQuery(graphql`
+    query MenuQuery {
+      allContentfulAuthor {
+        nodes {
+          name
+        }
+      }
+      allContentfulSong {
+        nodes {
+          title
+          author {
+            name
+          }
+        }
+      }
+    }
+  `);
+
+  const NavItem = ({ children, ...rest }) => (
+    <StyledNavItem onClick={onClose} {...rest}>
+      {children}
+    </StyledNavItem>
+  );
+
+  const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
+  const randomSong = getRandomItem(allContentfulSong.nodes);
+  const randomAuthor = getRandomItem(allContentfulAuthor.nodes);
+  const randomSongSlug = getSlug(randomSong.author.name, randomSong.title);
+  const randomAuthorSlug = getSlug(randomAuthor.name);
 
   useEffect(() => {
-    if (props.open) {
+    if (open) {
       // focus the menu after it has been transitioned in
       setTimeout(() => {
         menuRef.current.focus();
       }, transitionDuration);
     }
-  }, [props.open]);
+  }, [open]);
 
-  const { current } = props.buttonRef;
+  const { current } = buttonRef;
   const menuStyles = useMemo(() => {
     if (!current) {
       return null;
@@ -178,39 +221,34 @@ export default function DocsetSwitcher(props) {
       top: top + height + 2,
       left,
     };
-  }, [current, width, props.open]);
+  }, [current, width, open]);
 
   function handleWrapperClick(event) {
     if (event.target === event.currentTarget) {
-      props.onClose();
+      onClose();
     }
   }
 
   const hasSocialUrls = Boolean(
-    props.twitterUrl ||
-      props.youtubeUrl ||
-      props.contactMail ||
-      props.instagramUrl ||
-      props.soundcloudUrl ||
-      props.spotifyUrl,
+    twitterUrl || youtubeUrl || contactMail || instagramUrl || soundcloudUrl || spotifyUrl,
   );
   return (
     <Wrapper
       style={{
-        opacity: props.open ? 1 : 0,
-        visibility: props.open ? 'visible' : 'hidden',
+        opacity: open ? 1 : 0,
+        visibility: open ? 'visible' : 'hidden',
       }}
       onClick={handleWrapperClick}
     >
-      <Menu
+      <StyledMenu
         ref={menuRef}
         tabIndex={-1}
         style={{
           ...menuStyles,
-          transform: !props.open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)',
+          transform: !open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)',
         }}
       >
-        <MenuTitle>{props.siteName}</MenuTitle>
+        <MenuTitle>{siteName}</MenuTitle>
         <StyledNav>
           <NavItem to="/favourites">
             <NavItemTitle>
@@ -221,7 +259,7 @@ export default function DocsetSwitcher(props) {
             </NavItemTitle>
             <NavItemDescription>Check all songs marks as favourites.</NavItemDescription>
           </NavItem>
-          <NavItem to="/newest">
+          <NavItem to="/recently-added-songs">
             <NavItemTitle>
               20 newest songs{' '}
               <span role="img" aria-label="new songs">
@@ -248,57 +286,53 @@ export default function DocsetSwitcher(props) {
             </NavItemTitle>
             <NavItemDescription>Navigate to the list of all authors.</NavItemDescription>
           </NavItem>
-          <NavItem to="">
+          <NavItem to={randomSongSlug}>
             <NavItemTitle>Random song</NavItemTitle>
             <NavItemDescription>Pick and play random song.</NavItemDescription>
           </NavItem>
-          <NavItem to="">
+          <NavItem to={randomAuthorSlug}>
             <NavItemTitle>Random author</NavItemTitle>
             <NavItemDescription>Pick and check random author page.</NavItemDescription>
           </NavItem>
         </StyledNav>
-        {(props.footerNavConfig || hasSocialUrls) && (
+        {(footerNavConfig || hasSocialUrls) && (
           <FooterNav>
             <>
-              {props.footerNavConfig &&
-                Object.entries(props.footerNavConfig).map(([text, props]) => (
+              {footerNavConfig &&
+                Object.entries(footerNavConfig).map(([text, props]) => (
                   <FooterNavItem key={text} {...props}>
                     {text}
                   </FooterNavItem>
                 ))}
               {hasSocialUrls && (
                 <SocialLinks>
-                  {props.contactMail && (
-                    <SocialLink
-                      href={`mailto:${props.contactMail}`}
-                      title="Contact mail"
-                      target="_blank"
-                    >
+                  {contactMail && (
+                    <SocialLink href={`mailto:${contactMail}`} title="Contact mail" target="_blank">
                       <MailIcon />
                     </SocialLink>
                   )}
-                  {props.instagramUrl && (
-                    <SocialLink href={props.instagramUrl} title="Instagram" target="_blank">
+                  {instagramUrl && (
+                    <SocialLink href={instagramUrl} title="Instagram" target="_blank">
                       <InstagramLogoIcon />
                     </SocialLink>
                   )}
-                  {props.soundcloudUrl && (
-                    <SocialLink href={props.soundcloudUrl} title="Soundcloud" target="_blank">
+                  {soundcloudUrl && (
+                    <SocialLink href={soundcloudUrl} title="Soundcloud" target="_blank">
                       <SoundcloudLogoIcon />
                     </SocialLink>
                   )}
-                  {props.twitterUrl && (
-                    <SocialLink href={props.twitterUrl} title="Twitter" target="_blank">
+                  {twitterUrl && (
+                    <SocialLink href={twitterUrl} title="Twitter" target="_blank">
                       <IconTwitter />
                     </SocialLink>
                   )}
-                  {props.youtubeUrl && (
-                    <SocialLink href={props.youtubeUrl} title="YouTube" target="_blank">
+                  {youtubeUrl && (
+                    <SocialLink href={youtubeUrl} title="YouTube" target="_blank">
                       <IconYoutube />
                     </SocialLink>
                   )}
-                  {props.spotifyUrl && (
-                    <SocialLink href={props.spotifyUrl} title="Spotify" target="_blank">
+                  {spotifyUrl && (
+                    <SocialLink href={spotifyUrl} title="Spotify" target="_blank">
                       <SpotifyLogoIcon />
                     </SocialLink>
                   )}
@@ -307,12 +341,12 @@ export default function DocsetSwitcher(props) {
             </>
           </FooterNav>
         )}
-      </Menu>
+      </StyledMenu>
     </Wrapper>
   );
 }
 
-DocsetSwitcher.propTypes = {
+Menu.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   buttonRef: PropTypes.object.isRequired,

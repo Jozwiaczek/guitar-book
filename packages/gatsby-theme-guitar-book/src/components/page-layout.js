@@ -21,7 +21,7 @@ import breakpoints from '../utils/breakpoints';
 
 import Search from './search';
 import Header from './header';
-import DocsetSwitcher from './docset-switcher';
+import Menu from './menu';
 import { useResponsiveSidebar } from './responsive-sidebar';
 import Layout from './layout';
 import FlexWrapper from './flex-wrapper';
@@ -174,7 +174,7 @@ export default function PageLayout(props) {
           {props.children}
         </Main>
       </FlexWrapper>
-      <DocsetSwitcher
+      <Menu
         siteName={menuTitle || siteName}
         open={menuOpen}
         buttonRef={buttonRef}
