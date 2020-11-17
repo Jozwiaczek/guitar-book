@@ -12,7 +12,10 @@ const Songs = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
     <ContentWrapper>
-      <PageHeader title="All songs" />
+      <PageHeader
+        title="All songs 🎶"
+        description="Discover all songs which You can find in this Guitar book."
+      />
       <hr />
       <ListView
         items={nodes.map(({ title, author }, index) => ({

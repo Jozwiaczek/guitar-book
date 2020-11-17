@@ -76,7 +76,7 @@ export default function AuthorTemplate(props) {
         image={sitePage.fields.image}
       />
       <ContentWrapper>
-        <PageHeader title={name} description="Author" />
+        <PageHeader title={name} />
         <hr />
         <PageContent pathname={pathname} hash={hash} githubUrl={githubUrl}>
           <CustomLinkContext.Provider
@@ -95,7 +95,8 @@ export default function AuthorTemplate(props) {
                     width: '100%',
                   }}
                   imgStyle={{
-                    objectFit: 'contain',
+                    objectFit: 'cover',
+                    borderRadius: 10,
                   }}
                 />
               )}
@@ -145,7 +146,7 @@ export const AuthorTemplateQuery = graphql`
         description
       }
       avatar {
-        fluid(maxHeight: 600, quality: 100) {
+        fluid(maxHeight: 400, quality: 100) {
           ...GatsbyContentfulFluid
         }
       }
