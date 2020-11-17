@@ -2,9 +2,11 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import PageHeader from '../components/page-header';
-import { getSlug } from '../utils/getSlug';
+
 import ContentWrapper from '../components/content-wrapper';
 import ListView from '../components/list-view';
+
+const { getSlug } = require('../utils');
 
 const RecentlyAddedSongs = ({ data }) => {
   const { nodes } = data.allContentfulSong;

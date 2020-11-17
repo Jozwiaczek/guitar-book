@@ -17,10 +17,10 @@ import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
 import { VideoBox } from '../videoBox';
-import { Verse } from '../verse';
+import { Verse } from '../chords/verse';
 import { AllChordsPreview } from '../chords/allChordsPreview';
 import Link from '../link';
-import { getSlug } from '../../utils/getSlug';
+import { getSlug } from '../../utils';
 
 const CustomLinkContext = createContext();
 

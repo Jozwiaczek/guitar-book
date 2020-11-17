@@ -154,6 +154,7 @@ export default function PageLayout(props) {
     sidebarRef,
     openSidebar,
     sidebarOpen,
+    closeSidebar,
     handleWrapperClick,
     handleSidebarNavLinkClick,
   } = useResponsiveSidebar();
@@ -167,6 +168,7 @@ export default function PageLayout(props) {
 
   function closeMenu() {
     setMenuOpen(false);
+    closeSidebar();
   }
 
   const pathname = decodeURI(props.location.pathname);

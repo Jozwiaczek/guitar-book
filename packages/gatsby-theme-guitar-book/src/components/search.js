@@ -11,10 +11,9 @@ import { css } from '@emotion/core';
 
 import { position, size, transparentize } from 'polished';
 
-import { HEADER_HEIGHT } from '../utils';
+import { getSlug, HEADER_HEIGHT } from '../utils';
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-import { getSlug } from '../utils/getSlug';
 
 const borderRadius = 5;
 const border = `1px solid ${colors.text3}`;
