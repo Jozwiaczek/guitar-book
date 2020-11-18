@@ -9,6 +9,8 @@ import { Popover } from '@apollo/space-kit/Popover';
 import { ListHeading } from '@apollo/space-kit/ListHeading';
 import { ListItem } from '@apollo/space-kit/ListItem';
 
+import { graphql, useStaticQuery } from 'gatsby';
+
 import breakpoints from '../utils/breakpoints';
 import AutoScroll from './auto-scroll';
 
@@ -96,6 +98,22 @@ const LaunchTunerButton = () => {
 export default function Toolbox({ pathname }) {
   const [isAutoScrollShown, setAutoScrollOpen] = useState(false);
 
+  const { allSitePage } = useStaticQuery(
+    graphql`
+      {
+        allSitePage(filter: { fields: { isSong: { eq: true } } }) {
+          nodes {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    `,
+  );
+
+  const isSong = allSitePage.nodes.some((node) => node.fields.slug === pathname);
+
   return (
     <div>
       <Popover
@@ -106,7 +124,7 @@ export default function Toolbox({ pathname }) {
         content={
           <>
             <ListHeading>Toolbox</ListHeading>
-            {pathname !== '/' && (
+            {isSong && (
               <ListItem onClick={() => setAutoScrollOpen((prev) => !prev)}>
                 {isAutoScrollShown ? (
                   <>
