@@ -65,6 +65,10 @@ const MobileLink = styled.a({
   },
 });
 
+const ContentWrapper = styled.div`
+  min-height: 90px;
+`;
+
 const LaunchTunerButton = () => {
   const content = (
     <>
@@ -122,7 +126,7 @@ export default function Toolbox({ pathname }) {
         fallbackPlacements={['top']}
         iconSize="small"
         content={
-          <>
+          <ContentWrapper>
             <ListHeading>Toolbox</ListHeading>
             {isSong && (
               <ListItem onClick={() => setAutoScrollOpen((prev) => !prev)}>
@@ -142,7 +146,7 @@ export default function Toolbox({ pathname }) {
             <ListItem>
               <LaunchTunerButton />
             </ListItem>
-          </>
+          </ContentWrapper>
         }
         trigger={
           <StyledLink>
