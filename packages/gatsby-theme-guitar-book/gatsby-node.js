@@ -39,6 +39,12 @@ async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteN
 
     actions.createNodeField({
       node,
+      name: 'isSong',
+      value: !!node.context.isSong,
+    });
+
+    actions.createNodeField({
+      node,
       name: 'slug',
       value: slug,
     });
@@ -125,6 +131,7 @@ exports.createPages = async (
         twitterHandle,
         adSense,
         baseUrl,
+        isSong: true,
       },
     });
   });

@@ -11,6 +11,8 @@ import striptags from 'striptags';
 
 import styled from '@emotion/styled';
 
+import Img from 'gatsby-image';
+
 import SEO from '../seo';
 import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
@@ -113,6 +115,21 @@ export default function PageTemplate(props) {
               baseUrl,
             }}
           >
+            {contentfulPage.image && (
+              <Img
+                fluid={contentfulPage.image.fluid}
+                style={{
+                  height: 'auto',
+                  maxHeight: '400px',
+                  width: '80%',
+                  margin: '26px 0',
+                }}
+                imgStyle={{
+                  objectFit: 'cover',
+                  borderRadius: 10,
+                }}
+              />
+            )}
             <Wrapper style={{ whiteSpace: 'break-spaces' }}>
               {documentToReactComponents(contentfulPage.body.json, options)}
             </Wrapper>
@@ -150,6 +167,11 @@ export const PageTemplateQuery = graphql`
       }
       title
       description
+      image {
+        fluid(maxHeight: 400, quality: 100) {
+          ...GatsbyContentfulFluid
+        }
+      }
     }
   }
 `;
