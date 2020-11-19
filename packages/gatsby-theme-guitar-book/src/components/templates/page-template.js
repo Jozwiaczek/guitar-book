@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext } from 'react';
-import { graphql, navigate, useStaticQuery } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
 import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
