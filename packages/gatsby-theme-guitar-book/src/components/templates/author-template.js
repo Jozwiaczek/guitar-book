@@ -19,7 +19,6 @@ const CustomLinkContext = createContext();
 
 function CustomLink(props) {
   const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
-
   const linkProps = { ...props };
   if (props.href) {
     if (props.href.startsWith('/')) {
@@ -60,26 +59,25 @@ const DescriptionWrapper = styled.div`
 
 export default function AuthorTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulAuthor, sitePage } = props.data;
-  const { title, description } = site.siteMetadata;
+  const { site, contentfulAuthor, contentfulGlobalSettings, sitePage } = props.data;
+  const { siteName, description } = contentfulGlobalSettings;
   const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
-  const { githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
+  const { adSense, baseUrl } = props.pageContext;
 
   return (
     <>
       <SEO
         title={name}
         description={name || description}
-        siteName={title}
+        siteName={siteName}
         baseUrl={baseUrl}
-        twitterHandle={twitterHandle}
         adSense={adSense}
         image={sitePage.fields.image}
       />
       <ContentWrapper>
         <PageHeader title={name} />
         <hr />
-        <PageContent pathname={pathname} hash={hash} githubUrl={githubUrl}>
+        <PageContent pathname={pathname} hash={hash}>
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
@@ -131,10 +129,6 @@ export const AuthorTemplateQuery = graphql`
   query AuthorTemplateQuery($id: String) {
     site {
       pathPrefix
-      siteMetadata {
-        title
-        description
-      }
     }
     sitePage(fields: { id: { eq: $id } }) {
       fields {
@@ -154,6 +148,10 @@ export const AuthorTemplateQuery = graphql`
       song {
         title
       }
+    }
+    contentfulGlobalSettings {
+      siteName
+      description
     }
   }
 `;

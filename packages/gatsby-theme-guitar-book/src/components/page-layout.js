@@ -89,11 +89,9 @@ export default function PageLayout(props) {
   const data = useStaticQuery(
     graphql`
       {
-        site {
-          siteMetadata {
-            title
-            siteName
-          }
+        contentfulGlobalSettings {
+          siteName
+          menuLabel
         }
         allContentfulSidebar {
           edges {
@@ -172,18 +170,15 @@ export default function PageLayout(props) {
   }
 
   const pathname = decodeURI(props.location.pathname);
-  const { siteName, title } = data.site.siteMetadata;
-  const { subtitle } = props.pageContext;
+  const { siteName, menuLabel } = data.contentfulGlobalSettings;
 
-  const { logoLink, menuTitle } = props.pluginOptions;
-
-  const sidebarTitle = <span className="title-sidebar">{subtitle || siteName}</span>;
+  const sidebarTitle = <span className="title-sidebar">{menuLabel || 'Menu'}</span>;
 
   const sidebarContents = getSidebarContent(data.allContentfulSidebar.edges);
 
   return (
     <Layout>
-      <Helmet titleTemplate={['%s', subtitle, title].filter(Boolean).join(' - ')}>
+      <Helmet titleTemplate={['%s', siteName].filter(Boolean).join(' - ')}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Helmet>
       <FlexWrapper onClick={handleWrapperClick}>
@@ -193,7 +188,6 @@ export default function PageLayout(props) {
           open={sidebarOpen}
           ref={sidebarRef}
           title={siteName}
-          logoLink={logoLink}
         >
           <HeaderInner>
             <ButtonWrapper ref={buttonRef}>
@@ -227,11 +221,11 @@ export default function PageLayout(props) {
             <Search siteName={siteName} />
             <Toolbox pathname={pathname} />
           </Header>
-          {cloneElement(props.children, { ...props.children.props, dupa: '123' })}
+          {cloneElement(props.children, { ...props.children.props })}
         </Main>
       </FlexWrapper>
       <Menu
-        siteName={menuTitle || siteName}
+        siteName={menuLabel || 'Menu'}
         open={menuOpen}
         buttonRef={buttonRef}
         onClose={closeMenu}

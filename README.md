@@ -82,32 +82,9 @@ module.exports = {
     {
       resolve: `gatsby-theme-guitar-book`,
       options: {
-        ...themeOptions,
-        root: __dirname,
-        subtitle: 'English Songs',
-        siteName: 'Guitar Book',
-        pageTitle: 'Guitar Book',
-        description: 'Track and play best guitar songs for camping',
-        menuTitle: 'Songs Types',
-        gaTrackingId: 'UA-122299419-2',
-        baseUrl: 'https://guitar-book.netlify.app/',
-        logoLink: 'https://guitar-book.netlify.app//',
-        twitterHandle: 'jozwiaczek',
-        youtubeUrl: 'https://www.youtube.com/c/JakubJ%C3%B3%C5%BAwiak/featured',
-        navConfig: {
-          'Polish Songs 🇵🇱': {
-            url: 'https://guitar-book.netlify.app/',
-            description: 'Navigate to guitar book with example songs',
-          },
-          'English Songs 🇺🇸': {
-            url: 'https://guitar-book.netlify.app/english',
-            description: 'Navigate to guitar book with english songs',
-          },
-          'Shanties Songs 🏴‍': {
-            url: 'https://guitar-book.netlify.app/shanties',
-            description: 'Navigate to guitar book with shanties',
-          },
-        },
+        contentfulAPIKey: 'ApiKey',
+        contentfulSpaceId: 'spaceID',
+        gaTrackingId: 'TrackingId',
       },
     },
   ],
@@ -118,19 +95,9 @@ module.exports = {
 
 ## Options
 
-| Option name   | Type   | Required | Description                                                                                   |
-| ------------- | ------ | -------- | --------------------------------------------------------------------------------------------- |
-| root          | string | Yes      | Must be `__dirname`                                                                           |
-| siteName      | string | Yes      | The main title for the website, used in the `<title>` element and top left corner of the site |
-| description   | string | Yes      | The site description for SEO and social (FB, Twitter) tags                                    |
-| subtitle      | string | No       | The page title that gets rendered above the sidebar navigation                                |
-| pageTitle     | string | No       | The string to be rendered in the page's `<title>` tag. If omitted, `siteName` will be used.   |
-| gaTrackingId  | string | No       | Your site's Google Analytics tracking ID                                                      |
-| adSense       | string | No       | Your site's Google AdSense tracking ID                                                        |
-| baseUrl       | string | No       | The origin where your website will be hosted (e.g. `https://guitar-book.netlify.app`)         |
-| twitterHandle | string | No       | Your Twitter handle, without the "@"                                                          |
-| youtubeUrl    | string | No       | The URL of your YouTube channel                                                               |
-| navConfig     | object | No       | An object defining the top-left navigation links (see [`navConfig` reference](#navconfig))    |
+| Option name  | Type   | Required | Description                              |
+| ------------ | ------ | -------- | ---------------------------------------- |
+| gaTrackingId | string | No       | Your site's Google Analytics tracking ID |
 
 ### `navConfig`
 
