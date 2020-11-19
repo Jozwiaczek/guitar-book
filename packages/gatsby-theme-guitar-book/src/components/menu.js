@@ -155,24 +155,16 @@ const SocialLink = styled.a`
   }
 `;
 
-export default function Menu({
-  siteName,
-  onClose,
-  open,
-  buttonRef,
-  twitterUrl,
-  youtubeUrl,
-  contactMail,
-  instagramUrl,
-  soundcloudUrl,
-  spotifyUrl,
-  footerNavConfig,
-}) {
+export default function Menu({ onClose, open, buttonRef }) {
   const menuRef = useRef(null);
   const { width } = useWindowSize();
   useKey('Escape', onClose);
 
-  const { allContentfulSong, allContentfulAuthor } = useStaticQuery(graphql`
+  const {
+    allContentfulSong,
+    allContentfulAuthor,
+    contentfulGlobalSettings,
+  } = useStaticQuery(graphql`
     query MenuQuery {
       allContentfulAuthor {
         nodes {
@@ -187,8 +179,31 @@ export default function Menu({
           }
         }
       }
+      contentfulGlobalSettings {
+        menuLabel
+        twitterUrl
+        youtubeUrl
+        contactMail
+        instagramUrl
+        soundcloudUrl
+        spotifyUrl
+        menuFooterLabel
+        menuFooterLink
+      }
     }
   `);
+
+  const {
+    menuLabel,
+    twitterUrl,
+    youtubeUrl,
+    contactMail,
+    instagramUrl,
+    soundcloudUrl,
+    spotifyUrl,
+    menuFooterLabel,
+    menuFooterLink,
+  } = contentfulGlobalSettings;
 
   const NavItem = ({ children, ...rest }) => (
     <StyledNavItem onClick={onClose} {...rest}>
@@ -249,7 +264,7 @@ export default function Menu({
           transform: !open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)',
         }}
       >
-        <MenuTitle>{siteName}</MenuTitle>
+        <MenuTitle>{menuLabel}</MenuTitle>
         <StyledNav>
           <NavItem to="/favourites">
             <NavItemTitle>
@@ -306,15 +321,19 @@ export default function Menu({
             <NavItemDescription>Pick and check random author page.</NavItemDescription>
           </NavItem>
         </StyledNav>
-        {(footerNavConfig || hasSocialUrls) && (
+        {(menuFooterLabel || hasSocialUrls) && (
           <FooterNav>
             <>
-              {footerNavConfig &&
-                Object.entries(footerNavConfig).map(([text, props]) => (
-                  <FooterNavItem key={text} {...props}>
-                    {text}
-                  </FooterNavItem>
-                ))}
+              {menuFooterLabel && (
+                <FooterNavItem
+                  key={menuFooterLabel}
+                  href={menuFooterLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {menuFooterLabel}
+                </FooterNavItem>
+              )}
               {hasSocialUrls && (
                 <SocialLinks>
                   {contactMail && (
@@ -391,9 +410,4 @@ Menu.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   buttonRef: PropTypes.object.isRequired,
-  siteName: PropTypes.string.isRequired,
-  navItems: PropTypes.array.isRequired,
-  footerNavConfig: PropTypes.object.isRequired,
-  twitterUrl: PropTypes.string,
-  youtubeUrl: PropTypes.string,
 };

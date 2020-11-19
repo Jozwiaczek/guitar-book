@@ -2,16 +2,7 @@ const mapKeys = require('lodash/mapKeys');
 
 const { colors } = require('./src/utils/colors');
 
-module.exports = ({
-  siteName,
-  pageTitle,
-  description,
-  contentfulAPIKey,
-  contentfulSpaceId,
-  gaTrackingId,
-  ignore,
-  checkLinksOptions,
-}) => {
+module.exports = ({ contentfulAPIKey, contentfulSpaceId, gaTrackingId }) => {
   const gatsbyRemarkPlugins = [
     {
       resolve: 'gatsby-remark-autolink-headers',
@@ -90,11 +81,6 @@ module.exports = ({
         showLineNumbers: true,
       },
     },
-    'gatsby-remark-rewrite-relative-links',
-    {
-      resolve: 'gatsby-remark-check-links',
-      options: checkLinksOptions,
-    },
   ];
 
   const plugins = [
@@ -164,11 +150,6 @@ module.exports = ({
   }
 
   return {
-    siteMetadata: {
-      title: pageTitle || siteName,
-      siteName,
-      description,
-    },
     plugins,
   };
 };

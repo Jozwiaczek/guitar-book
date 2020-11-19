@@ -9,19 +9,17 @@ export default function Layout(props) {
     <StaticQuery
       query={graphql`
         {
-          site {
-            siteMetadata {
-              title
-              description
-            }
+          contentfulGlobalSettings {
+            siteName
+            description
           }
         }
       `}
       render={(data) => {
-        const { title, description } = data.site.siteMetadata;
+        const { siteName, description } = data.contentfulGlobalSettings;
         return (
           <>
-            <Helmet defaultTitle={title} titleTemplate={`%s - ${title}`}>
+            <Helmet defaultTitle={siteName} titleTemplate={`%s - ${siteName}`}>
               <meta name="description" content={description} />
             </Helmet>
             {props.children}

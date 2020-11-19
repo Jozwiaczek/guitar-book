@@ -62,9 +62,9 @@ const Wrapper = styled.div`
 
 export default function PageTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulPage, sitePage } = props.data;
-  const { title, description } = site.siteMetadata;
-  const { sidebarContents, twitterHandle, adSense, baseUrl } = props.pageContext;
+  const { site, contentfulPage, contentfulGlobalSettings, sitePage } = props.data;
+  const { siteName, description } = contentfulGlobalSettings;
+  const { sidebarContents, adSense, baseUrl } = props.pageContext;
 
   const pages = sidebarContents
     ?.reduce((acc, { pages }) => acc.concat(pages), [])
@@ -94,9 +94,8 @@ export default function PageTemplate(props) {
       <SEO
         title={contentfulPage.title}
         description={contentfulPage.description || description}
-        siteName={title}
+        siteName={siteName}
         baseUrl={baseUrl}
-        twitterHandle={twitterHandle}
         adSense={adSense}
         image={sitePage.fields.image}
       />
@@ -121,7 +120,7 @@ export default function PageTemplate(props) {
                 style={{
                   height: 'auto',
                   maxHeight: '400px',
-                  width: '80%',
+                  width: '90%',
                   margin: '26px 0',
                 }}
                 imgStyle={{
@@ -151,10 +150,6 @@ export const PageTemplateQuery = graphql`
   query PageTemplateQuery($id: String) {
     site {
       pathPrefix
-      siteMetadata {
-        title
-        description
-      }
     }
     sitePage(fields: { id: { eq: $id } }) {
       fields {
@@ -172,6 +167,10 @@ export const PageTemplateQuery = graphql`
           ...GatsbyContentfulFluid
         }
       }
+    }
+    contentfulGlobalSettings {
+      siteName
+      description
     }
   }
 `;

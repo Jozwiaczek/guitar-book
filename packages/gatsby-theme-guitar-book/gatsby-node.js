@@ -59,10 +59,7 @@ async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteN
 
 exports.onCreateNode = onCreateNode;
 
-exports.createPages = async (
-  { actions, graphql },
-  { subtitle, twitterHandle, adSense, baseUrl },
-) => {
+exports.createPages = async ({ actions, graphql }) => {
   const { data } = await graphql(`
     {
       allContentfulSong {
@@ -93,12 +90,16 @@ exports.createPages = async (
           }
         }
       }
+      contentfulGlobalSettings {
+        adSense
+      }
     }
   `);
 
   const songTemplate = require.resolve('./src/components/templates/song-template');
   const pageTemplate = require.resolve('./src/components/templates/page-template');
   const authorTemplate = require.resolve('./src/components/templates/author-template');
+  const { adSense } = data.contentfulGlobalSettings;
 
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
@@ -109,10 +110,7 @@ exports.createPages = async (
       context: {
         id,
         title: name,
-        subtitle,
-        twitterHandle,
         adSense,
-        baseUrl,
       },
     });
   });
@@ -127,10 +125,7 @@ exports.createPages = async (
         id,
         author,
         title,
-        subtitle,
-        twitterHandle,
         adSense,
-        baseUrl,
         isSong: true,
       },
     });
@@ -145,10 +140,7 @@ exports.createPages = async (
       context: {
         id,
         title,
-        subtitle,
-        twitterHandle,
         adSense,
-        baseUrl,
       },
     });
   });

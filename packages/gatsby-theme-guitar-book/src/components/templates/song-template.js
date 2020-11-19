@@ -80,9 +80,9 @@ const StyledHeader = styled(GLink)`
 
 export default function SongTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulSong, sitePage } = props.data;
-  const { title, description } = site.siteMetadata;
-  const { sidebarContents, githubUrl, twitterHandle, adSense, baseUrl } = props.pageContext;
+  const { site, contentfulSong, contentfulGlobalSettings, sitePage } = props.data;
+  const { siteName, description } = contentfulGlobalSettings;
+  const { sidebarContents, adSense, baseUrl } = props.pageContext;
   const [allChords, setAllChords] = useState([]);
   const pages = sidebarContents
     ?.reduce((acc, { pages }) => acc.concat(pages), [])
@@ -114,9 +114,8 @@ export default function SongTemplate(props) {
       <SEO
         title={contentfulSong.title}
         description={contentfulSong.author.name || description}
-        siteName={title}
+        siteName={siteName}
         baseUrl={baseUrl}
-        twitterHandle={twitterHandle}
         adSense={adSense}
         image={sitePage?.fields?.image}
         headings={headings}
@@ -140,13 +139,7 @@ export default function SongTemplate(props) {
             <hr />
           </>
         )}
-        <PageContent
-          title={contentfulSong.title}
-          pathname={pathname}
-          pages={pages}
-          hash={hash}
-          githubUrl={githubUrl}
-        >
+        <PageContent title={contentfulSong.title} pathname={pathname} pages={pages} hash={hash}>
           <CustomLinkContext.Provider
             value={{
               pathPrefix: site.pathPrefix,
@@ -175,10 +168,6 @@ export const SongTemplateQuery = graphql`
   query SongTemplateQuery($id: String) {
     site {
       pathPrefix
-      siteMetadata {
-        title
-        description
-      }
     }
     sitePage(fields: { id: { eq: $id } }) {
       fields {
@@ -195,6 +184,10 @@ export const SongTemplateQuery = graphql`
       author {
         name
       }
+    }
+    contentfulGlobalSettings {
+      siteName
+      description
     }
   }
 `;
