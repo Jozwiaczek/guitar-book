@@ -21,13 +21,13 @@ import breakpoints from '../utils/breakpoints';
 
 import Search from './search';
 import Header from './header';
-import Menu from './menu';
+import Menu from './menu/menu';
 import { useResponsiveSidebar } from './responsive-sidebar';
 import Layout from './layout';
 import FlexWrapper from './flex-wrapper';
 import Sidebar from './sidebar';
 import SidebarNav from './sidebar-nav';
-import MenuButton from './menu-button';
+import MenuButton from './menu/menu-button';
 import Toolbox from './toolbox';
 import { getSidebarContent } from '../utils/sidebar';
 
