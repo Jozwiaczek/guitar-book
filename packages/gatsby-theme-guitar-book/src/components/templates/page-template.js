@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext } from 'react';
-import { graphql, navigate } from 'gatsby';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
 import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -18,6 +18,7 @@ import ContentWrapper from '../content-wrapper';
 import PageHeader from '../page-header';
 import Footer from '../footer';
 import PageContent from '../page-content';
+import MenuItems from '../menu/menu-items';
 
 const CustomLinkContext = createContext();
 
@@ -114,6 +115,7 @@ export default function PageTemplate(props) {
               baseUrl,
             }}
           >
+            {contentfulPage.isHomepage && <MenuItems style={{ marginBottom: 20 }} />}
             {contentfulPage.image && (
               <Img
                 fluid={contentfulPage.image.fluid}
@@ -157,6 +159,7 @@ export const PageTemplateQuery = graphql`
       }
     }
     contentfulPage(id: { eq: $id }) {
+      isHomepage
       body {
         json
       }
