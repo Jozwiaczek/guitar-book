@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext } from 'react';
-import { graphql, navigate } from 'gatsby';
-
-import Img from 'gatsby-image';
-
+import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 
 import SEO from '../components/seo';
@@ -11,147 +8,96 @@ import ContentWrapper from '../components/content-wrapper';
 import PageHeader from '../components/page-header';
 import Footer from '../components/footer';
 import PageContent from '../components/page-content';
-import ListView from '../components/list-view';
-import SeeMore from '../components/see-more';
-import { getSlug } from '../utils';
 
-const CustomLinkContext = createContext();
-
-function CustomLink(props) {
-  const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
-  const linkProps = { ...props };
-  if (props.href) {
-    if (props.href.startsWith('/')) {
-      linkProps.onClick = function handleClick(event) {
-        const href = event.target.getAttribute('href');
-        if (href.startsWith('/')) {
-          event.preventDefault();
-          navigate(href.replace(pathPrefix, ''));
-        }
-      };
-    } else if (!props.href.startsWith('#') && !props.href.startsWith(baseUrl)) {
-      linkProps.target = '_blank';
-      linkProps.rel = 'noopener noreferrer';
-    }
+const HeaderWrapper = styled.div`
+  h1 {
+    margin-top: -285px;
+    padding-top: 285px;
+    display: inline-block;
   }
-
-  return <a {...linkProps} />;
-}
-
-CustomLink.propTypes = {
-  href: PropTypes.string,
-};
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
-  margin-bottom: 1rem;
+  h2 {
+    margin-top: -229px;
+    padding-top: 285px;
+    display: inline-block;
+  }
 `;
 
-const DescriptionWrapper = styled.div`
-  text-align: justify;
-  text-justify: auto;
-`;
-
-export default function AuthorTemplate(props) {
-  const { hash, pathname } = props.location;
-  const { site, contentfulAuthor, contentfulGlobalSettings, sitePage } = props.data;
+const BaseTemplate = ({
+  id,
+  seoTitle,
+  seoDescription,
+  contentTitle,
+  isFavouriteContent,
+  contentDescription,
+  subheader,
+  location,
+  pageContext,
+  children,
+}) => {
+  const data = useStaticQuery(graphql`
+    query BaseTemplateQuery {
+      sitePage(fields: { id: { eq: ${id} } }) {
+        fields {
+          image
+        }
+      }
+      contentfulGlobalSettings {
+        siteName
+        description
+      }
+    }
+  `);
+  const { hash, pathname } = location;
+  const { contentfulGlobalSettings, sitePage } = data;
   const { siteName, description } = contentfulGlobalSettings;
-  const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
-  const { adSense, baseUrl } = props.pageContext;
+  const { sidebarContents, adSense, baseUrl } = pageContext;
+  const pages = sidebarContents
+    ?.reduce((acc, { pages }) => acc.concat(pages), [])
+    .filter((page) => !page.anchor);
 
   return (
     <>
       <SEO
-        title={name}
-        description={name || description}
+        title={seoTitle}
+        description={seoDescription || description}
         siteName={siteName}
         baseUrl={baseUrl}
         adSense={adSense}
         image={sitePage.fields.image}
       />
       <ContentWrapper>
-        <PageHeader title={name} />
+        <PageHeader
+          title={contentTitle}
+          favourite={isFavouriteContent}
+          description={contentDescription}
+        />
         <hr />
-        <PageContent pathname={pathname} hash={hash}>
-          <CustomLinkContext.Provider
-            value={{
-              pathPrefix: site.pathPrefix,
-              baseUrl,
-            }}
-          >
-            <Container>
-              {avatar && (
-                <Img
-                  fluid={avatar.fluid}
-                  style={{
-                    height: 'auto',
-                    maxHeight: '400px',
-                    width: '100%',
-                  }}
-                  imgStyle={{
-                    objectFit: 'cover',
-                    borderRadius: 10,
-                  }}
-                />
-              )}
-              {authorDescription && (
-                <DescriptionWrapper>
-                  <SeeMore text={authorDescription.description} limit={1000} />
-                </DescriptionWrapper>
-              )}
-            </Container>
-            {songs && (
-              <ListView
-                title="Song list"
-                items={songs.map(({ title }) => ({ title, path: getSlug(name, title) }))}
-              />
-            )}
-          </CustomLinkContext.Provider>
+        {subheader && (
+          <>
+            {subheader}
+            <hr />
+          </>
+        )}
+        <PageContent title={seoTitle} pathname={pathname} pages={pages} hash={hash}>
+          <HeaderWrapper style={{ whiteSpace: 'break-spaces' }}>{children}</HeaderWrapper>
         </PageContent>
         <Footer />
       </ContentWrapper>
     </>
   );
-}
-
-AuthorTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  pageContext: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 };
 
-export const BaseTemplateQuery = graphql`
-  query BaseTemplateQuery($id: String) {
-    site {
-      pathPrefix
-    }
-    sitePage(fields: { id: { eq: $id } }) {
-      fields {
-        image
-      }
-    }
-    contentfulAuthor(id: { eq: $id }) {
-      name
-      description {
-        description
-      }
-      avatar {
-        fluid(maxHeight: 400, quality: 100) {
-          ...GatsbyContentfulFluid
-        }
-      }
-      song {
-        title
-      }
-    }
-    contentfulGlobalSettings {
-      siteName
-      description
-    }
-  }
-`;
+BaseTemplate.propTypes = {
+  id: PropTypes.number.isRequired,
+  isFavouriteContent: PropTypes.bool.isRequired,
+  seoTitle: PropTypes.string.isRequired,
+  seoDescription: PropTypes.string.isRequired,
+  contentTitle: PropTypes.string.isRequired,
+  contentDescription: PropTypes.element.isRequired,
+  subheader: PropTypes.element,
+  location: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired,
+  children: PropTypes.element.isRequired,
+};
+
+export default BaseTemplate;

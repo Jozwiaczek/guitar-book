@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext } from 'react';
-import { graphql, navigate } from 'gatsby';
+import React from 'react';
+import { graphql } from 'gatsby';
 import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -20,34 +20,6 @@ import Footer from '../components/footer';
 import PageContent from '../components/page-content';
 import MenuItems from '../components/menu/menu-items';
 
-const CustomLinkContext = createContext();
-
-function CustomLink(props) {
-  const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
-
-  const linkProps = { ...props };
-  if (props.href) {
-    if (props.href.startsWith('/')) {
-      linkProps.onClick = function handleClick(event) {
-        const href = event.target.getAttribute('href');
-        if (href.startsWith('/')) {
-          event.preventDefault();
-          navigate(href.replace(pathPrefix, ''));
-        }
-      };
-    } else if (!props.href.startsWith('#') && !props.href.startsWith(baseUrl)) {
-      linkProps.target = '_blank';
-      linkProps.rel = 'noopener noreferrer';
-    }
-  }
-
-  return <a {...linkProps} />;
-}
-
-CustomLink.propTypes = {
-  href: PropTypes.string,
-};
-
 const Wrapper = styled.div`
   h1 {
     margin-top: -285px;
@@ -63,7 +35,7 @@ const Wrapper = styled.div`
 
 export default function PageTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulPage, contentfulGlobalSettings, sitePage } = props.data;
+  const { contentfulPage, contentfulGlobalSettings, sitePage } = props.data;
   const { siteName, description } = contentfulGlobalSettings;
   const { sidebarContents, adSense, baseUrl } = props.pageContext;
 
@@ -109,32 +81,25 @@ export default function PageTemplate(props) {
           hash={hash}
           headings={headings}
         >
-          <CustomLinkContext.Provider
-            value={{
-              pathPrefix: site.pathPrefix,
-              baseUrl,
-            }}
-          >
-            {contentfulPage.isHomepage && <MenuItems home style={{ marginBottom: 20 }} />}
-            {contentfulPage.image && (
-              <Img
-                fluid={contentfulPage.image.fluid}
-                style={{
-                  height: 'auto',
-                  maxHeight: '400px',
-                  width: '90%',
-                  margin: '26px 0',
-                }}
-                imgStyle={{
-                  objectFit: 'cover',
-                  borderRadius: 10,
-                }}
-              />
-            )}
-            <Wrapper style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(contentfulPage.body.json, options)}
-            </Wrapper>
-          </CustomLinkContext.Provider>
+          {contentfulPage.isHomepage && <MenuItems home style={{ marginBottom: 20 }} />}
+          {contentfulPage.image && (
+            <Img
+              fluid={contentfulPage.image.fluid}
+              style={{
+                height: 'auto',
+                maxHeight: '400px',
+                width: '90%',
+                margin: '26px 0',
+              }}
+              imgStyle={{
+                objectFit: 'cover',
+                borderRadius: 10,
+              }}
+            />
+          )}
+          <Wrapper style={{ whiteSpace: 'break-spaces' }}>
+            {documentToReactComponents(contentfulPage.body.json, options)}
+          </Wrapper>
         </PageContent>
         <Footer />
       </ContentWrapper>
@@ -150,9 +115,6 @@ PageTemplate.propTypes = {
 
 export const PageTemplateQuery = graphql`
   query PageTemplateQuery($id: String) {
-    site {
-      pathPrefix
-    }
     sitePage(fields: { id: { eq: $id } }) {
       fields {
         image

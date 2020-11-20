@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext, useState } from 'react';
-import { graphql, Link as GLink, navigate } from 'gatsby';
+import React, { useState } from 'react';
+import { graphql, Link as GLink } from 'gatsby';
 import Slugger from 'github-slugger';
 
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -23,34 +23,6 @@ import { Verse } from '../components/chords/verse';
 import { AllChordsPreview } from '../components/chords/allChordsPreview';
 import { getSlug } from '../utils';
 import { colors } from '../utils/colors';
-
-const CustomLinkContext = createContext();
-
-function CustomLink(props) {
-  const { pathPrefix, baseUrl } = useContext(CustomLinkContext);
-
-  const linkProps = { ...props };
-  if (props.href) {
-    if (props.href.startsWith('/')) {
-      linkProps.onClick = function handleClick(event) {
-        const href = event.target.getAttribute('href');
-        if (href.startsWith('/')) {
-          event.preventDefault();
-          navigate(href.replace(pathPrefix, ''));
-        }
-      };
-    } else if (!props.href.startsWith('#') && !props.href.startsWith(baseUrl)) {
-      linkProps.target = '_blank';
-      linkProps.rel = 'noopener noreferrer';
-    }
-  }
-
-  return <a {...linkProps} />;
-}
-
-CustomLink.propTypes = {
-  href: PropTypes.string,
-};
 
 const Wrapper = styled.div`
   h1 {
@@ -80,7 +52,7 @@ const StyledHeader = styled(GLink)`
 
 export default function SongTemplate(props) {
   const { hash, pathname } = props.location;
-  const { site, contentfulSong, contentfulGlobalSettings, sitePage } = props.data;
+  const { contentfulSong, contentfulGlobalSettings, sitePage } = props.data;
   const { siteName, description } = contentfulGlobalSettings;
   const { sidebarContents, adSense, baseUrl } = props.pageContext;
   const [allChords, setAllChords] = useState([]);
@@ -140,17 +112,10 @@ export default function SongTemplate(props) {
           </>
         )}
         <PageContent title={contentfulSong.title} pathname={pathname} pages={pages} hash={hash}>
-          <CustomLinkContext.Provider
-            value={{
-              pathPrefix: site.pathPrefix,
-              baseUrl,
-            }}
-          >
-            <Wrapper style={{ whiteSpace: 'break-spaces' }}>
-              {documentToReactComponents(contentfulSong.lyrics.json, options)}
-            </Wrapper>
-            {allChords.length && <AllChordsPreview allChords={allChords} />}
-          </CustomLinkContext.Provider>
+          <Wrapper style={{ whiteSpace: 'break-spaces' }}>
+            {documentToReactComponents(contentfulSong.lyrics.json, options)}
+          </Wrapper>
+          {allChords.length && <AllChordsPreview allChords={allChords} />}
         </PageContent>
         <Footer />
       </ContentWrapper>
@@ -166,9 +131,6 @@ SongTemplate.propTypes = {
 
 export const SongTemplateQuery = graphql`
   query SongTemplateQuery($id: String) {
-    site {
-      pathPrefix
-    }
     sitePage(fields: { id: { eq: $id } }) {
       fields {
         image
