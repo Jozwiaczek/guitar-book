@@ -8,6 +8,8 @@ import useWindowSize from 'react-use/lib/useWindowSize';
 
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
+import { graphql, useStaticQuery } from 'gatsby';
+
 import { colors } from '../utils/colors';
 
 const StyledList = styled.ul({
@@ -77,6 +79,13 @@ export default function SectionNav(props) {
   const slugger = new Slugger();
   return (
     <StyledList>
+      {props.isHome && (
+        <StyledListItem>
+          <a href="#pageHeader" onClick={handleHeadingClick}>
+            {props.menuLabel}
+          </a>
+        </StyledListItem>
+      )}
       {props.headings.map((value) => {
         const text = striptags(value);
         const slug = slugger.slug(text);

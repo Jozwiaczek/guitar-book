@@ -13,16 +13,16 @@ import { BLOCKS } from '@contentful/rich-text-types';
 
 import { Tooltip } from '@apollo/space-kit/Tooltip';
 
-import SEO from '../seo';
-import ContentWrapper from '../content-wrapper';
-import PageHeader from '../page-header';
-import Footer from '../footer';
-import PageContent from '../page-content';
-import { VideoBox } from '../videoBox';
-import { Verse } from '../chords/verse';
-import { AllChordsPreview } from '../chords/allChordsPreview';
-import { getSlug } from '../../utils';
-import { colors } from '../../utils/colors';
+import SEO from '../components/seo';
+import ContentWrapper from '../components/content-wrapper';
+import PageHeader from '../components/page-header';
+import Footer from '../components/footer';
+import PageContent from '../components/page-content';
+import { VideoBox } from '../components/videoBox';
+import { Verse } from '../components/chords/verse';
+import { AllChordsPreview } from '../components/chords/allChordsPreview';
+import { getSlug } from '../utils';
+import { colors } from '../utils/colors';
 
 const CustomLinkContext = createContext();
 

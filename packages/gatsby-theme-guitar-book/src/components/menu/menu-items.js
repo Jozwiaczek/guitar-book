@@ -17,6 +17,10 @@ const MenuTitle = styled.h6(smallCaps, {
   color: colors.text3,
 });
 
+const BigMenuTitle = styled.h2({
+  margin: '24px 0',
+});
+
 const StyledNav = styled.nav({
   display: 'flex',
   flexWrap: 'wrap',
@@ -63,7 +67,7 @@ const NavItemDescription = styled.p({
   transition: 'color 150ms ease-in-out',
 });
 
-const MenuItems = ({ onClose, style }) => {
+const MenuItems = ({ onClose, home, style }) => {
   const {
     allContentfulSong,
     allContentfulAuthor,
@@ -104,7 +108,7 @@ const MenuItems = ({ onClose, style }) => {
 
   return (
     <div style={style}>
-      <MenuTitle>{menuLabel}</MenuTitle>
+      {home ? <BigMenuTitle>{menuLabel}</BigMenuTitle> : <MenuTitle>{menuLabel}</MenuTitle>}
       <StyledNav>
         <NavItem to="/favourites">
           <NavItemTitle>

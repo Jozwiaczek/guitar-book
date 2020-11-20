@@ -6,14 +6,14 @@ import Img from 'gatsby-image';
 
 import styled from '@emotion/styled';
 
-import SEO from '../seo';
-import ContentWrapper from '../content-wrapper';
-import PageHeader from '../page-header';
-import Footer from '../footer';
-import PageContent from '../page-content';
-import ListView from '../list-view';
-import SeeMore from '../see-more';
-import { getSlug } from '../../utils';
+import SEO from '../components/seo';
+import ContentWrapper from '../components/content-wrapper';
+import PageHeader from '../components/page-header';
+import Footer from '../components/footer';
+import PageContent from '../components/page-content';
+import ListView from '../components/list-view';
+import SeeMore from '../components/see-more';
+import { getSlug } from '../utils';
 
 const CustomLinkContext = createContext();
 
@@ -125,8 +125,8 @@ AuthorTemplate.propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-export const AuthorTemplateQuery = graphql`
-  query AuthorTemplateQuery($id: String) {
+export const BaseTemplateQuery = graphql`
+  query BaseTemplateQuery($id: String) {
     site {
       pathPrefix
     }

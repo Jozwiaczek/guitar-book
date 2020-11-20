@@ -5,9 +5,7 @@ import styled from '@emotion/styled';
 
 import useMount from 'react-use/lib/useMount';
 
-import { IconGithub } from '@apollo/space-kit/icons/IconGithub';
-
-import { withPrefix } from 'gatsby';
+import { graphql, useStaticQuery, withPrefix } from 'gatsby';
 
 import SectionNav from './section-nav';
 
@@ -93,55 +91,14 @@ const AsideHeading = styled.h4({
   fontWeight: 600,
 });
 
-const AsideLinkWrapper = styled.h5({
-  display: 'flex',
-  marginBottom: 0,
-  ':not(:last-child)': {
-    marginBottom: 16,
-  },
-});
-
-const AsideLinkInner = styled.a({
-  display: 'flex',
-  alignItems: 'center',
-  color: colors.text2,
-  textDecoration: 'none',
-  ':hover': {
-    color: colors.text3,
-  },
-  svg: {
-    width: 20,
-    height: 20,
-    marginRight: 6,
-    fill: 'currentColor',
-  },
-});
-
-function AsideLink(props) {
-  return (
-    <AsideLinkWrapper>
-      <AsideLinkInner target="_blank" rel="noopener noreferrer" {...props} />
-    </AsideLinkWrapper>
-  );
-}
-
-const EditLink = styled.div({
-  display: 'none',
-  marginTop: 48,
-  justifyContent: 'flex-end',
-  [breakpoints.lg]: {
-    display: 'flex',
-  },
-  [breakpoints.md]: {
-    display: 'none',
-  },
-  [breakpoints.sm]: {
-    display: 'flex',
-    marginTop: 24,
-  },
-});
-
 export default function PageContent(props) {
+  const { contentfulGlobalSettings } = useStaticQuery(graphql`
+    query SectionNavQuery {
+      contentfulGlobalSettings {
+        menuLabel
+      }
+    }
+  `);
   const contentRef = useRef(null);
   const [imagesToLoad, setImagesToLoad] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(0);
@@ -182,19 +139,12 @@ export default function PageContent(props) {
     return prefixedPath === props.pathname || prefixedPath.replace(/\/$/, '') === props.pathname;
   });
 
-  const editLink = props.githubUrl && (
-    <AsideLink href={props.githubUrl}>
-      <IconGithub /> Edit on GitHub
-    </AsideLink>
-  );
-
   return (
     <Wrapper>
       <InnerWrapper>
         <BodyContent ref={contentRef} className="content-wrapper">
           {props.children}
         </BodyContent>
-        <EditLink>{editLink}</EditLink>
         {props.pages && (
           <PageNav prevPage={props.pages[pageIndex - 1]} nextPage={props.pages[pageIndex + 1]} />
         )}
@@ -204,12 +154,13 @@ export default function PageContent(props) {
           {props.title && <AsideHeading>{props.title}</AsideHeading>}
           {props.headings?.length && (
             <SectionNav
+              menuLabel={contentfulGlobalSettings.menuLabel || 'Menu'}
+              isHome={props.pathname === '/'}
               headings={props.headings}
               contentRef={contentRef}
               imagesLoaded={imagesLoaded === imagesToLoad}
             />
           )}
-          {editLink}
         </Aside>
       )}
     </Wrapper>

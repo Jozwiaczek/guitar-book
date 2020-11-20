@@ -96,9 +96,9 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
-  const songTemplate = require.resolve('./src/components/templates/song-template');
-  const pageTemplate = require.resolve('./src/components/templates/page-template');
-  const authorTemplate = require.resolve('./src/components/templates/author-template');
+  const songTemplate = require.resolve('./src/templates/song-template');
+  const pageTemplate = require.resolve('./src/templates/page-template');
+  const authorTemplate = require.resolve('./src/templates/author-template');
   const { adSense } = data.contentfulGlobalSettings;
 
   // Author page

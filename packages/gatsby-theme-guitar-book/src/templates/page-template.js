@@ -13,12 +13,12 @@ import styled from '@emotion/styled';
 
 import Img from 'gatsby-image';
 
-import SEO from '../seo';
-import ContentWrapper from '../content-wrapper';
-import PageHeader from '../page-header';
-import Footer from '../footer';
-import PageContent from '../page-content';
-import MenuItems from '../menu/menu-items';
+import SEO from '../components/seo';
+import ContentWrapper from '../components/content-wrapper';
+import PageHeader from '../components/page-header';
+import Footer from '../components/footer';
+import PageContent from '../components/page-content';
+import MenuItems from '../components/menu/menu-items';
 
 const CustomLinkContext = createContext();
 
@@ -115,7 +115,7 @@ export default function PageTemplate(props) {
               baseUrl,
             }}
           >
-            {contentfulPage.isHomepage && <MenuItems style={{ marginBottom: 20 }} />}
+            {contentfulPage.isHomepage && <MenuItems home style={{ marginBottom: 20 }} />}
             {contentfulPage.image && (
               <Img
                 fluid={contentfulPage.image.fluid}
