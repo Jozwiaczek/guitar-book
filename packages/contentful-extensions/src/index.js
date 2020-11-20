@@ -6,19 +6,20 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import './index.css';
 import WikiText from './extensions/wiki-text';
+import ChordPreview from './extensions/chords-preview';
 
 const App = ({ sdk }) => {
+  // {/*<p>{'use route <host>/#/<extenstion-name>'}</p>*/}
+
   return (
     <HashRouter basename="/">
       <Switch>
-        <div>
-          <Route exact path="/">
-            <p>{'use route <host>/#/<extenstion-name>'}</p>
-          </Route>
-          <Route path="/wiki-text">
-            <WikiText sdk={sdk} />
-          </Route>
-        </div>
+        <Route exact path="/">
+          <ChordPreview sdk={sdk} />
+        </Route>
+        <Route path="/wiki-text">
+          <WikiText sdk={sdk} />
+        </Route>
       </Switch>
     </HashRouter>
   );

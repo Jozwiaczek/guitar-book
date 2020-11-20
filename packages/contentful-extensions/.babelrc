@@ -20,7 +20,8 @@
         "corejs": false,
         "helpers": false,
         "regenerator": true
-      }
+      },
+      "@emotion"
     ]
   ]
 }
