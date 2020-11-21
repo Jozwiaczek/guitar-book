@@ -134,7 +134,7 @@ module.exports = ({ contentfulAPIKey, contentfulSpaceId, gaTrackingId }) => {
         background_color: `#ede9fb`,
         theme_color: `#3f20ba`,
         display: `standalone`,
-        icon: require.resolve('./src/assets/logo.png'),
+        icon: require.resolve('./src/assets/images/logo.png'),
       },
     },
     `gatsby-plugin-offline`,
