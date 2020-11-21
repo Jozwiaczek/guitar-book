@@ -7,7 +7,7 @@ import { colors as apolloColors } from '@apollo/space-kit/colors';
 import { colors } from '../utils/colors';
 import { boxShadow } from '../components/search';
 import breakpoints from '../utils/breakpoints';
-import PageBase from '../components/page-base';
+import CustomPageBase from '../components/base/custom-page-base';
 
 const { getSlug } = require('../utils/helpers');
 
@@ -63,7 +63,7 @@ const ListItem = styled.li`
 const Authors = ({ data }) => {
   const { nodes } = data.allContentfulAuthor;
   return (
-    <PageBase
+    <CustomPageBase
       title="All authors 👨🏻‍🎤"
       description="Discover all authors which their songs are in this Guitar book!"
     >
@@ -88,7 +88,7 @@ const Authors = ({ data }) => {
           </ListItem>
         ))}
       </List>
-    </PageBase>
+    </CustomPageBase>
   );
 };
 

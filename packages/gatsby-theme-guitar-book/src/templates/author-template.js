@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import ListView from '../components/list-view';
 import SeeMore from '../components/see-more';
 import { getSlug, getTextWithLimit } from '../utils/helpers';
-import BaseTemplate from './base-template';
+import TemplateBase from '../components/base/template-base';
 
 const AboutAuthor = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ export default function AuthorTemplate({ location, data, pageContext }) {
   const { avatar, name, song, description } = contentfulAuthor;
 
   return (
-    <BaseTemplate
+    <TemplateBase
       data={data}
       location={location}
       title={name}
@@ -63,7 +63,7 @@ export default function AuthorTemplate({ location, data, pageContext }) {
           items={song.map(({ title }) => ({ title, path: getSlug(name, title) }))}
         />
       )}
-    </BaseTemplate>
+    </TemplateBase>
   );
 }
 

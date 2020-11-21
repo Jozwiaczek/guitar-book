@@ -2,14 +2,14 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import ListView from '../components/list-view';
-import PageBase from '../components/page-base';
+import CustomPageBase from '../components/base/custom-page-base';
 
 const { getSlug } = require('../utils/helpers');
 
 const Favourites = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
-    <PageBase
+    <CustomPageBase
       title="Favourites songs ⭐️"
       description="Discover all songs marked by author of this Guitar Book as favourite."
     >
@@ -19,7 +19,7 @@ const Favourites = ({ data }) => {
           path: getSlug(author.name, title),
         }))}
       />
-    </PageBase>
+    </CustomPageBase>
   );
 };
 

@@ -2,34 +2,33 @@ import '../prism.less';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, cloneElement } from 'react';
-
 import styled from '@emotion/styled';
 import { Button } from '@apollo/space-kit/Button';
-
 import { Helmet } from 'react-helmet';
-
 import { IconLayoutModule } from '@apollo/space-kit/icons/IconLayoutModule';
-
 import { graphql, useStaticQuery } from 'gatsby';
-
 import { size } from 'polished';
-
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
-
 import Search from './search';
 import Header from './header';
 import Menu from './menu/menu';
 import { useResponsiveSidebar } from './responsive-sidebar';
 import Layout from './layout';
-import FlexWrapper from './flex-wrapper';
 import Sidebar from './sidebar';
 import SidebarNav from './sidebar-nav';
 import MenuButton from './menu/menu-button';
 import Toolbox from './toolbox';
 import { getSidebarContent } from '../utils/sidebar';
+
+const FlexWrapper = styled.div({
+  display: 'flex',
+  minHeight: '100vh',
+  maxWidth: 1440,
+  margin: '0 auto',
+});
 
 const Main = styled.main({
   flexGrow: 1,

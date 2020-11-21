@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
 import MenuItems from '../components/menu/menu-items';
-import BaseTemplate from './base-template';
+import TemplateBase from '../components/base/template-base';
 import HTMLField from '../components/contentfulFields/HTMLField';
 import { getHeadingsFromJson } from '../utils/helpers';
 
@@ -13,7 +13,7 @@ export default function PageTemplate({ data, location, pageContext }) {
   const { title, description, isHomepage, image, body } = contentfulPage;
 
   return (
-    <BaseTemplate
+    <TemplateBase
       data={data}
       location={location}
       title={title}
@@ -38,7 +38,7 @@ export default function PageTemplate({ data, location, pageContext }) {
         />
       )}
       <HTMLField json={body.json} />
-    </BaseTemplate>
+    </TemplateBase>
   );
 }
 

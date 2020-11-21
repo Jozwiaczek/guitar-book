@@ -2,31 +2,28 @@ import '../styles.less';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
-export default function Layout(props) {
-  return (
-    <StaticQuery
-      query={graphql`
-        {
-          contentfulGlobalSettings {
-            siteName
-            description
-          }
+export default function Layout({ children }) {
+  const { contentfulGlobalSettings } = useStaticQuery(
+    graphql`
+      {
+        contentfulGlobalSettings {
+          siteName
+          description
         }
-      `}
-      render={(data) => {
-        const { siteName, description } = data.contentfulGlobalSettings;
-        return (
-          <>
-            <Helmet defaultTitle={siteName} titleTemplate={`%s - ${siteName}`}>
-              <meta name="description" content={description} />
-            </Helmet>
-            {props.children}
-          </>
-        );
-      }}
-    />
+      }
+    `,
+  );
+  const { siteName, description } = contentfulGlobalSettings;
+
+  return (
+    <>
+      <Helmet defaultTitle={siteName} titleTemplate={`%s - ${siteName}`}>
+        <meta name="description" content={description} />
+      </Helmet>
+      {children}
+    </>
   );
 }
 

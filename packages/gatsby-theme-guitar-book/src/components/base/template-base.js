@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SEO from '../components/seo';
-import ContentWrapper from '../components/content-wrapper';
-import PageHeader from '../components/page-header';
-import Footer from '../components/footer';
-import PageContent from '../components/page-content';
+import SEO from './components/seo';
+import ContentWrapper from './components/content-wrapper';
+import PageHeader from '../page-header';
+import Footer from '../footer';
+import PageContent from '../page-content';
 
-const BaseTemplate = ({
+const TemplateBase = ({
   title,
   description,
   isFavourite,
@@ -63,7 +63,7 @@ const BaseTemplate = ({
   );
 };
 
-BaseTemplate.propTypes = {
+TemplateBase.propTypes = {
   data: PropTypes.shape({
     sitePage: PropTypes.object,
     contentfulGlobalSettings: PropTypes.object,
@@ -79,4 +79,4 @@ BaseTemplate.propTypes = {
   headings: PropTypes.array,
 };
 
-export default BaseTemplate;
+export default TemplateBase;

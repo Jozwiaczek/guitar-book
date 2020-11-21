@@ -9,7 +9,7 @@ import { Verse } from '../components/chords/verse';
 import { AllChordsPreview } from '../components/chords/allChordsPreview';
 import { getHeadingsFromJson, getSlug } from '../utils/helpers';
 import { colors } from '../utils/colors';
-import BaseTemplate from './base-template';
+import TemplateBase from '../components/base/template-base';
 import HTMLField from '../components/contentfulFields/HTMLField';
 
 const StyledHeader = styled(GLink)`
@@ -37,7 +37,7 @@ export default function SongTemplate({ location, data, pageContext }) {
   };
 
   return (
-    <BaseTemplate
+    <TemplateBase
       data={data}
       location={location}
       title={title}
@@ -54,7 +54,7 @@ export default function SongTemplate({ location, data, pageContext }) {
     >
       <HTMLField json={lyrics.json} options={options} />
       {allChords.length && <AllChordsPreview allChords={allChords} />}
-    </BaseTemplate>
+    </TemplateBase>
   );
 }
 

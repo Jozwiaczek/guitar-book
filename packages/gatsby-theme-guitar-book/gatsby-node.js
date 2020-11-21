@@ -92,6 +92,7 @@ exports.createPages = async ({ actions, graphql }) => {
       }
       contentfulGlobalSettings {
         adSense
+        baseUrl
       }
     }
   `);
@@ -99,7 +100,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const songTemplate = require.resolve('./src/templates/song-template');
   const pageTemplate = require.resolve('./src/templates/page-template');
   const authorTemplate = require.resolve('./src/templates/author-template');
-  const { adSense } = data.contentfulGlobalSettings;
+  const { adSense, baseUrl } = data.contentfulGlobalSettings;
 
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
@@ -111,6 +112,7 @@ exports.createPages = async ({ actions, graphql }) => {
         id,
         title: name,
         adSense,
+        baseUrl,
       },
     });
   });
