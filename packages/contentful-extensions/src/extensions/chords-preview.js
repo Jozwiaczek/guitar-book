@@ -37,9 +37,13 @@ export default function ChordsPreview({ sdk }) {
   const classes = useStyles();
 
   const saveValue = (text) => {
-    const formattedText = text.replace(/\t/g, '    ');
+    const formattedText = text
+      .replace(/\t/g, '    ')
+      .split(/\n/)
+      .map((l) => l.replace(/\s/g, ' '))
+      .join('\n');
     setValue(formattedText);
-    sdk.field.setValue(formattedText.trim());
+    sdk.field.setValue(formattedText.trim()).catch((err) => new Error(err));
   };
 
   sdk.window.startAutoResizer();

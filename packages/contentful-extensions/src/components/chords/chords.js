@@ -70,30 +70,3 @@ export const getChord = (chordText) => {
   }
   return <p>There isn&apos;t chord in schema</p>;
 };
-
-// EXAMPLE
-// const MyChord = () => {
-//   const chord = {
-//     frets: [1, 3, 3, 2, 1, 1],
-//     fingers: [1, 3, 4, 2, 1, 1],
-//     barres: [1],
-//     capo: false,
-//   };
-//   const instrument = {
-//     strings: 6,
-//     fretsOnChord: 4,
-//     name: 'Guitar',
-//     keys: [],
-//     tunings: {
-//       standard: ['6', '5', '4', '3', '2', '1']
-//     }
-//   };
-//   const lite = false;
-//   return (
-//     <Chord
-//       chord={chord}
-//       instrument={instrument}
-//       lite={lite}
-//     />
-//   );
-// };
