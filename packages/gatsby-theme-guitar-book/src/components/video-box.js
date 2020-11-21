@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { IconArrowDown } from '@apollo/space-kit/icons/IconArrowDown';
 import { IconArrowUp } from '@apollo/space-kit/icons/IconArrowUp';
-
 import { size } from 'polished';
+import ReactPlayer from 'react-player';
 
 import { colors } from '../utils/colors';
 
@@ -52,7 +52,6 @@ const Content = styled.div({
 export function VideoBox({ videoUrl }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = expanded ? IconArrowUp : IconArrowDown;
-  const ytLink = videoUrl.replace('watch?v=', 'embed/');
 
   return (
     <Container>
@@ -62,13 +61,7 @@ export function VideoBox({ videoUrl }) {
       </StyledButton>
       {expanded && (
         <Content>
-          <iframe
-            allowFullScreen
-            title="Music Video"
-            src={ytLink}
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            frameBorder="0"
-          />
+          <ReactPlayer playing controls light pip url={videoUrl} />
         </Content>
       )}
     </Container>
