@@ -27,7 +27,7 @@ const Icon = styled.span`
 
 export default function PageHeader({ favourite, title, description }) {
   return (
-    <div className="header-wrapper">
+    <div id="pageHeader" className="header-wrapper">
       <HeaderWrapper>
         <Heading>{title}</Heading>
         {favourite && (

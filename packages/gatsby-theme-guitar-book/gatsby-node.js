@@ -2,7 +2,7 @@ const path = require('path');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug } = require('./src/utils');
+const { getSlug } = require('./src/utils/helpers');
 
 async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteName }) {
   const slug = node.path;
@@ -92,14 +92,15 @@ exports.createPages = async ({ actions, graphql }) => {
       }
       contentfulGlobalSettings {
         adSense
+        baseUrl
       }
     }
   `);
 
-  const songTemplate = require.resolve('./src/components/templates/song-template');
-  const pageTemplate = require.resolve('./src/components/templates/page-template');
-  const authorTemplate = require.resolve('./src/components/templates/author-template');
-  const { adSense } = data.contentfulGlobalSettings;
+  const songTemplate = require.resolve('./src/templates/song-template');
+  const pageTemplate = require.resolve('./src/templates/page-template');
+  const authorTemplate = require.resolve('./src/templates/author-template');
+  const { adSense, baseUrl } = data.contentfulGlobalSettings;
 
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
@@ -111,6 +112,7 @@ exports.createPages = async ({ actions, graphql }) => {
         id,
         title: name,
         adSense,
+        baseUrl,
       },
     });
   });

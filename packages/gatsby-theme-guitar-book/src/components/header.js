@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { HEADER_HEIGHT } from '../utils';
 import breakpoints from '../utils/breakpoints';
+import { HEADER_HEIGHT } from '../utils/constants';
 
 const Wrapper = styled.header({
   position: 'sticky',

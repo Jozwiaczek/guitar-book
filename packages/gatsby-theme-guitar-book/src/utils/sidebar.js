@@ -1,4 +1,4 @@
-const { getSlug } = require('../utils');
+const { getSlug } = require('./helpers');
 
 export const getSidebarContent = (edges) => {
   const { items } = edges[0].node;
