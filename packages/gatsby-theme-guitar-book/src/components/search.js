@@ -61,18 +61,17 @@ const SuggestionBox = styled.div({
   border,
 });
 
-const Suggestion = styled.div({
+const Suggestion = styled.div((props) => ({
   color: 'inherit',
   background: 'none',
   textDecoration: 'none',
   padding: '20px 32px',
   borderBottom: `1px solid ${colors.divider}`,
-
+  backgroundColor: props.isSelected && transparentize(0.5, colors.divider),
   ':hover': {
-    backgroundColor: transparentize(0.5, colors.divider),
     cursor: 'pointer',
   },
-});
+}));
 
 const Title = styled.div({
   marginBottom: 4,
@@ -117,6 +116,9 @@ export default function Search(props) {
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
   const [mouseOver, setMouseOver] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const resultsRefs = useRef([]);
+  const suggestionBoxRef = useRef();
   const resultLimit = 10;
   const inputRef = useRef(null);
 
@@ -160,6 +162,7 @@ export default function Search(props) {
 
   const search = useCallback((searchText) => {
     searchText = searchText.trim();
+    setSelectedIndex(0);
     if (!searchText) return [];
     const searchRegExp = new RegExp(searchText, 'i');
     return resultContentful
@@ -197,12 +200,60 @@ export default function Search(props) {
       .slice(0, resultLimit);
   }, []);
 
+  function navigateTo(slug) {
+    navigate(slug);
+    setMouseOver(false);
+    setValue('');
+    inputRef.current.blur();
+  }
+
   // focus the input when the slash key is pressed
   useKey(
-    (event) => event.keyCode === 191 && event.target.tagName.toUpperCase() !== 'INPUT',
+    (event) => event.key === '/' && inputRef.current !== document.activeElement,
     (event) => {
       event.preventDefault();
       inputRef.current.focus();
+    },
+  );
+
+  // select item up/down
+  useKey(
+    (event) => (event.key === 'ArrowUp' || event.key === 'ArrowDown') && resultsShown,
+    (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setSelectedIndex((prevState) => {
+        const index =
+          (prevState + (event.key === 'ArrowUp' ? (prevState === 0 ? 0 : -1) : 1)) %
+          Math.min(resultLimit, result.length);
+        suggestionBoxRef.current.scrollTo({
+          behavior: 'smooth',
+          block: 'center',
+          top: resultsRefs.current[index].offsetTop,
+        });
+        return index;
+      });
+    },
+  );
+
+  // navigate to selected item
+  useKey(
+    (event) => event.key === 'Enter' && resultsShown,
+    (event) => {
+      event.preventDefault();
+      if (result.length > selectedIndex) {
+        navigateTo(result[selectedIndex].slug);
+      }
+    },
+  );
+
+  // blur input on esc
+  useKey(
+    (event) => event.key === 'Escape' && inputRef.current === document.activeElement,
+    (event) => {
+      event.preventDefault();
+      setValue('');
+      inputRef.current.blur();
     },
   );
 
@@ -254,19 +305,20 @@ export default function Search(props) {
         />
         {!focused && !value && <Hotkey>/</Hotkey>}
         {resultsShown && (
-          <SuggestionBox>
+          <SuggestionBox ref={suggestionBoxRef}>
             {result.length ? (
               <>
                 {result.map((res, index) => (
                   <Suggestion
                     key={index}
-                    onMouseEnter={() => setMouseOver(true)}
-                    onMouseLeave={() => setMouseOver(false)}
-                    onClick={() => {
-                      navigate(`${res.slug}`);
-                      setMouseOver(false);
-                      setValue('');
+                    isSelected={index === selectedIndex}
+                    ref={(el) => (resultsRefs.current[index] = el)}
+                    onMouseEnter={() => {
+                      setSelectedIndex(index);
+                      setMouseOver(true);
                     }}
+                    onMouseLeave={() => setMouseOver(false)}
+                    onClick={() => navigateTo(res.slug)}
                   >
                     <Title>
                       <HighlightLabel label={res.title} />
