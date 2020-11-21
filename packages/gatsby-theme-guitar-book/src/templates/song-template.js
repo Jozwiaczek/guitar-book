@@ -4,7 +4,7 @@ import { graphql, Link as GLink } from 'gatsby';
 import styled from '@emotion/styled';
 import { Tooltip } from '@apollo/space-kit/Tooltip';
 
-import { VideoBox } from '../components/videoBox';
+import { VideoBox } from '../components/video-box';
 import { Verse } from '../components/chords/verse';
 import { AllChordsPreview } from '../components/chords/allChordsPreview';
 import { getHeadingsFromJson, getSlug } from '../utils/helpers';
