@@ -37,8 +37,9 @@ export default function ChordsPreview({ sdk }) {
   const classes = useStyles();
 
   const saveValue = (text) => {
-    setValue(text);
-    sdk.field.setValue(text);
+    const formattedText = text.replace(/\t/g, '    ');
+    setValue(formattedText);
+    sdk.field.setValue(formattedText.trim());
   };
 
   sdk.window.startAutoResizer();
@@ -60,7 +61,7 @@ export default function ChordsPreview({ sdk }) {
           <Paper elevation={0} className={classes.paper}>
             <div style={{ whiteSpace: 'break-spaces' }}>
               <Typography>
-                <Verse text={value} />
+                <Verse text={value || ''} />
               </Typography>
             </div>
           </Paper>
@@ -74,7 +75,7 @@ export default function ChordsPreview({ sdk }) {
           <TextField
             multiline
             fullWidth
-            placeholder="Placeholder"
+            placeholder="Put lyrics here"
             variant="outlined"
             inputProps={{ className: classes.textarea }}
             value={value}

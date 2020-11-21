@@ -9,7 +9,7 @@ export const Verse = ({ text, setAllChords }) => {
   const chordRegEx = /^[A-Ha-h][mb#74]?(add9)?(m7)?(maj7)?(sus)?(sus4)?(is)?$/;
 
   const renderChords = (chordsLine) => {
-    const chords = chordsLine.split(SPACE_CODE);
+    const chords = chordsLine.split(/\s/);
     return (
       <b>
         {chords.map((item, lineIndex) => {
@@ -30,7 +30,7 @@ export const Verse = ({ text, setAllChords }) => {
   );
 
   return lines.map((line, index) => {
-    const wordsCount = line.split(SPACE_CODE).filter((w) => !!w && !w.match(chordRegEx)).length;
+    const wordsCount = line.split(/\s/).filter((w) => !!w && !w.match(chordRegEx)).length;
     return (
       <React.Fragment key={index}>
         {wordsCount ? renderText(line) : renderChords(line)}
