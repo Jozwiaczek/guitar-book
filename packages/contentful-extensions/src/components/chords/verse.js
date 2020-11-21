@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChordPreview from './chordPreview';
+import ChordTooltip from './chordTooltip';
 
 export const Verse = ({ text, setAllChords }) => {
   const SPACE_CODE = ' ';
@@ -17,7 +17,7 @@ export const Verse = ({ text, setAllChords }) => {
           if (setAllChords) setAllChords((prev) => (prev.includes(item) ? prev : [...prev, item]));
           return (
             <React.Fragment key={lineIndex}>
-              <ChordPreview>{item}</ChordPreview>{' '}
+              <ChordTooltip>{item}</ChordTooltip>{' '}
             </React.Fragment>
           );
         })}
