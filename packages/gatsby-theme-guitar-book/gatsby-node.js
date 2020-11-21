@@ -2,7 +2,7 @@ const path = require('path');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug } = require('./src/utils');
+const { getSlug } = require('./src/utils/helpers');
 
 async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteName }) {
   const slug = node.path;
@@ -59,10 +59,7 @@ async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteN
 
 exports.onCreateNode = onCreateNode;
 
-exports.createPages = async (
-  { actions, graphql },
-  { subtitle, twitterHandle, adSense, baseUrl },
-) => {
+exports.createPages = async ({ actions, graphql }) => {
   const { data } = await graphql(`
     {
       allContentfulSong {
@@ -93,12 +90,17 @@ exports.createPages = async (
           }
         }
       }
+      contentfulGlobalSettings {
+        adSense
+        baseUrl
+      }
     }
   `);
 
-  const songTemplate = require.resolve('./src/components/templates/song-template');
-  const pageTemplate = require.resolve('./src/components/templates/page-template');
-  const authorTemplate = require.resolve('./src/components/templates/author-template');
+  const songTemplate = require.resolve('./src/templates/song-template');
+  const pageTemplate = require.resolve('./src/templates/page-template');
+  const authorTemplate = require.resolve('./src/templates/author-template');
+  const { adSense, baseUrl } = data.contentfulGlobalSettings;
 
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
@@ -109,8 +111,6 @@ exports.createPages = async (
       context: {
         id,
         title: name,
-        subtitle,
-        twitterHandle,
         adSense,
         baseUrl,
       },
@@ -127,10 +127,7 @@ exports.createPages = async (
         id,
         author,
         title,
-        subtitle,
-        twitterHandle,
         adSense,
-        baseUrl,
         isSong: true,
       },
     });
@@ -145,10 +142,7 @@ exports.createPages = async (
       context: {
         id,
         title,
-        subtitle,
-        twitterHandle,
         adSense,
-        baseUrl,
       },
     });
   });

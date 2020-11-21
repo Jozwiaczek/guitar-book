@@ -8,18 +8,17 @@ import { IconYoutube } from '@apollo/space-kit/icons/IconYoutube';
 
 import { transparentize } from 'polished';
 
-import { graphql, Link, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
-import { ReactComponent as SpotifyLogoIcon } from '../assets/icons/spotify.svg';
-import { ReactComponent as InstagramLogoIcon } from '../assets/icons/instagram.svg';
-import { ReactComponent as SoundcloudLogoIcon } from '../assets/icons/soundcloud.svg';
-import { ReactComponent as MailIcon } from '../assets/icons/mail.svg';
+import { ReactComponent as SpotifyLogoIcon } from '../../assets/icons/spotify.svg';
+import { ReactComponent as InstagramLogoIcon } from '../../assets/icons/instagram.svg';
+import { ReactComponent as SoundcloudLogoIcon } from '../../assets/icons/soundcloud.svg';
+import { ReactComponent as MailIcon } from '../../assets/icons/mail.svg';
 
-import { boxShadow } from './search';
-import { colors } from '../utils/colors';
-import { smallCaps } from '../utils/typography';
-import breakpoints from '../utils/breakpoints';
-import { getSlug } from '../utils';
+import { boxShadow } from '../search';
+import { colors } from '../../utils/colors';
+import breakpoints from '../../utils/breakpoints';
+import MenuItems from './menu-items';
 
 const Wrapper = styled.div({
   width: '100%',
@@ -54,60 +53,6 @@ const StyledMenu = styled.div({
   [breakpoints.sm]: {
     width: 'calc(100vw - 48px)',
   },
-});
-
-const MenuTitle = styled.h6(smallCaps, {
-  margin: 24,
-  marginBottom: 0,
-  fontSize: 13,
-  fontWeight: 600,
-  color: colors.text3,
-});
-
-const StyledNav = styled.nav({
-  display: 'flex',
-  flexWrap: 'wrap',
-  margin: 12,
-});
-
-const StyledNavItem = styled(Link)({
-  display: 'block',
-  width: '50%',
-  [breakpoints.md]: {
-    width: '100%',
-  },
-  height: '100%',
-  padding: 12,
-  borderRadius: 4,
-  color: colors.text1,
-  textDecoration: 'none',
-  backgroundColor: 'transparent',
-  transitionProperty: 'color, background-color',
-  transitionDuration: '150ms',
-  transitionTimingFunction: 'ease-in-out',
-  '@media (hover: hover)': {
-    ':hover': {
-      color: 'white',
-      backgroundColor: colors.primary,
-      p: {
-        color: colors.primaryLight,
-      },
-    },
-  },
-});
-
-export const NavItemTitle = styled.h4({
-  marginBottom: 8,
-  fontWeight: 600,
-  color: 'inherit',
-});
-
-export const NavItemDescription = styled.p({
-  marginBottom: 0,
-  fontSize: 14,
-  lineHeight: 1.5,
-  color: colors.text3,
-  transition: 'color 150ms ease-in-out',
 });
 
 const FooterNav = styled.nav({
@@ -155,52 +100,36 @@ const SocialLink = styled.a`
   }
 `;
 
-export default function Menu({
-  siteName,
-  onClose,
-  open,
-  buttonRef,
-  twitterUrl,
-  youtubeUrl,
-  contactMail,
-  instagramUrl,
-  soundcloudUrl,
-  spotifyUrl,
-  footerNavConfig,
-}) {
+export default function Menu({ onClose, open, buttonRef }) {
   const menuRef = useRef(null);
   const { width } = useWindowSize();
   useKey('Escape', onClose);
 
-  const { allContentfulSong, allContentfulAuthor } = useStaticQuery(graphql`
+  const { contentfulGlobalSettings } = useStaticQuery(graphql`
     query MenuQuery {
-      allContentfulAuthor {
-        nodes {
-          name
-        }
-      }
-      allContentfulSong {
-        nodes {
-          title
-          author {
-            name
-          }
-        }
+      contentfulGlobalSettings {
+        twitterUrl
+        youtubeUrl
+        contactMail
+        instagramUrl
+        soundcloudUrl
+        spotifyUrl
+        menuFooterLabel
+        menuFooterLink
       }
     }
   `);
 
-  const NavItem = ({ children, ...rest }) => (
-    <StyledNavItem onClick={onClose} {...rest}>
-      {children}
-    </StyledNavItem>
-  );
-
-  const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
-  const randomSong = getRandomItem(allContentfulSong.nodes);
-  const randomAuthor = getRandomItem(allContentfulAuthor.nodes);
-  const randomSongSlug = getSlug(randomSong.author.name, randomSong.title);
-  const randomAuthorSlug = getSlug(randomAuthor.name);
+  const {
+    twitterUrl,
+    youtubeUrl,
+    contactMail,
+    instagramUrl,
+    soundcloudUrl,
+    spotifyUrl,
+    menuFooterLabel,
+    menuFooterLink,
+  } = contentfulGlobalSettings;
 
   useEffect(() => {
     if (open) {
@@ -233,6 +162,7 @@ export default function Menu({
   const hasSocialUrls = Boolean(
     twitterUrl || youtubeUrl || contactMail || instagramUrl || soundcloudUrl || spotifyUrl,
   );
+
   return (
     <Wrapper
       style={{
@@ -249,72 +179,20 @@ export default function Menu({
           transform: !open && 'translate3d(0,-24px,-16px) rotate3d(1,0,0.1,8deg)',
         }}
       >
-        <MenuTitle>{siteName}</MenuTitle>
-        <StyledNav>
-          <NavItem to="/favourites">
-            <NavItemTitle>
-              Favourites{' '}
-              <span role="img" aria-label="favourites">
-                ⭐️
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Check all songs marks as favourites.</NavItemDescription>
-          </NavItem>
-          <NavItem to="/recently-added-songs">
-            <NavItemTitle>
-              Recently added songs{' '}
-              <span role="img" aria-label="new songs">
-                🆕
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Checkout last added 20 songs.</NavItemDescription>
-          </NavItem>
-          <NavItem to="/songs">
-            <NavItemTitle>
-              All songs{' '}
-              <span role="img" aria-label="songs">
-                🎶
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Navigate to the list of all songs.</NavItemDescription>
-          </NavItem>
-          <NavItem to="/authors">
-            <NavItemTitle>
-              All authors{' '}
-              <span role="img" aria-label="author">
-                👨🏻‍🎤
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Navigate to the list of all authors.</NavItemDescription>
-          </NavItem>
-          <NavItem to={randomSongSlug}>
-            <NavItemTitle>
-              Random song{' '}
-              <span role="img" aria-label="random">
-                🔮
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Pick and play random song.</NavItemDescription>
-          </NavItem>
-          <NavItem to={randomAuthorSlug}>
-            <NavItemTitle>
-              Random author{' '}
-              <span role="img" aria-label="random">
-                🔮
-              </span>
-            </NavItemTitle>
-            <NavItemDescription>Pick and check random author page.</NavItemDescription>
-          </NavItem>
-        </StyledNav>
-        {(footerNavConfig || hasSocialUrls) && (
+        <MenuItems onClose={onClose} />
+        {(menuFooterLabel || hasSocialUrls) && (
           <FooterNav>
             <>
-              {footerNavConfig &&
-                Object.entries(footerNavConfig).map(([text, props]) => (
-                  <FooterNavItem key={text} {...props}>
-                    {text}
-                  </FooterNavItem>
-                ))}
+              {menuFooterLabel && (
+                <FooterNavItem
+                  key={menuFooterLabel}
+                  href={menuFooterLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {menuFooterLabel}
+                </FooterNavItem>
+              )}
               {hasSocialUrls && (
                 <SocialLinks>
                   {contactMail && (
@@ -391,9 +269,4 @@ Menu.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   buttonRef: PropTypes.object.isRequired,
-  siteName: PropTypes.string.isRequired,
-  navItems: PropTypes.array.isRequired,
-  footerNavConfig: PropTypes.object.isRequired,
-  twitterUrl: PropTypes.string,
-  youtubeUrl: PropTypes.string,
 };

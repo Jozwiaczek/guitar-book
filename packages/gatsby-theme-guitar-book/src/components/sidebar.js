@@ -5,6 +5,8 @@ import styled from '@emotion/styled';
 
 import { transparentize } from 'polished';
 
+import { Link } from 'gatsby';
+
 import breakpoints from '../utils/breakpoints';
 import { colors } from '../utils/colors';
 
@@ -42,7 +44,7 @@ const Header = styled.div({
   marginBottom: 24,
 });
 
-const StyledLink = styled.a({
+const StyledLink = styled(Link)({
   color: colors.text1,
   textDecoration: 'none',
 });
@@ -51,7 +53,7 @@ const Sidebar = React.forwardRef((props, ref) => {
   const content = (
     <>
       <Header>
-        <StyledLink href={props.logoLink}>
+        <StyledLink to="/">
           <Logo />
         </StyledLink>
       </Header>
@@ -76,12 +78,7 @@ Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   open: PropTypes.bool,
   responsive: PropTypes.bool,
-  logoLink: PropTypes.string,
   className: PropTypes.string,
-};
-
-Sidebar.defaultProps = {
-  logoLink: '/',
 };
 
 export default Sidebar;

@@ -1,19 +1,15 @@
 import React from 'react';
 import { graphql, navigate } from 'gatsby';
-
 import Img from 'gatsby-image';
-
 import styled from '@emotion/styled';
 import { colors as apolloColors } from '@apollo/space-kit/colors';
 
-import PageHeader from '../components/page-header';
-
-import ContentWrapper from '../components/content-wrapper';
 import { colors } from '../utils/colors';
 import { boxShadow } from '../components/search';
 import breakpoints from '../utils/breakpoints';
+import CustomPageBase from '../components/base/custom-page-base';
 
-const { getSlug } = require('../utils');
+const { getSlug } = require('../utils/helpers');
 
 const List = styled.ul`
   list-style: none;
@@ -67,12 +63,10 @@ const ListItem = styled.li`
 const Authors = ({ data }) => {
   const { nodes } = data.allContentfulAuthor;
   return (
-    <ContentWrapper>
-      <PageHeader
-        title="All authors 👨🏻‍🎤"
-        description="Discover all authors which their songs are in this Guitar book!"
-      />
-      <hr />
+    <CustomPageBase
+      title="All authors 👨🏻‍🎤"
+      description="Discover all authors which their songs are in this Guitar book!"
+    >
       <List>
         {nodes.map(({ name, description, avatar }, index) => (
           <ListItem bigFont={!avatar} key={index} onClick={() => navigate(getSlug(name))}>
@@ -94,7 +88,7 @@ const Authors = ({ data }) => {
           </ListItem>
         ))}
       </List>
-    </ContentWrapper>
+    </CustomPageBase>
   );
 };
 

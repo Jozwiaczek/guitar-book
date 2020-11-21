@@ -4,16 +4,14 @@ import { graphql, navigate, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 import useKey from 'react-use/lib/useKey';
 import Highlighter from 'react-highlight-words';
-
 import { TextField } from '@apollo/space-kit/TextField';
-
 import { css } from '@emotion/core';
-
 import { position, size, transparentize } from 'polished';
 
-import { getSlug, HEADER_HEIGHT } from '../utils';
+import { getSlug } from '../utils/helpers';
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
+import { HEADER_HEIGHT } from '../utils/constants';
 
 const borderRadius = 5;
 const border = `1px solid ${colors.text3}`;

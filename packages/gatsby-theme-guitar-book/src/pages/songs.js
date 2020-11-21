@@ -1,29 +1,25 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 
-import PageHeader from '../components/page-header';
-
-import ContentWrapper from '../components/content-wrapper';
 import ListView from '../components/list-view';
+import CustomPageBase from '../components/base/custom-page-base';
 
-const { getSlug } = require('../utils');
+const { getSlug } = require('../utils/helpers');
 
 const Songs = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
-    <ContentWrapper>
-      <PageHeader
-        title="All songs 🎶"
-        description="Discover all songs which You can find in this Guitar book."
-      />
-      <hr />
+    <CustomPageBase
+      title="All songs 🎶"
+      description="Discover all songs which You can find in this Guitar book."
+    >
       <ListView
         items={nodes.map(({ title, author }, index) => ({
           title: `${index + 1}. ${title}`,
           path: getSlug(author.name, title),
         }))}
       />
-    </ContentWrapper>
+    </CustomPageBase>
   );
 };
 

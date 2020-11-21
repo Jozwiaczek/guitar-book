@@ -3,15 +3,7 @@ import PropTypes from 'prop-types';
 import { withPrefix } from 'gatsby';
 import Helmet from 'react-helmet';
 
-export default function SEO({
-  image,
-  baseUrl,
-  twitterHandle,
-  title,
-  description,
-  siteName,
-  adSense,
-}) {
+export default function SEO({ image, baseUrl, title, description, siteName, adSense }) {
   const imagePath = withPrefix(`/${image}`);
 
   return (
@@ -26,7 +18,6 @@ export default function SEO({
       <meta property="og:image" content={imagePath} />
       <meta name="apple-mobile-web-app-capable" />
       {baseUrl && <meta name="twitter:image" content={baseUrl + imagePath} />}
-      {twitterHandle && <meta name="twitter:site" content={`@${twitterHandle}`} />}
       {adSense && (
         <script
           async
@@ -44,6 +35,5 @@ SEO.propTypes = {
   siteName: PropTypes.string.isRequired,
   baseUrl: PropTypes.string,
   image: PropTypes.string.isRequired,
-  twitterHandle: PropTypes.string,
   adSense: PropTypes.string,
 };
