@@ -4,7 +4,7 @@ import { graphql, Link, useStaticQuery } from 'gatsby';
 
 import styled from '@emotion/styled';
 
-import { getSlug } from '../../utils';
+import { getSlug } from '../../utils/helpers';
 import { smallCaps } from '../../utils/typography';
 import { colors } from '../../utils/colors';
 import breakpoints from '../../utils/breakpoints';

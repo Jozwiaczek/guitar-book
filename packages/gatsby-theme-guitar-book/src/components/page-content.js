@@ -1,19 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-
 import styled from '@emotion/styled';
-
 import useMount from 'react-use/lib/useMount';
-
 import { graphql, useStaticQuery, withPrefix } from 'gatsby';
 
 import SectionNav from './section-nav';
-
-import { HEADER_HEIGHT } from '../utils';
-
 import PageNav from './page-nav';
 import { colors } from '../utils/colors';
 import breakpoints from '../utils/breakpoints';
+import { HEADER_HEIGHT } from '../utils/constants';
 
 const Wrapper = styled.div({
   display: 'flex',

@@ -1,26 +1,22 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 
-import PageHeader from '../components/page-header';
-
-import ContentWrapper from '../components/content-wrapper';
 import ListView from '../components/list-view';
+import PageBase from '../components/page-base';
 
-const { getSlug } = require('../utils');
+const { getSlug } = require('../utils/helpers');
 
 const RecentlyAddedSongs = ({ data }) => {
   const { nodes } = data.allContentfulSong;
   return (
-    <ContentWrapper>
-      <PageHeader title="Recently added songs 🆕" description="Discover last 20 songs." />
-      <hr />
+    <PageBase title="Recently added songs 🆕" description="Discover last 20 songs.">
       <ListView
         items={nodes.map(({ title, author }, index) => ({
           title: `${index + 1}. ${title}`,
           path: getSlug(author.name, title),
         }))}
       />
-    </ContentWrapper>
+    </PageBase>
   );
 };
 

@@ -2,7 +2,7 @@ const path = require('path');
 
 const { createPrinterNode } = require('gatsby-plugin-printer');
 
-const { getSlug } = require('./src/utils');
+const { getSlug } = require('./src/utils/helpers');
 
 async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteName }) {
   const slug = node.path;

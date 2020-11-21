@@ -1,21 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { graphql } from 'gatsby';
-
 import Img from 'gatsby-image';
-
 import styled from '@emotion/styled';
 
-import SEO from '../components/seo';
-import ContentWrapper from '../components/content-wrapper';
-import PageHeader from '../components/page-header';
-import Footer from '../components/footer';
-import PageContent from '../components/page-content';
 import ListView from '../components/list-view';
 import SeeMore from '../components/see-more';
-import { getSlug } from '../utils';
+import { getSlug, getTextWithLimit } from '../utils/helpers';
+import BaseTemplate from './base-template';
 
-const Container = styled.div`
+const AboutAuthor = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -25,63 +19,51 @@ const Container = styled.div`
   margin-bottom: 1rem;
 `;
 
-const DescriptionWrapper = styled.div`
+const Description = styled.div`
   text-align: justify;
   text-justify: auto;
 `;
 
-export default function AuthorTemplate(props) {
-  const { hash, pathname } = props.location;
-  const { contentfulAuthor, contentfulGlobalSettings, sitePage } = props.data;
-  const { siteName, description } = contentfulGlobalSettings;
-  const { avatar, name, song: songs, description: authorDescription } = contentfulAuthor;
-  const { adSense, baseUrl } = props.pageContext;
+export default function AuthorTemplate({ location, data, pageContext }) {
+  const { contentfulAuthor } = data;
+  const { avatar, name, song, description } = contentfulAuthor;
 
   return (
-    <>
-      <SEO
-        title={name}
-        description={name || description}
-        siteName={siteName}
-        baseUrl={baseUrl}
-        adSense={adSense}
-        image={sitePage.fields.image}
-      />
-      <ContentWrapper>
-        <PageHeader title={name} />
-        <hr />
-        <PageContent pathname={pathname} hash={hash}>
-          <Container>
-            {avatar && (
-              <Img
-                fluid={avatar.fluid}
-                style={{
-                  height: 'auto',
-                  maxHeight: '400px',
-                  width: '100%',
-                }}
-                imgStyle={{
-                  objectFit: 'cover',
-                  borderRadius: 10,
-                }}
-              />
-            )}
-            {authorDescription && (
-              <DescriptionWrapper>
-                <SeeMore text={authorDescription.description} limit={1000} />
-              </DescriptionWrapper>
-            )}
-          </Container>
-          {songs && (
-            <ListView
-              title="Song list"
-              items={songs.map(({ title }) => ({ title, path: getSlug(name, title) }))}
-            />
-          )}
-        </PageContent>
-        <Footer />
-      </ContentWrapper>
-    </>
+    <BaseTemplate
+      data={data}
+      location={location}
+      title={name}
+      description={getTextWithLimit(description.description, 70)}
+      pageContext={pageContext}
+    >
+      <AboutAuthor>
+        {avatar && (
+          <Img
+            fluid={avatar.fluid}
+            style={{
+              height: 'auto',
+              maxHeight: '400px',
+              width: '100%',
+            }}
+            imgStyle={{
+              objectFit: 'cover',
+              borderRadius: 10,
+            }}
+          />
+        )}
+        {description && (
+          <Description>
+            <SeeMore text={description.description} limit={1000} />
+          </Description>
+        )}
+      </AboutAuthor>
+      {song && (
+        <ListView
+          title="Song list"
+          items={song.map(({ title }) => ({ title, path: getSlug(name, title) }))}
+        />
+      )}
+    </BaseTemplate>
   );
 }
 
@@ -114,7 +96,6 @@ export const AuthorTemplateQuery = graphql`
     }
     contentfulGlobalSettings {
       siteName
-      description
     }
   }
 `;
