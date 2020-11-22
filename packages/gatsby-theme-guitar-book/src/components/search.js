@@ -130,7 +130,7 @@ export default function Search(props) {
               name
             }
             lyrics {
-              json
+              lyrics
             }
           }
         }
@@ -144,13 +144,7 @@ export default function Search(props) {
         const authorName = node.author.name;
         return {
           title: node.title,
-          lyrics: node.lyrics.json.content.reduce((externalAcc, { content }) => {
-            const joinedValues = content.reduce(
-              (innerAcc, { value }) => `${innerAcc} ${value}`,
-              '',
-            );
-            return `${externalAcc} ${joinedValues}`;
-          }, ''),
+          lyrics: node.lyrics.lyrics,
           slug: getSlug(authorName, node.title),
           author: authorName,
         };
