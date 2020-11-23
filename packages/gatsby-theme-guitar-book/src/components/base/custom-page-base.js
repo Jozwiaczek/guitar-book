@@ -18,7 +18,6 @@ const CustomPageBase = ({ children, title, description, uri }) => {
       }
       contentfulGlobalSettings {
         siteName
-        baseUrl
         adSense
       }
     }
@@ -29,7 +28,7 @@ const CustomPageBase = ({ children, title, description, uri }) => {
   );
   const socialCardImagePath = matchedSite && matchedSite.fields.image;
 
-  const { siteName, baseUrl, adSense } = contentfulGlobalSettings;
+  const { siteName, adSense } = contentfulGlobalSettings;
 
   return (
     <>
@@ -37,7 +36,6 @@ const CustomPageBase = ({ children, title, description, uri }) => {
         title={title}
         description={description}
         siteName={siteName}
-        baseUrl={baseUrl}
         adSense={adSense}
         image={socialCardImagePath}
       />

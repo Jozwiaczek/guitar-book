@@ -22,7 +22,7 @@ const TemplateBase = ({
   const { hash, pathname } = location;
   const { contentfulGlobalSettings, sitePage } = data;
   const { siteName } = contentfulGlobalSettings;
-  const { sidebarContents, adSense, baseUrl } = pageContext;
+  const { sidebarContents, adSense } = pageContext;
   const pages = sidebarContents?.reduce((acc, { pages }) => acc.concat(pages), []);
 
   return (
@@ -31,7 +31,6 @@ const TemplateBase = ({
         title={title}
         description={description}
         siteName={siteName}
-        baseUrl={baseUrl}
         adSense={adSense}
         image={sitePage.fields.image}
       />
