@@ -44,7 +44,7 @@ export default function SongTemplate({ location, data, pageContext }) {
       }
       subheader={videoLink && <VideoBox videoUrl={videoLink} />}
     >
-      <p>
+      <p style={{ whiteSpace: 'break-spaces' }}>
         <Verse text={lyrics.lyrics} setAllChords={setAllChords} />
       </p>
       {allChords.length && <AllChordsPreview allChords={allChords} />}
