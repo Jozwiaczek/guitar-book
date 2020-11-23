@@ -40,7 +40,7 @@
     "gatsby-plugin-less": "^3.0.1",
     "gatsby-plugin-manifest": "^2.4.22",
     "gatsby-plugin-offline": "^3.2.22",
-    "gatsby-plugin-printer": "^1.1.1",
+    "gatsby-plugin-printer": "1.0.x",
     "gatsby-plugin-react-helmet": "^3.0.2",
     "gatsby-plugin-sharp": "^2.8.0",
     "gatsby-plugin-svgr": "^2.0.1",

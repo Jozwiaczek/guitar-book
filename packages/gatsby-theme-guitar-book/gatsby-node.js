@@ -4,7 +4,7 @@ const { createPrinterNode } = require('gatsby-plugin-printer');
 
 const { getSlug } = require('./src/utils/helpers');
 
-async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteName }) {
+async function onCreateNode({ node, actions }) {
   const slug = node.path;
 
   if (
@@ -24,7 +24,7 @@ async function onCreateNode({ node, actions, getNode, loadNodeContent }, { siteN
       fileName,
       outputDir,
       data: {
-        title: siteName,
+        title: node.context.siteName || 'Guitar Book',
         subtitle: node.context.title,
         category: node.context.author && node.context.author.name,
       },
@@ -91,6 +91,7 @@ exports.createPages = async ({ actions, graphql }) => {
         }
       }
       contentfulGlobalSettings {
+        siteName
         adSense
         baseUrl
       }
@@ -100,7 +101,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const songTemplate = require.resolve('./src/templates/song-template');
   const pageTemplate = require.resolve('./src/templates/page-template');
   const authorTemplate = require.resolve('./src/templates/author-template');
-  const { adSense, baseUrl } = data.contentfulGlobalSettings;
+  const { adSense, baseUrl, siteName } = data.contentfulGlobalSettings;
 
   // Author page
   data.allContentfulAuthor.edges.forEach(({ node }) => {
@@ -109,6 +110,7 @@ exports.createPages = async ({ actions, graphql }) => {
       path: getSlug(name),
       component: authorTemplate,
       context: {
+        siteName,
         id,
         title: name,
         adSense,
@@ -124,6 +126,7 @@ exports.createPages = async ({ actions, graphql }) => {
       path: getSlug(author.name, title),
       component: songTemplate,
       context: {
+        siteName,
         id,
         author,
         title,
@@ -140,6 +143,7 @@ exports.createPages = async ({ actions, graphql }) => {
       path: isHomepage ? '/' : getSlug(title),
       component: pageTemplate,
       context: {
+        siteName,
         id,
         title,
         adSense,
