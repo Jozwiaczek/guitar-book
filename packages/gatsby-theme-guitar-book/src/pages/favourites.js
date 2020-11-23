@@ -6,10 +6,11 @@ import CustomPageBase from '../components/base/custom-page-base';
 
 const { getSlug } = require('../utils/helpers');
 
-const Favourites = ({ data }) => {
+const Favourites = ({ data, uri }) => {
   const { nodes } = data.allContentfulSong;
   return (
     <CustomPageBase
+      uri={uri}
       title="Favourites songs ⭐️"
       description="Discover all songs marked by author of this Guitar Book as favourite."
     >

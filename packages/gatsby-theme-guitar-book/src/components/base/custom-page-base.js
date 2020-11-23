@@ -6,9 +6,16 @@ import PageHeader from '../page-header';
 import ContentWrapper from './components/content-wrapper';
 import SEO from './components/seo';
 
-const CustomPageBase = ({ children, title, description }) => {
-  const { contentfulGlobalSettings } = useStaticQuery(graphql`
+const CustomPageBase = ({ children, title, description, uri }) => {
+  const { contentfulGlobalSettings, allSitePage } = useStaticQuery(graphql`
     query PageBaseQuery {
+      allSitePage {
+        nodes {
+          fields {
+            image
+          }
+        }
+      }
       contentfulGlobalSettings {
         siteName
         baseUrl
@@ -16,6 +23,11 @@ const CustomPageBase = ({ children, title, description }) => {
       }
     }
   `);
+
+  const matchedSite = allSitePage.nodes.find(
+    (site) => site.fields?.image === `social-cards${uri}.png`,
+  );
+  const socialCardImagePath = matchedSite && matchedSite.fields.image;
 
   const { siteName, baseUrl, adSense } = contentfulGlobalSettings;
 
@@ -27,6 +39,7 @@ const CustomPageBase = ({ children, title, description }) => {
         siteName={siteName}
         baseUrl={baseUrl}
         adSense={adSense}
+        image={socialCardImagePath}
       />
       <ContentWrapper>
         <PageHeader title={title} description={description} />
@@ -38,6 +51,7 @@ const CustomPageBase = ({ children, title, description }) => {
 };
 
 CustomPageBase.propTypes = {
+  uri: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,

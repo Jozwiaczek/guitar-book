@@ -6,10 +6,11 @@ import CustomPageBase from '../components/base/custom-page-base';
 
 const { getSlug } = require('../utils/helpers');
 
-const Songs = ({ data }) => {
+const Songs = ({ data, uri }) => {
   const { nodes } = data.allContentfulSong;
   return (
     <CustomPageBase
+      uri={uri}
       title="All songs 🎶"
       description="Discover all songs which You can find in this Guitar book."
     >
