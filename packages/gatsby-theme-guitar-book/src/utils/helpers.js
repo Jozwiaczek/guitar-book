@@ -20,6 +20,8 @@ const getHeadingsFromJson = (json) =>
   });
 
 const getTextWithLimit = (text, limit) => {
+  if (!text) return '';
+
   let result = '';
   const words = text.split(/ /);
   for (let i = 0; i < words.length && result.length < limit; i++) {
