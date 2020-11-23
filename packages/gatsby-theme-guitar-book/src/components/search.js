@@ -44,11 +44,11 @@ const HotkeyIcon = styled.div`
 `;
 
 const HotkeyBar = styled.div`
-  height: 35px;
+  height: 50px;
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: ${colors.text3};
+  background-color: ${colors.primary};
   color: ${colors.text4};
   align-items: center;
   padding-left: 1rem;
@@ -100,7 +100,7 @@ const Suggestion = styled.div((props) => ({
   textDecoration: 'none',
   padding: '20px 32px',
   borderBottom: `1px solid ${colors.divider}`,
-  backgroundColor: props.isSelected && transparentize(0.5, colors.divider),
+  backgroundColor: props.isSelected && transparentize(0.5, '#d0d4de'),
   ':hover': {
     cursor: 'pointer',
   },
