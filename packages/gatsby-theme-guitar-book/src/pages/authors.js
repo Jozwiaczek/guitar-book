@@ -60,11 +60,11 @@ const ListItem = styled.li`
   }
 `;
 
-const Authors = ({ data, uri }) => {
+const Authors = ({ data, location }) => {
   const { nodes } = data.allContentfulAuthor;
   return (
     <CustomPageBase
-      uri={uri}
+      pathname={location.pathname}
       title="All authors 👨🏻‍🎤"
       description="Discover all authors which their songs are in this Guitar book!"
     >

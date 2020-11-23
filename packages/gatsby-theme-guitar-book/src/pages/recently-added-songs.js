@@ -6,10 +6,14 @@ import CustomPageBase from '../components/base/custom-page-base';
 
 const { getSlug } = require('../utils/helpers');
 
-const RecentlyAddedSongs = ({ data, uri }) => {
+const RecentlyAddedSongs = ({ data, location }) => {
   const { nodes } = data.allContentfulSong;
   return (
-    <CustomPageBase title="Recently added songs 🆕" description="Discover last 20 songs." uri={uri}>
+    <CustomPageBase
+      title="Recently added songs 🆕"
+      description="Discover last 20 songs."
+      pathname={location.pathname}
+    >
       <ListView
         items={nodes.map(({ title, author }, index) => ({
           title: `${index + 1}. ${title}`,
