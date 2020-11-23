@@ -19,12 +19,15 @@ async function onCreateNode({ node, actions }) {
         .replace('/', '-')
         .trim() || 'index';
 
+    const upperCaseFirstLetter = (str) => str[0].toUpperCase() + str.slice(1);
+    const staticPageTitle = upperCaseFirstLetter(fileName.replace(/-/g, ' '));
+
     createPrinterNode({
       id: `${node.id} >>> Printer`,
       fileName,
       outputDir,
       data: {
-        title: node.context.siteName || 'Guitar Book',
+        title: node.context.siteName || staticPageTitle,
         subtitle: node.context.title,
         category: node.context.author && node.context.author.name,
       },
