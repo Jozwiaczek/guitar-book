@@ -7,10 +7,9 @@ import { Tooltip } from '@apollo/space-kit/Tooltip';
 import { VideoBox } from '../components/video-box';
 import { Verse } from '../components/chords/verse';
 import { AllChordsPreview } from '../components/chords/allChordsPreview';
-import { getHeadingsFromJson, getSlug } from '../utils/helpers';
+import { getSlug } from '../utils/helpers';
 import { colors } from '../utils/colors';
 import TemplateBase from '../components/base/template-base';
-import HTMLField from '../components/contentfulFields/HTMLField';
 
 const StyledHeader = styled(GLink)`
   font-size: 1.4rem;
@@ -30,12 +29,6 @@ export default function SongTemplate({ location, data, pageContext }) {
   const { title, author, favourite, videoLink, lyrics } = contentfulSong;
   const [allChords, setAllChords] = useState([]);
 
-  const options = {
-    renderText: (text) => {
-      return <Verse text={text} setAllChords={setAllChords} />;
-    },
-  };
-
   return (
     <TemplateBase
       data={data}
@@ -44,7 +37,6 @@ export default function SongTemplate({ location, data, pageContext }) {
       description={author.name}
       isFavourite={!!favourite}
       pageContext={pageContext}
-      headings={getHeadingsFromJson(lyrics.json)}
       contentDescription={
         <Tooltip content="Show author">
           <StyledHeader to={getSlug(author.name)}>{author.name}</StyledHeader>
@@ -52,7 +44,9 @@ export default function SongTemplate({ location, data, pageContext }) {
       }
       subheader={videoLink && <VideoBox videoUrl={videoLink} />}
     >
-      <HTMLField json={lyrics.json} options={options} />
+      <p style={{ whiteSpace: 'break-spaces' }}>
+        <Verse text={lyrics.lyrics} setAllChords={setAllChords} />
+      </p>
       {allChords.length && <AllChordsPreview allChords={allChords} />}
     </TemplateBase>
   );
@@ -73,7 +67,7 @@ export const SongTemplateQuery = graphql`
     }
     contentfulSong(id: { eq: $id }) {
       lyrics {
-        json
+        lyrics
       }
       favourite
       title

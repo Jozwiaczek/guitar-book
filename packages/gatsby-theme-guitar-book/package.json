@@ -63,6 +63,7 @@
     "react-helmet": "^5.2.0",
     "react-highlight-words": "^0.16.0",
     "react-open-app": "^1.0.2",
+    "react-player": "^2.7.0",
     "react-textfit": "^1.1.0",
     "react-use": "^9.11.0",
     "recompose": "^0.30.0",
@@ -71,8 +72,7 @@
     "remark-react": "^5.0.1",
     "remark-typescript": "^0.3.0",
     "source-sans-pro": "^3.6.0",
-    "striptags": "^3.1.1",
-    "react-player": "^2.7.0"
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
     "gatsby-plugin-eslint": "^2.0.8"
