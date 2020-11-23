@@ -96,7 +96,7 @@ export default function SocialCard({ subtitle, category, title }) {
           colors: 'black',
         }}
       >
-        {title.replace(/\s+(\S*)$/, '\xA0$1')}
+        {title ? title.replace(/\s+(\S*)$/, '\xA0$1') : ''}
       </TextFit>
       <div>
         <svg viewBox="0 0 440.7 178.23" style={{ height: 105 }}>

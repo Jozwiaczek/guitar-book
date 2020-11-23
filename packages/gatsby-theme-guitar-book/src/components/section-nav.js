@@ -8,8 +8,6 @@ import useWindowSize from 'react-use/lib/useWindowSize';
 
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
-import { graphql, useStaticQuery } from 'gatsby';
-
 import { colors } from '../utils/colors';
 
 const StyledList = styled.ul({

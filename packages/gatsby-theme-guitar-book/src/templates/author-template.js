@@ -33,7 +33,7 @@ export default function AuthorTemplate({ location, data, pageContext }) {
       data={data}
       location={location}
       title={name}
-      description={getTextWithLimit(description.description, 70)}
+      description={getTextWithLimit(description?.description, 70)}
       pageContext={pageContext}
     >
       <AboutAuthor>
