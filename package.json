@@ -1,26 +1,48 @@
 {
   "name": "guitar-book",
   "private": true,
-  "main": "index.js",
   "license": "MIT",
-  "pre-commit": [
-    "lint:fix"
-  ],
   "scripts": {
     "clean": "lerna bootstrap && lerna run clean",
-    "build:apps": "lerna bootstrap && lerna run build --scope {'polish-guitar-book, english-guitar-book'} --stream",
-    "serve:apps": "lerna bootstrap && lerna run serve --parallel --scope {'polish-guitar-book, english-guitar-book'} --stream",
     "publish": "yarn lerna publish -y prerelease --force-publish",
-    "lint": "lerna run lint",
-    "lint:fix": "lerna run lint -- --fix",
-    "sort-package-json": "lerna exec npx sort-package-json"
+    "lint:fix": "lerna run lint:fix",
+    "prettier": "prettier --write --config .prettierrc .",
+    "sort-package-json": "lerna exec npx sort-package-json",
+    "removeNodeModules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
+  },
+  "keywords": [
+    "Gatsby",
+    "Guitar",
+    "Guitar Book",
+    "Chords"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/guitar-book"
+  },
+  "author": {
+    "name": "Jakub Jozwiak",
+    "email": "kubencki@gmail.com"
   },
   "workspaces": [
-    "apps/*",
-    "gatsby-theme-guitar-book"
+    "packages/*"
   ],
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "4.0.0",
     "lerna": "^3.22.1",
-    "pre-commit": "^1.2.2"
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "2.1.1"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }

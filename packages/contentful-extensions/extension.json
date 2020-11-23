@@ -1,0 +1,6 @@
+{
+  "id": "my-first-extension",
+  "name": "my-first-extension",
+  "srcdoc": "./build/index.html",
+  "fieldTypes": ["Text"]
+}

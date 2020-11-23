@@ -1,0 +1,61 @@
+{
+  "name": "guitar-book-contentful-extensions",
+  "version": "1.0.1-alpha.11",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/guitar-book",
+    "directory": "packages/contentful-extensions"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Mateusz Nestorowicz",
+    "email": "nestorowicz1@gmail.com"
+  },
+  "workspaces": {
+    "nohoist": [
+      "@contentful/contentful-extension-scripts",
+      "@contentful/contentful-extension-scripts/**"
+    ]
+  },
+  "scripts": {
+    "build": "contentful-extension-scripts build",
+    "configure": "contentful space use && contentful space environment use",
+    "deploy:contentful": "yarn build && contentful extension update --force",
+    "lint": "eslint ./ --ext .js,.jsx",
+    "lint:fix": "eslint  --ext .js,.jsx --cache --fix",
+    "login": "contentful login",
+    "logout": "contentful logout",
+    "start": "contentful-extension-scripts start"
+  },
+  "browserslist": [
+    "last 5 Chrome version",
+    "> 1%",
+    "not ie <= 11"
+  ],
+  "dependencies": {
+    "@contentful/contentful-extension-scripts": "^0.20.3",
+    "@contentful/forma-36-fcss": "^0.0.35",
+    "@contentful/forma-36-react-components": "3.11.3",
+    "@contentful/forma-36-tokens": "^0.5.2",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@tombatossals/chords-db": "^0.5.1",
+    "@tombatossals/react-chords": "^0.2.10",
+    "contentful-ui-extensions-sdk": "3.13.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.2.0",
+    "wikijs": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "7.10.0",
+    "@babel/preset-env": "7.10.0",
+    "@babel/preset-react": "7.10.0",
+    "@testing-library/react": "8.0.4",
+    "contentful-cli": "0.33.2",
+    "cssnano": "4.1.10"
+  }
+}

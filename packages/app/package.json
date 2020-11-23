@@ -1,0 +1,38 @@
+{
+  "name": "guitar-book-app",
+  "version": "1.0.1-alpha.11",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jozwiaczek/guitar-book",
+    "directory": "packages/app"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jakub Jozwiak",
+    "email": "kubencki@gmail.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "gatsby develop --host 0.0.0.0 --port 8000 --open",
+    "lint": "eslint  --ext .js,.jsx --cache",
+    "serve": "gatsby serve --host 0.0.0.0 --port 8001 --open"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.26.1",
+    "gatsby-theme-guitar-book": "^1.0.1-alpha.11",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-react": "^7.20.5",
+    "gatsby-plugin-eslint": "^2.0.8"
+  }
+}
